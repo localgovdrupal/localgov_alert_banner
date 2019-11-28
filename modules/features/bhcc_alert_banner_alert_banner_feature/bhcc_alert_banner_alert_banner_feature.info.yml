@@ -1,0 +1,18 @@
+name: 'BHCC Alert Banner Feature'
+description: 'Contains the ECK and Flag entity configuration, plus a view to display and manage the alert banner.'
+type: module
+core: 8.x
+dependencies:
+  - block
+  - eck
+  - field
+  - field_group
+  - flag
+  - link
+  - options
+  - user
+  - views
+  - bhcc_alert_banner
+version: 8.x-1.x-dev
+package: 'BHCC Alert Banner'
+core_incompatible: false
