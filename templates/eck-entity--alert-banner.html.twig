@@ -1,0 +1,57 @@
+{#
+/**
+ * @file
+ * Default theme implementation to display an ECK entity.
+ *
+ * Available variables:
+ * - eck_entity: The full ECK entity with limited access to object properties
+ *   and methods. Only "getter" methods (method names starting with "get",
+ *   "has", or "is") and a few common methods such as "id" and "label" are
+ *   available. Calling other methods (such as node.delete) will result in an
+ *   exception.
+ * - content: All ECK entity items. Use {{ content }} to print them all,
+ *   or print a subset such as {{ content.field_example }}. Use
+ *   {{ content|without('field_example') }} to temporarily suppress the printing
+ *   of a given child element.
+ * - attributes: HTML attributes for the containing element.
+ *
+ * @see template_preprocess_eck_entity()
+ *
+ * @ingroup themeable
+ */
+#}
+{{ attach_library('bhcc_alert_banners/alert_banner') }}
+{%
+  set alert_type = eck_entity.get('field_alert_type_of_alert').value
+%}
+{% set classes = [
+  'alert-banner',
+  'alert-banner--' ~ alert_type|clean_class,
+  is_front ? 'alert-banner--homepage' : '',
+  'js-alert-banner'
+] %}
+
+<!-- Alert Banner-->
+<div{{ attributes.addClass(classes).setAttribute('role', 'alert') }}>
+  <div class="wrapper">
+    <div class="alert-banner--inner">
+      <div class="alert-banner--inner--content">
+        {% if alert_type == 'minor' %}
+          <p><strong class="alert-banner--content-heading--inline">{{ eck_entity.label()|trim }}:</strong> <span class="alert-banner--content-body--inline">{{ content.field_alert_short_description }}</span></p>
+        {% else %}
+          <h2 class="alert-banner--content-heading">{{ content.title }}</h2>
+          <p class="alert-banner--content-body">{{ content.field_alert_short_description }}</p>
+        {% endif %}
+      </div>
+      <div class="alert-banner--actions paragraph">
+        {% if content.field_alert_link %}
+          <div class="alert-banner--content-link">{{ content.field_alert_link }}</div>
+        {% endif %}
+        <div class="alert-banner--dismiss">
+          <a href="#" class="js-alert-banner-close">Hide <span class="sr-only">Notifications</span></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- END Alert Banner -->

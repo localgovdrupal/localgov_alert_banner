@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - eck.eck_type.alert_banner.alert_banner
+    - field.storage.alert_banner.field_alert_type_of_alert
+  module:
+    - options
+id: alert_banner.alert_banner.field_alert_type_of_alert
+field_name: field_alert_type_of_alert
+entity_type: alert_banner
+bundle: alert_banner
+label: 'Type of alert'
+description: ''
+required: true
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string

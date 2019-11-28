@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - eck.eck_type.alert_banner.alert_banner
+    - field.storage.alert_banner.field_alert_short_description
+id: alert_banner.alert_banner.field_alert_short_description
+field_name: field_alert_short_description
+entity_type: alert_banner
+bundle: alert_banner
+label: 'Short description'
+description: 'No more than two sentences.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string_long

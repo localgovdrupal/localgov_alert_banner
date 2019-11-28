@@ -1,0 +1,16 @@
+langcode: en
+status: true
+dependencies: {  }
+id: emergency_publisher
+label: 'Emergency publisher'
+weight: -2
+is_admin: null
+permissions:
+  - 'access alert_banner entity page'
+  - 'create alert_banner entities'
+  - 'edit any alert_banner entities'
+  - 'edit own alert_banner entities'
+  - 'flag put_live'
+  - 'unflag put_live'
+  - 'view any alert_banner entities'
+  - 'view own alert_banner entities'

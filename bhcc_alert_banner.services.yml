@@ -1,0 +1,17 @@
+services:
+  bhcc_alert_banners.flag_subscriber:
+    class: Drupal\bhcc_alert_banners\EventSubscriber\AlertBannerFlagLive
+    tags:
+      - { name: event_subscriber }
+  bhcc_alert_banners.state:
+    class: Drupal\bhcc_alert_banners\AlertBannerState
+    arguments: ['@state']
+  bhcc_alert_banners.route_subscriber:
+    class: Drupal\bhcc_alert_banners\Routing\AlertBannerRouteSubscriber
+    tags:
+      - { name: event_subscriber }
+  bhcc_alert_banners.alert_banner_entity_page_access:
+    class: Drupal\bhcc_alert_banners\Access\AlertBannerEntityPageAccess
+    arguments: ['@current_user']
+    tags:
+      - { name: access_check }

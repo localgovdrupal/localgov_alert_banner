@@ -1,0 +1,9 @@
+langcode: en
+status: true
+dependencies: {  }
+id: alert_banner
+label: 'Alert Banner'
+created: true
+changed: true
+uid: true
+title: true

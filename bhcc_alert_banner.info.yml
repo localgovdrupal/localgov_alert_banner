@@ -1,0 +1,8 @@
+name: 'BHCC Alert Banners'
+type: module
+description: 'Alert Banners Support module'
+core: 8.x
+package: 'BHCC Alert Banners'
+dependencies:
+  - eck
+  - flag

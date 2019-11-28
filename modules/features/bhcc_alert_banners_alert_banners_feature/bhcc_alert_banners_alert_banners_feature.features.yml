@@ -1,0 +1,8 @@
+bundle: bhcc_alert_banners
+excluded:
+  - block.block.views_block__alert_banner_block_1
+  - facets.facet_source.search_api__search_api_page__local_offers
+  - pathauto.pattern._node_field_service_entity_url_relative_update_node_title_
+  - webform.webform.send_us_a_message_about_rubbish_
+  - wsdata.wscall.tribepad_search_
+required: true

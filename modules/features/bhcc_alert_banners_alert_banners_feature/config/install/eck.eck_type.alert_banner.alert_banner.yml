@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - eck.eck_entity_type.alert_banner
+name: 'Alert Banner'
+type: alert_banner
+description: 'Add an alert banner which will appear at the top of the website.'

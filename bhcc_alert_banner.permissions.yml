@@ -1,0 +1,3 @@
+access alert_banner entity page:
+  title: 'Access Alert Banner entity page'
+  description: 'Allow access to the Alert Banners entity page for preview purposes'
