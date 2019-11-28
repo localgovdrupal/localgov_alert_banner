@@ -4,7 +4,7 @@
  * Access check for Alert Banner entity page
  */
 
-namespace Drupal\bhcc_alert_banners\Access;
+namespace Drupal\bhcc_alert_banner\Access;
 
 use Drupal\Core\Routing\Access\AccessInterface;
 use Drupal\Core\Session\AccountInterface;

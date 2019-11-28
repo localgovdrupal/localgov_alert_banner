@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Contains bhcc_alert_banners.module.
+ * Contains bhcc_alert_banner.module.
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
@@ -10,10 +10,10 @@ use Drupal\Core\Routing\RouteMatchInterface;
 /**
  * Implements hook_help().
  */
-function bhcc_alert_banners_help($route_name, RouteMatchInterface $route_match) {
+function bhcc_alert_banner_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
-    // Main module help for the bhcc_alert_banners module.
-    case 'help.page.bhcc_alert_banners':
+    // Main module help for the bhcc_alert_banner module.
+    case 'help.page.bhcc_alert_banner':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
       $output .= '<p>' . t('Alert Banners Support module') . '</p>';
@@ -26,18 +26,18 @@ function bhcc_alert_banners_help($route_name, RouteMatchInterface $route_match) 
 /**
  * Implements HOOK_module_implements_alter
  */
-function bhcc_alert_banners_module_implements_alter(&$implementations, $hook) {
+function bhcc_alert_banner_module_implements_alter(&$implementations, $hook) {
   if ($hook == 'form_alter') {
     // Move bhcc alert banners to last hook
-    unset($implementations['bhcc_alert_banners']);
-    $implementations['bhcc_alert_banners'] = null;
+    unset($implementations['bhcc_alert_banner']);
+    $implementations['bhcc_alert_banner'] = null;
   }
 }
 
 /**
  * Implements HOOK_entity_build_defaults_alter
  */
-function bhcc_alert_banners_entity_build_defaults_alter(array &$build, \Drupal\Core\Entity\EntityInterface $entity, $view_mode) {
+function bhcc_alert_banner_entity_build_defaults_alter(array &$build, \Drupal\Core\Entity\EntityInterface $entity, $view_mode) {
 
   // ECK entities don't implement getType()
   if ($entity->bundle() == 'alert_banner') {
@@ -51,7 +51,7 @@ function bhcc_alert_banners_entity_build_defaults_alter(array &$build, \Drupal\C
     $build['#cache']['contexts'][] = 'url.path:is_front';
 
     // Get token and use as a cache tag
-    $token = \Drupal::service('bhcc_alert_banners.state')->getToken();
+    $token = \Drupal::service('bhcc_alert_banner.state')->getToken();
     $build['#cache']['tags'][] = 'bhcc.alert.banner.token:'.$token;
 
     // We need to switch off (static) page cache here for individual anon users.
@@ -64,12 +64,12 @@ function bhcc_alert_banners_entity_build_defaults_alter(array &$build, \Drupal\C
 /**
  * Implements HOOK_preprocess_eck_entity
  */
-function bhcc_alert_banners_preprocess_eck_entity(&$variables) {
+function bhcc_alert_banner_preprocess_eck_entity(&$variables) {
 
   if ($variables['entity_type'] == 'alert_banner') {
 
     // Get token
-    $token = \Drupal::service('bhcc_alert_banners.state')->getToken();
+    $token = \Drupal::service('bhcc_alert_banner.state')->getToken();
 
     // Get cookie
     $cookie = \Drupal::request()->cookies->get('hide-alert-banner-token');
@@ -88,21 +88,21 @@ function bhcc_alert_banners_preprocess_eck_entity(&$variables) {
 /**
  * Implements HOOK_alert_banner_create
  */
-function bhcc_alert_banners_alert_banner_create(Drupal\Core\Entity\EntityInterface $entity) {
-  _bhcc_alert_banners_alert_banner_save($entity);
+function bhcc_alert_banner_alert_banner_create(Drupal\Core\Entity\EntityInterface $entity) {
+  _bhcc_alert_banner_alert_banner_save($entity);
 }
 
 /**
  * Implements HOOK_alert_banner_update
  */
-function bhcc_alert_banners_alert_banner_update(Drupal\Core\Entity\EntityInterface $entity) {
-  _bhcc_alert_banners_alert_banner_save($entity);
+function bhcc_alert_banner_alert_banner_update(Drupal\Core\Entity\EntityInterface $entity) {
+  _bhcc_alert_banner_alert_banner_save($entity);
 }
 
 /**
  * Common function when aler banner entity saved
  */
-function _bhcc_alert_banners_alert_banner_save(Drupal\Core\Entity\EntityInterface $entity) {
+function _bhcc_alert_banner_alert_banner_save(Drupal\Core\Entity\EntityInterface $entity) {
 
   // Check if the entity is flagged as live
   $flag = \Drupal::service('flag')->getFlagById('put_live');
@@ -112,7 +112,7 @@ function _bhcc_alert_banners_alert_banner_save(Drupal\Core\Entity\EntityInterfac
     if (!empty($flaggings)) {
 
       // Regenerate a JS token for the updated alert banner
-      \Drupal::service('bhcc_alert_banners.state')->generateToken($entity)->save();
+      \Drupal::service('bhcc_alert_banner.state')->generateToken($entity)->save();
     }
   }
 
@@ -123,7 +123,7 @@ function _bhcc_alert_banners_alert_banner_save(Drupal\Core\Entity\EntityInterfac
 /**
  * Implements HOOK_form_alter
  */
-function bhcc_alert_banners_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+function bhcc_alert_banner_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
 
   // Edit the alert banner entity form on the creation or edit mode
   if ($form_id == 'alert_banner_alert_banner_form' || $form_id == 'alert_banner_alert_banner_edit_form') {
@@ -185,7 +185,7 @@ function bhcc_alert_banners_form_alter(&$form, \Drupal\Core\Form\FormStateInterf
 /**
  * Implements hook_theme().
  */
-function bhcc_alert_banners_theme() {
+function bhcc_alert_banner_theme() {
   return [
     // Bundle our template with the module (which can be overridden in theme)
     'eck_entity__alert_banner' => [

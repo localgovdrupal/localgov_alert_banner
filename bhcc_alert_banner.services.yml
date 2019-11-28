@@ -1,17 +1,17 @@
 services:
-  bhcc_alert_banners.flag_subscriber:
-    class: Drupal\bhcc_alert_banners\EventSubscriber\AlertBannerFlagLive
+  bhcc_alert_banner.flag_subscriber:
+    class: Drupal\bhcc_alert_banner\EventSubscriber\AlertBannerFlagLive
     tags:
       - { name: event_subscriber }
-  bhcc_alert_banners.state:
-    class: Drupal\bhcc_alert_banners\AlertBannerState
+  bhcc_alert_banner.state:
+    class: Drupal\bhcc_alert_banner\AlertBannerState
     arguments: ['@state']
-  bhcc_alert_banners.route_subscriber:
-    class: Drupal\bhcc_alert_banners\Routing\AlertBannerRouteSubscriber
+  bhcc_alert_banner.route_subscriber:
+    class: Drupal\bhcc_alert_banner\Routing\AlertBannerRouteSubscriber
     tags:
       - { name: event_subscriber }
-  bhcc_alert_banners.alert_banner_entity_page_access:
-    class: Drupal\bhcc_alert_banners\Access\AlertBannerEntityPageAccess
+  bhcc_alert_banner.alert_banner_entity_page_access:
+    class: Drupal\bhcc_alert_banner\Access\AlertBannerEntityPageAccess
     arguments: ['@current_user']
     tags:
       - { name: access_check }

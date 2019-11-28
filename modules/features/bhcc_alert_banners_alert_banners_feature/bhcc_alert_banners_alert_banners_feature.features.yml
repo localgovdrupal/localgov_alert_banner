@@ -1,4 +1,4 @@
-bundle: bhcc_alert_banners
+bundle: bhcc_alert_banner
 excluded:
   - block.block.views_block__alert_banner_block_1
   - facets.facet_source.search_api__search_api_page__local_offers

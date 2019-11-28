@@ -4,7 +4,7 @@
  * Route subscriber for alert banners
  */
 
-namespace Drupal\bhcc_alert_banners\Routing;
+namespace Drupal\bhcc_alert_banner\Routing;
 
 use Drupal\Core\Routing\RouteSubscriberBase;
 use Symfony\Component\Routing\RouteCollection;
@@ -21,7 +21,7 @@ class AlertBannerRouteSubscriber extends RouteSubscriberBase {
 
     if ($route = $collection->get('entity.alert_banner.canonical')) {
       // Change the access permission for the alert banner access page
-      $route->setRequirement('_custom_access', 'bhcc_alert_banners.alert_banner_entity_page_access::access');
+      $route->setRequirement('_custom_access', 'bhcc_alert_banner.alert_banner_entity_page_access::access');
     }
 
   }

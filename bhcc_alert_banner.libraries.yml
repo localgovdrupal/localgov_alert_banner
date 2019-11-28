@@ -1,7 +1,7 @@
 alert_banner:
   version: VERSION
   js:
-    js/alert_banners.js: {}
+    js/alert_banner.js: {}
   dependencies:
     - core/jquery
     - core/cookie

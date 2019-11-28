@@ -1,8 +1,8 @@
 
-bhcc_alert_banners.alert_banner_controller_edit:
+bhcc_alert_banner.alert_banner_controller_edit:
   path: '/admin/content/alert'
   defaults:
-    _controller: '\Drupal\bhcc_alert_banners\Controller\AlertBannerController::edit'
+    _controller: '\Drupal\bhcc_alert_banner\Controller\AlertBannerController::edit'
     _title: 'Edit Alert Banner'
   requirements:
     _permission: 'edit any alert_banner entities'
