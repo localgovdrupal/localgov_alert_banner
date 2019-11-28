@@ -4,14 +4,14 @@ dependencies:
   module:
     - eck
 id: put_live
-label: 'Put Alert Banner Live'
+label: 'Put alert banner live'
 bundles: {  }
 entity_type: alert_banner
 global: true
 weight: 0
 flag_short: 'Put live'
 flag_long: 'This will place this alert banner across the top of the website, removing any existing banners.'
-flag_message: 'Alert Banner is now Live.'
+flag_message: 'Alert banner is now live.'
 unflag_short: 'Remove banner'
 unflag_long: 'This will remove the alert banner from the website.'
 unflag_message: 'The alert banner has been removed.'
@@ -28,8 +28,8 @@ flagTypeConfig:
 linkTypeConfig:
   flag_confirmation: 'Place the alert banner live'
   unflag_confirmation: 'Remove the alert banner'
-  flag_create_button: 'Put Live'
-  flag_delete_button: 'Remove Alert Banner'
+  flag_create_button: 'Put live'
+  flag_delete_button: 'Remove alert banner'
   form_behavior: modal
   edit_flagging: 'Edit alter details'
   flag_update_button: Cancel

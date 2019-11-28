@@ -9,7 +9,7 @@ field_name: field_alert_short_description
 entity_type: alert_banner
 bundle: alert_banner
 label: 'Short description'
-description: 'No more than two sentences.'
+description: 'No more than 50 or so characters'
 required: false
 translatable: false
 default_value: {  }

@@ -3,6 +3,7 @@ description: 'Contains the ECK and Flag entity configuration, plus a view to dis
 type: module
 core: 8.x
 dependencies:
+  - bhcc_alert_banner
   - block
   - eck
   - field
@@ -12,7 +13,6 @@ dependencies:
   - options
   - user
   - views
-  - bhcc_alert_banner
 version: 8.x-1.x-dev
 package: 'BHCC Alert Banner'
 core_incompatible: false
