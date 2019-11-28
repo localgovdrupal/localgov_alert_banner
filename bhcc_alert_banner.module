@@ -16,7 +16,7 @@ function bhcc_alert_banner_help($route_name, RouteMatchInterface $route_match) {
     case 'help.page.bhcc_alert_banner':
       $output = '';
       $output .= '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('Alert Banners Support module') . '</p>';
+      $output .= '<p>' . t('Alert Banner Support module') . '</p>';
       return $output;
 
     default:
@@ -28,7 +28,7 @@ function bhcc_alert_banner_help($route_name, RouteMatchInterface $route_match) {
  */
 function bhcc_alert_banner_module_implements_alter(&$implementations, $hook) {
   if ($hook == 'form_alter') {
-    // Move bhcc alert banners to last hook
+    // Move bhcc alert banner to last hook
     unset($implementations['bhcc_alert_banner']);
     $implementations['bhcc_alert_banner'] = null;
   }

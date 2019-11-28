@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Route subscriber for alert banners
+ * Route subscriber for alert banner
  */
 
 namespace Drupal\bhcc_alert_banner\Routing;

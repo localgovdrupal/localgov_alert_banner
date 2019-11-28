@@ -10,7 +10,7 @@ dependencies:
 id: alert_banner
 label: 'Alert Banner'
 module: views
-description: 'Alert Banners displayed at the top of the site.'
+description: 'Alert Banner displayed at the top of the site.'
 tag: ''
 base_table: alert_banner_field_data
 base_field: id

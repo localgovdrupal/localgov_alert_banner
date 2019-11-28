@@ -68,7 +68,7 @@ class AlertBannerFlagLive implements EventSubscriberInterface {
 
     $existingFlags = \Drupal::entityTypeManager()->getStorage('flagging')->loadMultiple($existingFlagIds);
 
-    // Unflag prvious alert banners
+    // Unflag prvious alert banner
     // Ideally, this should only be a previously flagged alert banner
     foreach($existingFlags as $existingFlagEntity) {
       $existingFlaggedBanner = $existingFlagEntity->getFlaggable();
