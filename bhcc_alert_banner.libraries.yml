@@ -4,4 +4,4 @@ alert_banner:
     js/alert_banner.js: {}
   dependencies:
     - core/jquery
-    - core/cookie
+    - core/jquery.cookie
