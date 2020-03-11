@@ -31,7 +31,8 @@
   'alert-banner',
   'alert-banner--' ~ alert_type|clean_class,
   is_front ? 'alert-banner--homepage' : '',
-  'js-alert-banner'
+  'js-alert-banner',
+  has_link ? 'alert-banner--has-link' : 'alert-banner--no-link'
 ] %}
 
 <!-- Alert Banner-->
