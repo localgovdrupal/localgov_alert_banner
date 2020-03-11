@@ -82,6 +82,13 @@ function bhcc_alert_banner_preprocess_eck_entity(&$variables) {
 
     // Ensure token is accessible by javascript.
     $variables['#attached']['drupalSettings']['bhcc_alert_banner']['token'] = $token;
+
+    // Add the remove hide link flag status
+    $flagService = \Drupal::service('flag');
+    $flag = $flagService->getFlagById('remove_hide_link');
+    $flagging = $flagService->getFlagging($flag, $variables['eck_entity']);
+
+    $variables['remove_hide_link'] = (!empty($flagging) ? TRUE : FALSE);
   }
 }
 

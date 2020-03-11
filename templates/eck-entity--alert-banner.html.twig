@@ -24,6 +24,9 @@
 {%
   set alert_type = eck_entity.get('field_alert_type_of_alert').value
 %}
+{%
+  set has_link = eck_entity.get('field_alert_link') is not empty
+%}
 {% set classes = [
   'alert-banner',
   'alert-banner--' ~ alert_type|clean_class,
@@ -44,12 +47,14 @@
         {% endif %}
       </div>
       <div class="alert-banner--actions paragraph">
-        {% if content.field_alert_link %}
+        {% if has_link %}
           <div class="alert-banner--content-link">{{ content.field_alert_link }}</div>
         {% endif %}
-        <div class="alert-banner--dismiss">
-          <a href="#" class="js-alert-banner-close">Hide <span class="sr-only">Notifications</span></a>
-        </div>
+        {% if not remove_hide_link %}
+          <div class="alert-banner--dismiss">
+            <a href="#" class="js-alert-banner-close">Hide <span class="sr-only">Notifications</span></a>
+          </div>
+        {% endif %}
       </div>
     </div>
   </div>
