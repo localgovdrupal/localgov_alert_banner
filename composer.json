@@ -1,0 +1,12 @@
+{
+    "name": "localgovdrupal/localgov_alert_banner",
+    "type": "drupal-module",
+    "description": "LocalGovDrupal distribution: Alert banner.",
+    "homepage": "https://github.com/localgovdrupal/localgov_alert_banner",
+    "minimum-stability": "dev",
+    "require": {
+        "drupal/field_group": "~3.1",
+        "drupal/eck": "^1.0@beta",
+        "drupal/flag": "^4.0@beta"
+    }
+}

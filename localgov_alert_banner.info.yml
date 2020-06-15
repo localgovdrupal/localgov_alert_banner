@@ -1,15 +1,15 @@
-name: 'localgov Alert Banner'
+name: 'LocalGovDrupal Alert banner'
 type: module
-description: 'Alert Banner Support module'
-core: 8.x
-package: 'localgov Alert Banner'
+description: 'LocalGovDrupal Alert banner module'
+core_version_requirement: ^8.8 || ^9
+package: LocalGovDrupal
 dependencies:
-  - eck
-  - flag
-  - block
-  - field
-  - field_group
-  - link
-  - options
-  - user
-  - views
+  - drupal:eck
+  - drupal:flag
+  - drupal:block
+  - drupal:field
+  - drupal:field_group
+  - drupal:link
+  - drupal:options
+  - drupal:user
+  - drupal:views
