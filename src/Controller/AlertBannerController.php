@@ -30,7 +30,7 @@ class AlertBannerController extends ControllerBase {
       $alertBanner = EckEntity::load($defaultAlertBannerId);
     } else {
       // If not, show the add new banner form
-      $alertBanner = EckEntity::create(['type' => 'alert_banner']);
+      $alertBanner = $this->entityTypeManager()->getStorage('alert_banner')->create(['type' => 'alert_banner']);
     }
 
     // Return the edit form.

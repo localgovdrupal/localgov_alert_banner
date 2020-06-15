@@ -1,6 +1,8 @@
 langcode: en
 status: true
 dependencies:
+  module:
+    - eck
   config:
     - eck.eck_entity_type.alert_banner
 name: 'Alert Banner'
