@@ -1,9 +1,9 @@
-name: 'BHCC Alert Banner Feature'
+name: 'localgov Alert Banner Feature'
 description: 'Contains the ECK and Flag entity configuration, plus a view to display and manage the alert banner.'
 type: module
 core: 8.x
 dependencies:
-  - bhcc_alert_banner
+  - localgov_alert_banner
   - block
   - eck
   - field
@@ -14,5 +14,5 @@ dependencies:
   - user
   - views
 version: 8.x-1.x-dev
-package: 'BHCC Alert Banner'
+package: 'localgov Alert Banner'
 core_incompatible: false

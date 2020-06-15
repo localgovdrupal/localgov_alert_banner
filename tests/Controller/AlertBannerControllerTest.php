@@ -1,11 +1,11 @@
 <?php
 
-namespace Drupal\bhcc_alert_banner\Tests;
+namespace Drupal\localgov_alert_banner\Tests;
 
 use Drupal\simpletest\WebTestBase;
 
 /**
- * Provides automated tests for the bhcc_alert_banner module.
+ * Provides automated tests for the localgov_alert_banner module.
  */
 class AlertBannerControllerTest extends WebTestBase {
 
@@ -15,8 +15,8 @@ class AlertBannerControllerTest extends WebTestBase {
    */
   public static function getInfo() {
     return [
-      'name' => "bhcc_alert_banner AlertBannerController's controller functionality",
-      'description' => 'Test Unit for module bhcc_alert_banner and controller AlertBannerController.',
+      'name' => "localgov_alert_banner AlertBannerController's controller functionality",
+      'description' => 'Test Unit for module localgov_alert_banner and controller AlertBannerController.',
       'group' => 'Other',
     ];
   }
@@ -29,10 +29,10 @@ class AlertBannerControllerTest extends WebTestBase {
   }
 
   /**
-   * Tests bhcc_alert_banner functionality.
+   * Tests localgov_alert_banner functionality.
    */
   public function testAlertBannerController() {
-    // Check that the basic functions of module bhcc_alert_banner.
+    // Check that the basic functions of module localgov_alert_banner.
     $this->assertEquals(TRUE, TRUE, 'Test Unit Generated via Drupal Console.');
   }
 

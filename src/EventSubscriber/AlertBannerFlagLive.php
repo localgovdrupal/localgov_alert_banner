@@ -2,12 +2,12 @@
 
 /**
 * @file
-* Contains \Drupal\bhcc_alert_banner\EventSubscriber\AlertBannerFlagLive.
+* Contains \Drupal\localgov_alert_banner\EventSubscriber\AlertBannerFlagLive.
 * @src
 * https://dev.studiopresent.com/blog/back-end/perform-actions-flag-unflag-drupal-8
 */
 
-namespace Drupal\bhcc_alert_banner\EventSubscriber;
+namespace Drupal\localgov_alert_banner\EventSubscriber;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\flag\Event\FlagEvents;
@@ -37,7 +37,7 @@ class AlertBannerFlagLive implements EventSubscriberInterface {
       $this->unflagExistingFlags($flag, $existingFlagIds);
 
       // Regenerate JS token
-      \Drupal::service('bhcc_alert_banner.state')->generateToken($flagging->getFlaggable())->save();
+      \Drupal::service('localgov_alert_banner.state')->generateToken($flagging->getFlaggable())->save();
 
     }
   }

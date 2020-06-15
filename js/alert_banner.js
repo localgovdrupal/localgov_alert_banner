@@ -15,7 +15,7 @@
 
   $(document).ready(function() {
 
-    var token = drupalSettings.bhcc_alert_banner.token;
+    var token = drupalSettings.localgov_alert_banner.token;
     var cookie = $.cookie('hide-alert-banner-token');
 
     $('.js-alert-banner').removeClass('hidden');

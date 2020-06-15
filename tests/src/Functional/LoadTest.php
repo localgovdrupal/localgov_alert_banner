@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\bhcc_alert_banner\Functional;
+namespace Drupal\Tests\localgov_alert_banner\Functional;
 
 use Drupal\Core\Url;
 use Drupal\Tests\BrowserTestBase;
@@ -8,7 +8,7 @@ use Drupal\Tests\BrowserTestBase;
 /**
  * Simple test to ensure that main page loads with module enabled.
  *
- * @group bhcc_alert_banner
+ * @group localgov_alert_banner
  */
 class LoadTest extends BrowserTestBase {
 
@@ -17,7 +17,7 @@ class LoadTest extends BrowserTestBase {
    *
    * @var array
    */
-  public static $modules = ['bhcc_alert_banner'];
+  public static $modules = ['localgov_alert_banner'];
 
   /**
    * A user with permission to administer site configuration.

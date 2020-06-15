@@ -1,5 +1,0 @@
-bhcc_alert_banner.edit_default_alert_banner:
-  title: 'Alert banner'
-  parent: system.admin_content
-  route_name: bhcc_alert_banner.alert_banner_controller_edit
-  weight: 99

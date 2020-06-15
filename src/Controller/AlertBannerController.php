@@ -5,7 +5,7 @@
  *  Defines a default controller for editing the Alert Banner
  */
 
-namespace Drupal\bhcc_alert_banner\Controller;
+namespace Drupal\localgov_alert_banner\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\eck\Entity\EckEntity;

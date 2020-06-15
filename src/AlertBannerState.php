@@ -2,21 +2,21 @@
 
 /**
 * @file
-* Contains \Drupal\bhcc_alert_banner\AlertBannerState.
+* Contains \Drupal\localgov_alert_banner\AlertBannerState.
 *
 * Common service for generating and setting a token for unique emergency banner.
 * @note not entity ID as same entity should get a new token when put
 *       live or message refreshed.
 */
 
-namespace Drupal\bhcc_alert_banner;
+namespace Drupal\localgov_alert_banner;
 
 use Drupal\Core\State\State;
 
 /**
  * Class AlertBannerState
  *
- * @package Drupal\bhcc_alert_banner
+ * @package Drupal\localgov_alert_banner
  */
 class AlertBannerState {
 
@@ -36,7 +36,7 @@ class AlertBannerState {
    */
   public function __construct(State $state) {
     $this->state = $state;
-    $this->token = $state->get('bhcc_alert_banner.alert_banner_token');
+    $this->token = $state->get('localgov_alert_banner.alert_banner_token');
   }
 
   /**
@@ -62,7 +62,7 @@ class AlertBannerState {
    * @return mixed
    */
   public function save() {
-    return $this->state->set('bhcc_alert_banner.alert_banner_token', $this->token);
+    return $this->state->set('localgov_alert_banner.alert_banner_token', $this->token);
   }
 
 }
