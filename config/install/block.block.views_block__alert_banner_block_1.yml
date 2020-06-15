@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.alert_banner
+  module:
+    - views
+  theme:
+    - localgov_theme
+id: views_block__alert_banner_block_1
+theme: localgov_theme
+region: banner
+weight: 0
+provider: null
+plugin: 'views_block:alert_banner-block_1'
+settings:
+  id: 'views_block:alert_banner-block_1'
+  label: ''
+  provider: views
+  label_display: '0'
+  views_label: ''
+  items_per_page: none
+visibility: {  }
