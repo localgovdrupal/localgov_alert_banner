@@ -6,3 +6,10 @@ package: 'localgov Alert Banner'
 dependencies:
   - eck
   - flag
+  - block
+  - field
+  - field_group
+  - link
+  - options
+  - user
+  - views
