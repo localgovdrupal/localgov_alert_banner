@@ -1,0 +1,28 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - eck
+id: remove_hide_link
+label: 'Remove hide link'
+bundles: {  }
+entity_type: alert_banner
+global: true
+weight: 0
+flag_short: 'Remove the hide link'
+flag_long: 'This will remove the hide link that appears on alert banners'
+flag_message: ''
+unflag_short: 'Show the hide link'
+unflag_long: ''
+unflag_message: ''
+unflag_denied_text: ''
+flag_type: 'entity:alert_banner'
+link_type: reload
+flagTypeConfig:
+  show_in_links: {  }
+  show_as_field: true
+  show_on_form: true
+  show_contextual_link: false
+  extra_permissions:
+    owner: '0'
+linkTypeConfig: {  }
