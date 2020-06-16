@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - flag.flag.remove_hide_link
+  module:
+    - flag
+id: flag_action.remove_hide_link_flag
+label: 'Remove the hide link'
+type: alert_banner
+plugin: 'flag_action:remove_hide_link_flag'
+configuration:
+  flag_id: remove_hide_link
+  flag_action: flag

@@ -1,0 +1,12 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - flag
+id: flag_action.put_live_flag
+label: 'Put alert banner live'
+type: alert_banner
+plugin: 'flag_action:put_live_flag'
+configuration:
+  flag_id: put_live
+  flag_action: flag
