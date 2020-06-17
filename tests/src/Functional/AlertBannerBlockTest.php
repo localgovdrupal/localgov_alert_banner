@@ -52,8 +52,9 @@ class AlertBannerBlockTest extends BrowserTestBase {
     $alert->save();
 
     // Flag the alert banner to put it live.
-    $flag = \Drupal::service('flag')->getFlagById('put_live');
-    \Drupal::service('flag')->flag($flag, $alert);
+    $flag_service = $this->container->get('flag');
+    $flag = $flag_service->getFlagById('put_live');
+    $flag_service->flag($flag, $alert);
 
     // Load the front page and check the banner is displayed.
     $this->drupalGet('<front>');
