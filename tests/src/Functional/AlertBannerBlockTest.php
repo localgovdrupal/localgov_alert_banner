@@ -23,7 +23,6 @@ class AlertBannerBlockTest extends BrowserTestBase {
    * {@inheritdoc}
    */
   public static $modules = [
-    'flag',
     'localgov_alert_banner',
   ];
 
