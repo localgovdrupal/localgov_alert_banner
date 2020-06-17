@@ -31,5 +31,4 @@ linkTypeConfig:
   flag_create_button: 'Put live'
   flag_delete_button: 'Remove alert banner'
   form_behavior: modal
-  edit_flagging: 'Edit alter details'
   flag_update_button: Cancel
