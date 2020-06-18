@@ -867,8 +867,7 @@ display:
     display_title: Page
     position: 1
     display_options:
-      display_extenders:
-        metatag_display_extender: {  }
+      display_extenders: {  }
       path: admin/content/alert-banners
       menu:
         type: normal
