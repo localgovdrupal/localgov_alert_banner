@@ -147,13 +147,16 @@ function localgov_alert_banner_form_alter(&$form, \Drupal\Core\Form\FormStateInt
       ],
     ];
 
-    // Add elbow room libary
-    $form['#attached']['library'][] = 'elbow_room/base';
-    $elbowRoomConfig = Drupal::configFactory()->get('elbow_room.settings');
-    $form['#attached']['drupalSettings']['elbow_room']['default'] = $elbowRoomConfig->get('default');
+    // Support Elbow room module if it's installed.
+    $module_handler = \Drupal::service('module_handler');
+    if ($module_handler->moduleExists('elbow_room')) {
+      $form['#attached']['library'][] = 'elbow_room/base';
+      $elbowRoomConfig = Drupal::configFactory()->get('elbow_room.settings');
+      $form['#attached']['drupalSettings']['elbow_room']['default'] = $elbowRoomConfig->get('default');
 
-    // Add node form classes for elbow room to function
-    $form['#attributes']['class'][] = 'node-form';
+      // Add node form classes for elbow room to function
+      $form['#attributes']['class'][] = 'node-form';
+    }
 
     // Set authoring information into sidebar
     $form['author'] = [
