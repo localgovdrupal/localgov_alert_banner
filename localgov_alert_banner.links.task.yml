@@ -1,0 +1,26 @@
+# Alert banner routing definition
+localgov_alert_banner.settings_tab:
+  route_name: localgov_alert_banner.settings
+  title: 'Settings'
+  base_route: localgov_alert_banner.settings
+
+entity.localgov_alert_banner.canonical:
+  route_name: entity.localgov_alert_banner.canonical
+  base_route: entity.localgov_alert_banner.canonical
+  title: 'View'
+
+entity.localgov_alert_banner.edit_form:
+  route_name: entity.localgov_alert_banner.edit_form
+  base_route: entity.localgov_alert_banner.canonical
+  title: 'Edit'
+
+entity.localgov_alert_banner.version_history:
+  route_name: entity.localgov_alert_banner.version_history
+  base_route: entity.localgov_alert_banner.canonical
+  title: 'Revisions'
+
+entity.localgov_alert_banner.delete_form:
+  route_name:  entity.localgov_alert_banner.delete_form
+  base_route:  entity.localgov_alert_banner.canonical
+  title: Delete
+  weight: 10

@@ -3,3 +3,11 @@ localgov_alert_banner.edit_default_alert_banner:
   parent: system.admin_content
   route_name: localgov_alert_banner.alert_banner_controller_edit
   weight: 99
+
+# Alert banner menu items definition
+entity.localgov_alert_banner.collection:
+  title: 'Alert banners'
+  route_name: entity.localgov_alert_banner.collection
+  description: 'Alert banners'
+  parent: system.admin_content
+  weight: 100

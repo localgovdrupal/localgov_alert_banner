@@ -1,0 +1,22 @@
+{#
+/**
+ * @file localgov_alert_banner.html.twig
+ * Default theme implementation to present Alert banner data.
+ *
+ * This template is used when viewing Alert banner pages.
+ *
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ * - attributes: HTML attributes for the container element.
+ *
+ * @see template_preprocess_localgov_alert_banner()
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass('localgov_alert_banner') }}>
+  {% if content %}
+    {{- content -}}
+  {% endif %}
+</div>

@@ -1,0 +1,5 @@
+entity.localgov_alert_banner.add_form:
+  route_name: entity.localgov_alert_banner.add_form
+  title: 'Add Alert banner'
+  appears_on:
+    - entity.localgov_alert_banner.collection
