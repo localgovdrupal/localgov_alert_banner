@@ -5,3 +5,11 @@ entity.localgov_alert_banner.collection:
   description: 'Alert banners'
   parent: system.admin_content
   weight: 100
+
+# Alert banner types
+entity.localgov_alert_banner_type.collection:
+  title: 'Alert banner types'
+  route_name: entity.localgov_alert_banner_type.collection
+  description: 'List Alert banner types (bundles)'
+  parent: system.admin_structure
+  weight: 99

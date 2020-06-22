@@ -1,0 +1,12 @@
+localgov_alert_banner.localgov_alert_banner_type.*:
+  type: config_entity
+  label: 'Alert banner type config'
+  mapping:
+    id:
+      type: string
+      label: 'ID'
+    label:
+      type: label
+      label: 'Label'
+    uuid:
+      type: string

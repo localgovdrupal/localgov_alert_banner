@@ -19,6 +19,7 @@ use Drupal\user\UserInterface;
  * @ContentEntityType(
  *   id = "localgov_alert_banner",
  *   label = @Translation("Alert banner"),
+ *   bundle_label = @Translation("Alert banner type"),
  *   handlers = {
  *     "storage" = "Drupal\localgov_alert_banner\AlertBannerStorage",
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
@@ -46,6 +47,7 @@ use Drupal\user\UserInterface;
  *   entity_keys = {
  *     "id" = "id",
  *     "revision" = "vid",
+ *     "bundle" = "type",
  *     "label" = "title",
  *     "uuid" = "uuid",
  *     "uid" = "user_id",
@@ -54,7 +56,8 @@ use Drupal\user\UserInterface;
  *   },
  *   links = {
  *     "canonical" = "/admin/content/localgov_alert_banner/{localgov_alert_banner}",
- *     "add-form" = "/admin/content/localgov_alert_banner/add",
+ *     "add-page" = "/admin/content/localgov_alert_banner/add",
+ *     "add-form" = "/admin/content/localgov_alert_banner/add/{localgov_alert_banner_type}",
  *     "edit-form" = "/admin/content/localgov_alert_banner/{localgov_alert_banner}/edit",
  *     "delete-form" = "/admin/content/localgov_alert_banner/{localgov_alert_banner}/delete",
  *     "version-history" = "/admin/content/localgov_alert_banner/{localgov_alert_banner}/revisions",
@@ -64,7 +67,7 @@ use Drupal\user\UserInterface;
  *     "translation_revert" = "/admin/content/localgov_alert_banner/{localgov_alert_banner}/revisions/{localgov_alert_banner_revision}/revert/{langcode}",
  *     "collection" = "/admin/content/localgov_alert_banner",
  *   },
- *   field_ui_base_route = "localgov_alert_banner.settings"
+ *   bundle_entity_type = "localgov_alert_banner_type",
  * )
  */
 class AlertBanner extends EditorialContentEntityBase implements AlertBannerInterface {
@@ -139,7 +142,9 @@ class AlertBanner extends EditorialContentEntityBase implements AlertBannerInter
    * {@inheritdoc}
    */
   public function getType() {
-    return $this->get('type')->value;
+    $storage = $this->entityTypeManager()->getStorage('localgov_alert_banner_type');
+    $alert_banner_type = $storage->load($this->get('type')->target_id);
+    return $alert_banner_type->label();
   }
 
   /**
@@ -220,7 +225,7 @@ class AlertBanner extends EditorialContentEntityBase implements AlertBannerInter
       ->setDisplayConfigurable('view', TRUE);
 
     // Banner type
-    $fields['type'] = BaseFieldDefinition::create('list_string')
+    $fields['alert_type'] = BaseFieldDefinition::create('list_string')
       ->setLabel(t('Type of alert'))
       ->setRevisionable(TRUE)
       ->setDefaultValue('')
