@@ -46,6 +46,7 @@ use Drupal\user\UserInterface;
  *   entity_keys = {
  *     "id" = "id",
  *     "revision" = "vid",
+ *     "bundle" = "type",
  *     "label" = "title",
  *     "uuid" = "uuid",
  *     "uid" = "user_id",
@@ -54,7 +55,8 @@ use Drupal\user\UserInterface;
  *   },
  *   links = {
  *     "canonical" = "/admin/content/localgov_alert_banner/{localgov_alert_banner}",
- *     "add-form" = "/admin/content/localgov_alert_banner/add",
+ *     "add-page" = "/admin/content/localgov_alert_banner/add",
+ *     "add-form" = "/admin/content/localgov_alert_banner/add/{localgov_alert_banner_type}",
  *     "edit-form" = "/admin/content/localgov_alert_banner/{localgov_alert_banner}/edit",
  *     "delete-form" = "/admin/content/localgov_alert_banner/{localgov_alert_banner}/delete",
  *     "version-history" = "/admin/content/localgov_alert_banner/{localgov_alert_banner}/revisions",
@@ -64,7 +66,7 @@ use Drupal\user\UserInterface;
  *     "translation_revert" = "/admin/content/localgov_alert_banner/{localgov_alert_banner}/revisions/{localgov_alert_banner_revision}/revert/{langcode}",
  *     "collection" = "/admin/content/localgov_alert_banner",
  *   },
- *   field_ui_base_route = "localgov_alert_banner.settings"
+ *   bundle_entity_type = "localgov_alert_banner_type",
  * )
  */
 class AlertBanner extends EditorialContentEntityBase implements AlertBannerInterface {
@@ -220,7 +222,7 @@ class AlertBanner extends EditorialContentEntityBase implements AlertBannerInter
       ->setDisplayConfigurable('view', TRUE);
 
     // Banner type
-    $fields['type'] = BaseFieldDefinition::create('list_string')
+    $fields['alert_type'] = BaseFieldDefinition::create('list_string')
       ->setLabel(t('Type of alert'))
       ->setRevisionable(TRUE)
       ->setDefaultValue('')
