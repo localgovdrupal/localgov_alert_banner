@@ -1,6 +1,7 @@
 access alert_banner entity page:
   title: 'Access Alert Banner page'
   description: 'Allow access to the Alert Banner page for preview purposes'
+
 add alert banner entities:
   title: 'Create new Alert banner'
 
@@ -14,12 +15,6 @@ delete alert banner entities:
 
 edit alert banner entities:
   title: 'Edit Alert banners'
-
-view published alert banner entities:
-  title: 'View published Alert banners'
-
-view unpublished alert banner entities:
-  title: 'View unpublished Alert banners'
 
 view all alert banner revisions:
   title: 'View all Alert banner revisions'
