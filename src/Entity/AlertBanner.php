@@ -19,6 +19,7 @@ use Drupal\user\UserInterface;
  * @ContentEntityType(
  *   id = "localgov_alert_banner",
  *   label = @Translation("Alert banner"),
+ *   bundle_label = @Translation("Alert banner type"),
  *   handlers = {
  *     "storage" = "Drupal\localgov_alert_banner\AlertBannerStorage",
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
@@ -141,7 +142,9 @@ class AlertBanner extends EditorialContentEntityBase implements AlertBannerInter
    * {@inheritdoc}
    */
   public function getType() {
-    return $this->get('type')->value;
+    $storage = $this->entityTypeManager()->getStorage('localgov_alert_banner_type');
+    $alert_banner_type = $storage->load($this->get('type')->target_id);
+    return $alert_banner_type->label();
   }
 
   /**
