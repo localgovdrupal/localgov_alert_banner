@@ -18,44 +18,6 @@ use Drupal\eck\Entity\EckEntity;
 class AlertBannerController extends ControllerBase implements ContainerInjectionInterface {
 
   /**
-   * Edit
-   *
-   * Edit the default alert banner
-   */
-  public function edit() {
-
-    // Find if there is an existing alert banner.
-    $defaultAlertBannerId = $this->getDefaultAlertBanner();
-
-    if (!empty($defaultAlertBannerId)) {
-      // If there is, show the edit for for that.
-      $alertBanner = EckEntity::load($defaultAlertBannerId);
-    } else {
-      // If not, show the add new banner form
-      $alertBanner = $this->entityTypeManager()->getStorage('alert_banner')->create(['type' => 'alert_banner']);
-    }
-
-    // Return the edit form.
-    return \Drupal::service('entity.form_builder')->getForm($alertBanner);
-
-  }
-
-  /**
-   * Get the deafult alert banner
-   * @return int The first alert banner found, or null if not.
-   */
-  private function getDefaultAlertBanner() {
-
-    $query = $this->entityTypeManager()
-      ->getStorage('alert_banner')
-      ->getQuery()
-      ->execute();
-
-    $defaultAlertBannerId = reset($query);
-    return $defaultAlertBannerId;
-  }
-
-  /**
    * The date formatter.
    *
    * @var \Drupal\Core\Datetime\DateFormatter
