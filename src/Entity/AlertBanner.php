@@ -200,8 +200,8 @@ class AlertBanner extends EditorialContentEntityBase implements AlertBannerInter
 
     // Author.
     $fields['user_id'] = BaseFieldDefinition::create('entity_reference')
-      ->setLabel(t('Authored by'))
-      ->setDescription(t('The username of the author. '))
+      ->setLabel($this->t('Authored by'))
+      ->setDescription($this->t('The username of the author.'))
       ->setRevisionable(TRUE)
       ->setSetting('target_type', 'user')
       ->setSetting('handler', 'default')
@@ -226,7 +226,7 @@ class AlertBanner extends EditorialContentEntityBase implements AlertBannerInter
 
     // Banner type.
     $fields['alert_type'] = BaseFieldDefinition::create('list_string')
-      ->setLabel(t('Type of alert'))
+      ->setLabel($this->t('Type of alert'))
       ->setRevisionable(TRUE)
       ->setDefaultValue('')
       ->setSettings([
@@ -251,8 +251,8 @@ class AlertBanner extends EditorialContentEntityBase implements AlertBannerInter
 
     // Banner title.
     $fields['title'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Title'))
-      ->setDescription(t('The title of the Alert banner.'))
+      ->setLabel($this->t('Title'))
+      ->setDescription($this->t('The title of the Alert banner.'))
       ->setRevisionable(TRUE)
       ->setSettings([
         'max_length' => 50,
@@ -274,8 +274,8 @@ class AlertBanner extends EditorialContentEntityBase implements AlertBannerInter
 
     // Banner short description.
     $fields['short_description'] = BaseFieldDefinition::create('string_long')
-      ->setLabel(t('Short description'))
-      ->setDescription(t('No more than 50 or so characters'))
+      ->setLabel($this->t('Short description'))
+      ->setDescription($this->t('No more than 50 or so characters'))
       ->setRevisionable(TRUE)
       ->setSettings([
         'max_length' => 100,
@@ -296,7 +296,7 @@ class AlertBanner extends EditorialContentEntityBase implements AlertBannerInter
 
     // Banner link.
     $fields['link'] = BaseFieldDefinition::create('link')
-      ->setLabel(t("Link"))
+      ->setLabel($this->t("Link"))
       ->setRevisionable(TRUE)
       ->setDefaultValue('')
       ->setDisplayOptions('view', [
@@ -313,8 +313,8 @@ class AlertBanner extends EditorialContentEntityBase implements AlertBannerInter
 
     // Remove hide link.
     $fields['remove_hide_link'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Remove hide link'))
-      ->setDescription(t('This will remove the hide link that appears on alert banners '))
+      ->setLabel($this->t('Remove hide link'))
+      ->setDescription($this->t('This will remove the hide link that appears on alert banners.'))
       ->setRevisionable(TRUE)
       ->setDefaultValue(0)
       ->setDisplayOptions('view', [
@@ -331,18 +331,18 @@ class AlertBanner extends EditorialContentEntityBase implements AlertBannerInter
 
     // Created.
     $fields['created'] = BaseFieldDefinition::create('created')
-      ->setLabel(t('Created'))
-      ->setDescription(t('The time that the banner was created.'));
+      ->setLabel($this->t('Created'))
+      ->setDescription($this->t('The time that the banner was created.'));
 
     // Changed.
     $fields['changed'] = BaseFieldDefinition::create('changed')
-      ->setLabel(t('Changed'))
-      ->setDescription(t('The time that the banner was last edited.'));
+      ->setLabel($this->t('Changed'))
+      ->setDescription($this->t('The time that the banner was last edited.'));
 
     // Revision translation.
     $fields['revision_translation_affected'] = BaseFieldDefinition::create('boolean')
-      ->setLabel(t('Revision translation affected'))
-      ->setDescription(t('Indicates if the last edit of a translation belongs to current revision.'))
+      ->setLabel($this->t('Revision translation affected'))
+      ->setDescription($this->t('Indicates if the last edit of a translation belongs to current revision.'))
       ->setReadOnly(TRUE)
       ->setRevisionable(TRUE)
       ->setTranslatable(TRUE);
