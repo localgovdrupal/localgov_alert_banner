@@ -127,7 +127,7 @@ function _localgov_alert_banner_alert_banner_save(Drupal\Core\Entity\EntityInter
 function localgov_alert_banner_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
 
   // Edit the alert banner entity form on the creation or edit mode
-  if ($form_id == 'alert_banner_alert_banner_form' || $form_id == 'alert_banner_alert_banner_edit_form' || $form_id == 'localgov_alert_banner_add_form' || $form_id == 'localgov_alert_banner_edit_form') {
+  if ($form_id == 'localgov_alert_banner_localgov_alert_banner_add_form' || $form_id == 'localgov_alert_banner_localgov_alert_banner_edit_form') {
 
     // Create the vertical tabs like on node edit forms
     // @src https://drupal.stackexchange.com/a/276907
@@ -152,6 +152,19 @@ function localgov_alert_banner_form_alter(&$form, \Drupal\Core\Form\FormStateInt
       $form['#attributes']['class'][] = 'node-form';
     }
 
+    // Alert details group
+    $form['alert_details'] = [
+      '#type' => 'fieldset',
+      '#title' => t('Alert details'),
+      '#open' => true,
+      '#weight' => -5,
+    ];
+    $form['alert_type']['#group'] = 'alert_details';
+    $form['title']['#group'] = 'alert_details';
+    $form['short_description']['#group'] = 'alert_details';
+
+    $form['remove_hide_link']['#group'] = 'flag';
+
     // Set authoring information into sidebar
     $form['author'] = [
       '#type' => 'details',
@@ -170,6 +183,9 @@ function localgov_alert_banner_form_alter(&$form, \Drupal\Core\Form\FormStateInt
     $form['created']['#group'] = 'author';
     $form['revision_log_message']['#group'] = 'author';
 
+    // Move new revision into author group.
+    $form['new_revision']['#group'] = 'author';
+
     // Change the Title label
     unset($form['title']['widget'][0]['value']['#description']);
 
@@ -179,7 +195,6 @@ function localgov_alert_banner_form_alter(&$form, \Drupal\Core\Form\FormStateInt
     // Set the flags details group to open and change title
     $form['flag']['#open'] = true;
     $form['flag']['#title'] = t('Publishing options');
-    unset($form['flag']['#group']);
 
     // Change put live description
     $form['flag']['set_live']['#description'] = t('Tick this box to put the banner on our website.').'<br>'.t('Untick this box if you want to remove the banner from the website.');
