@@ -1,6 +1,7 @@
 services:
   localgov_alert_banner.flag_subscriber:
     class: Drupal\localgov_alert_banner\EventSubscriber\AlertBannerFlagLive
+    arguments: ['@flag', '@entity_type.manager', '@localgov_alert_banner.state']
     tags:
       - { name: event_subscriber }
   localgov_alert_banner.state:
