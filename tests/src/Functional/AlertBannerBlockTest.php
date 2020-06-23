@@ -27,13 +27,6 @@ class AlertBannerBlockTest extends BrowserTestBase {
   ];
 
   /**
-   * {@inheritdoc}
-   */
-  protected function setUp() {
-    parent::setUp();
-  }
-
-  /**
    * Test alert banner block displays.
    */
   public function testAlertBannerDisplays() {
