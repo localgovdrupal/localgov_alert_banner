@@ -8,7 +8,10 @@ use Drupal\flag\Event\FlagEvents;
 use Drupal\flag\Event\FlaggingEvent;
 
 /**
+ * Provides an event subscriver for the flag event.
  *
+ * @package Drupal\localgov_alert_banner\EventSubscriber
+ * @ingroup localgov_alert_banner
  */
 class AlertBannerFlagLive implements EventSubscriberInterface {
 
@@ -16,11 +19,11 @@ class AlertBannerFlagLive implements EventSubscriberInterface {
    * On Flag event.
    *
    * @param \Drupal\flag\Event\FlaggingEvent $event
+   *   Flag event.
    */
   public function onFlag(FlaggingEvent $event) {
 
     $flagging = $event->getFlagging();
-    $entityId = $flagging->getFlaggable()->id();
     $flagType = $flagging->getFlagId();
 
     // Make sure we only act on the put live flag.
@@ -46,9 +49,10 @@ class AlertBannerFlagLive implements EventSubscriberInterface {
    * @param int $id
    *   Current Flagging Entity ID (to exclude)
    * @param string $flagType
-   *   flag_id.
+   *   Flag_id.
    *
-   * @return array            Array of existing flag IDs, excluding the current
+   * @return array
+   *   Array of existing flag IDs, excluding the current entity.
    */
   private function getExistingFlagIds(int $id, string $flagType) {
 
@@ -62,11 +66,13 @@ class AlertBannerFlagLive implements EventSubscriberInterface {
   /**
    * Unflag existing flags.
    *
-   * Use instead of flags own unflagAllByEntity so to exclude the current banner.
+   * Use instead of flags own unflagAllByEntity
+   * so to exclude the current banner.
    *
    * @param \Drupal\flag\FlagInterface $flag
+   *   The flag object.
    * @param array $existingFlagIds
-   *   flag IDs to unflag.
+   *   Flag IDs to unflag.
    */
   private function unflagExistingFlags(FlagInterface $flag, array $existingFlagIds) {
 
