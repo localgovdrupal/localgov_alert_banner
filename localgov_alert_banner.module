@@ -183,6 +183,9 @@ function localgov_alert_banner_form_alter(&$form, \Drupal\Core\Form\FormStateInt
     $form['created']['#group'] = 'author';
     $form['revision_log_message']['#group'] = 'author';
 
+    // Move new revision into author group.
+    $form['new_revision']['#group'] = 'author';
+
     // Change the Title label
     unset($form['title']['widget'][0]['value']['#description']);
 
@@ -192,7 +195,6 @@ function localgov_alert_banner_form_alter(&$form, \Drupal\Core\Form\FormStateInt
     // Set the flags details group to open and change title
     $form['flag']['#open'] = true;
     $form['flag']['#title'] = t('Publishing options');
-    unset($form['flag']['#group']);
 
     // Change put live description
     $form['flag']['set_live']['#description'] = t('Tick this box to put the banner on our website.').'<br>'.t('Untick this box if you want to remove the banner from the website.');
