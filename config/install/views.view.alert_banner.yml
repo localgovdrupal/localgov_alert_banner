@@ -2,17 +2,15 @@ langcode: en
 status: true
 dependencies:
   config:
-    - eck.eck_type.alert_banner.alert_banner
-    - flag.flag.put_live
+    - flag.flag.set_live
   module:
-    - eck
     - flag
 id: alert_banner
-label: 'Alert Banner'
+label: 'Alert banner'
 module: views
 description: 'Alert Banners displayed at the top of the site.'
 tag: ''
-base_table: alert_banner_field_data
+base_table: localgov_alert_banner_field_data
 base_field: id
 core: 8.x
 display:
@@ -58,7 +56,7 @@ display:
           default_row_class: false
           uses_fields: false
       row:
-        type: 'entity:alert_banner'
+        type: 'entity:localgov_alert_banner'
       fields:
         title:
           table: alert_banner_field_data
@@ -125,15 +123,6 @@ display:
           separator: ', '
           field_api_classes: false
       filters:
-        type:
-          id: type
-          table: alert_banner_field_data
-          field: type
-          value:
-            alert_banner: alert_banner
-          entity_type: alert_banner
-          entity_field: type
-          plugin_id: bundle
         flagged:
           id: flagged
           table: flagging
@@ -192,15 +181,15 @@ display:
       relationships:
         flag_relationship:
           id: flag_relationship
-          table: alert_banner_field_data
+          table: localgov_alert_banner_field_data
           field: flag_relationship
           relationship: none
           group_type: group
-          admin_label: Flags
+          admin_label: 'Live banner flag'
           required: true
-          flag: put_live
+          flag: set_live
           user_scope: any
-          entity_type: alert_banner
+          entity_type: localgov_alert_banner
           plugin_id: flag_relationship
       arguments: {  }
       display_extenders: {  }
@@ -210,9 +199,9 @@ display:
         - 'languages:language_content'
         - 'languages:language_interface'
       tags: {  }
-  block_1:
+  alert_banner_block:
     display_plugin: block
-    id: block_1
+    id: alert_banner_block
     display_title: Block
     position: 1
     display_options:

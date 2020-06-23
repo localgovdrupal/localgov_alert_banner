@@ -4,7 +4,6 @@ description: 'LocalGovDrupal Alert banner module'
 core_version_requirement: ^8.8 || ^9
 package: LocalGovDrupal
 dependencies:
-  - drupal:eck
   - drupal:flag
   - drupal:block
   - drupal:field

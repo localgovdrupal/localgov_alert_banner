@@ -6,7 +6,6 @@
     "minimum-stability": "dev",
     "require": {
         "drupal/field_group": "~3.1",
-        "drupal/eck": "^1.0@beta",
         "drupal/flag": "^4.0@beta"
     }
 }

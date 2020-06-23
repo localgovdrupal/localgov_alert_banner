@@ -1,5 +1,15 @@
-localgov_alert_banner.edit_default_alert_banner:
-  title: 'Alert banner'
+# Alert banner menu items definition
+entity.localgov_alert_banner.collection:
+  title: 'Alert banners'
+  route_name: entity.localgov_alert_banner.collection
+  description: 'Alert banners'
   parent: system.admin_content
-  route_name: localgov_alert_banner.alert_banner_controller_edit
+  weight: 100
+
+# Alert banner types
+entity.localgov_alert_banner_type.collection:
+  title: 'Alert banner types'
+  route_name: entity.localgov_alert_banner_type.collection
+  description: 'List Alert banner types (bundles)'
+  parent: system.admin_structure
   weight: 99

@@ -26,7 +26,7 @@ class AlertBannerFlagLive implements EventSubscriberInterface {
     $flagType = $flagging->getFlagId();
 
     // Make sure we only act on the put live flag
-    if ($flagType == 'put_live') {
+    if ($flagType == 'set_live') {
 
       $flag = \Drupal::service('flag')->getFlagById($flagType);
 
@@ -68,7 +68,7 @@ class AlertBannerFlagLive implements EventSubscriberInterface {
 
     $existingFlags = \Drupal::entityTypeManager()->getStorage('flagging')->loadMultiple($existingFlagIds);
 
-    // Unflag prvious alert banner
+    // Unflag any live alert banner
     // Ideally, this should only be a previously flagged alert banner
     foreach($existingFlags as $existingFlagEntity) {
       $existingFlaggedBanner = $existingFlagEntity->getFlaggable();

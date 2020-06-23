@@ -1,0 +1,10 @@
+entity.localgov_alert_banner.add_page:
+  route_name: entity.localgov_alert_banner.add_page
+  title: 'Add Alert banner'
+  appears_on:
+    - entity.localgov_alert_banner.collection
+entity.localgov_alert_banner_type.add_form:
+  route_name: entity.localgov_alert_banner_type.add_form
+  title: 'Add Alert banner type'
+  appears_on:
+    - entity.localgov_alert_banner_type.collection
