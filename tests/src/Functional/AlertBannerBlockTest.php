@@ -5,7 +5,7 @@ namespace Drupal\Tests\localgov_alert_banner\Functional;
 use Drupal\Tests\BrowserTestBase;
 
 /**
- * Functional tests for LocalGovDrupal Alert banner block
+ * Functional tests for LocalGovDrupal Alert banner block.
  */
 class AlertBannerBlockTest extends BrowserTestBase {
 
@@ -37,7 +37,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
    * Test alert banner block displays.
    */
   public function testAlertBannerDisplays() {
-    //Set up an alert banner.
+    // Set up an alert banner.
     $title = $this->randomMachineName(8);
     $alert_message = 'Alert message: ' . $this->randomMachineName(16);
     $alert = $this->container->get('entity_type.manager')->getStorage('localgov_alert_banner')
@@ -64,7 +64,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
    * Test non live alert banner does not diaplay.
    */
   public function testNonLiveAlertBannerDoesNotDisplay() {
-    //Set up an alert banner.
+    // Set up an alert banner.
     $title = $this->randomMachineName(8);
     $alert_message = 'Alert message: ' . $this->randomMachineName(16);
     $alert = $this->container->get('entity_type.manager')->getStorage('localgov_alert_banner')

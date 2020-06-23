@@ -26,4 +26,3 @@ revert all alert banner revisions:
 delete all alert banner revisions:
   title: 'Delete all revisions'
   description: 'Role requires permission to <em>view Alert banner revisions</em> and <em>delete rights</em> for alert banner entities in question or <em>administer alert banner entities</em>.'
-

@@ -8,7 +8,6 @@ use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Url;
 use Drupal\localgov_alert_banner\Entity\AlertBannerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\eck\Entity\EckEntity;
 
 /**
  * Class AlertBannerController.

@@ -28,7 +28,6 @@ class AlertBannerAccessControlHandler extends EntityAccessControlHandler {
           return AccessResult::allowedIfHasPermission($account, 'view unpublished alert banner entities');
         }
 
-
         return AccessResult::allowedIfHasPermission($account, 'view published alert banner entities');
 
       case 'update':
@@ -50,6 +49,5 @@ class AlertBannerAccessControlHandler extends EntityAccessControlHandler {
   protected function checkCreateAccess(AccountInterface $account, array $context, $entity_bundle = NULL) {
     return AccessResult::allowedIfHasPermission($account, 'add alert banner entities');
   }
-
 
 }

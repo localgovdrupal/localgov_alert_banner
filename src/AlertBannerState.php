@@ -1,20 +1,12 @@
 <?php
 
-/**
-* @file
-* Contains \Drupal\localgov_alert_banner\AlertBannerState.
-*
-* Common service for generating and setting a token for unique emergency banner.
-* @note not entity ID as same entity should get a new token when put
-*       live or message refreshed.
-*/
-
 namespace Drupal\localgov_alert_banner;
 
+use Drupal\Core\Entity\ContentEntityBase;
 use Drupal\Core\State\State;
 
 /**
- * Class AlertBannerState
+ * Class AlertBannerState.
  *
  * @package Drupal\localgov_alert_banner
  */
@@ -32,6 +24,7 @@ class AlertBannerState {
 
   /**
    * AlertBannerState constructor.
+   *
    * @param Drupal\Core\State\State $state
    */
   public function __construct(State $state) {
@@ -43,10 +36,10 @@ class AlertBannerState {
    * @param  \Drupal\Core\Entity\ContentEntityBase $entity
    * @return $this
    */
-  public function generateToken(\Drupal\Core\Entity\ContentEntityBase $entity) {
-    $prefix = 'alert-'.$entity->id();
-    $hash = sha1(uniqid('', true));
-    $this->token = $prefix.'-'.$hash;
+  public function generateToken(ContentEntityBase $entity) {
+    $prefix = 'alert-' . $entity->id();
+    $hash = sha1(uniqid('', TRUE));
+    $this->token = $prefix . '-' . $hash;
 
     return $this;
   }
@@ -55,7 +48,7 @@ class AlertBannerState {
    * @return string
    */
   public function getToken() {
-    return $this->token ?? null;
+    return $this->token ?? NULL;
   }
 
   /**

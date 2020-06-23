@@ -5,6 +5,8 @@
  * Contains localgov_alert_banner.module.
  */
 
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
@@ -24,35 +26,35 @@ function localgov_alert_banner_help($route_name, RouteMatchInterface $route_matc
 }
 
 /**
- * Implements HOOK_module_implements_alter
+ * Implements HOOK_module_implements_alter.
  */
 function localgov_alert_banner_module_implements_alter(&$implementations, $hook) {
   if ($hook == 'form_alter') {
-    // Move localgov alert banner to last hook
+    // Move localgov alert banner to last hook.
     unset($implementations['localgov_alert_banner']);
-    $implementations['localgov_alert_banner'] = null;
+    $implementations['localgov_alert_banner'] = NULL;
   }
 }
 
 /**
- * Implements HOOK_entity_build_defaults_alter
+ * Implements HOOK_entity_build_defaults_alter.
  */
-function localgov_alert_banner_entity_build_defaults_alter(array &$build, \Drupal\Core\Entity\EntityInterface $entity, $view_mode) {
+function localgov_alert_banner_entity_build_defaults_alter(array &$build, EntityInterface $entity, $view_mode) {
 
   // ECK entities don't implement getType()
   if ($entity->bundle() == 'localgov_alert_banner') {
 
-    // Set a cache context based on the hide alert banner cookie token
+    // Set a cache context based on the hide alert banner cookie token.
     $build['#cache']['contexts'][] = 'cookies:hide-alert-banner-token';
     $build['#cache']['contexts'][] = 'user.roles:anonymous';
     $build['#cache']['contexts'][] = 'session';
 
-    // Set a cache context based on if on the front page
+    // Set a cache context based on if on the front page.
     $build['#cache']['contexts'][] = 'url.path:is_front';
 
-    // Get token and use as a cache tag
+    // Get token and use as a cache tag.
     $token = \Drupal::service('localgov_alert_banner.state')->getToken();
-    $build['#cache']['tags'][] = 'localgov.alert.banner.token:'.$token;
+    $build['#cache']['tags'][] = 'localgov.alert.banner.token:' . $token;
 
     // We need to switch off (static) page cache here for individual anon users.
     // They still get the dynamic page cache, handled by the cache contexts.
@@ -62,22 +64,22 @@ function localgov_alert_banner_entity_build_defaults_alter(array &$build, \Drupa
 }
 
 /**
- * Implements HOOK_preprocess_eck_entity
+ * Implements HOOK_preprocess_eck_entity.
  */
 function localgov_alert_banner_preprocess(&$variables) {
 
   if (isset($variables['elements']['localgov_alert_banner'])) {
 
-    // Get token
+    // Get token.
     $token = \Drupal::service('localgov_alert_banner.state')->getToken();
 
-    // Get cookie
+    // Get cookie.
     $cookie = \Drupal::request()->cookies->get('hide-alert-banner-token');
 
-    // Add a hidden class
+    // Add a hidden class.
     $variables['attributes']['class'][] = 'hidden';
 
-    // Token as attribute
+    // Token as attribute.
     $variables['attributes']['data-dismiss-alert-token'] = $token;
 
     // Ensure token is accessible by javascript.
@@ -87,32 +89,32 @@ function localgov_alert_banner_preprocess(&$variables) {
 }
 
 /**
- * Implements HOOK_alert_banner_create
+ * Implements HOOK_alert_banner_create.
  */
-function localgov_alert_banner_alert_banner_create(Drupal\Core\Entity\EntityInterface $entity) {
+function localgov_alert_banner_alert_banner_create(EntityInterface $entity) {
   _localgov_alert_banner_alert_banner_save($entity);
 }
 
 /**
- * Implements HOOK_alert_banner_update
+ * Implements HOOK_alert_banner_update.
  */
-function localgov_alert_banner_alert_banner_update(Drupal\Core\Entity\EntityInterface $entity) {
+function localgov_alert_banner_alert_banner_update(EntityInterface $entity) {
   _localgov_alert_banner_alert_banner_save($entity);
 }
 
 /**
- * Common function when alert banner entity saved
+ * Common function when alert banner entity saved.
  */
-function _localgov_alert_banner_alert_banner_save(Drupal\Core\Entity\EntityInterface $entity) {
+function _localgov_alert_banner_alert_banner_save(EntityInterface $entity) {
 
-  // Check if the entity is flagged as live
+  // Check if the entity is flagged as live.
   $flag = \Drupal::service('flag')->getFlagById('set_live');
-  if (!empty($flag))  {
+  if (!empty($flag)) {
     $flaggings = \Drupal::service('flag')->getEntityFlaggings($flag, $entity);
 
     if (!empty($flaggings)) {
 
-      // Regenerate a JS token for the updated alert banner
+      // Regenerate a JS token for the updated alert banner.
       \Drupal::service('localgov_alert_banner.state')->generateToken($entity)->save();
     }
   }
@@ -122,14 +124,14 @@ function _localgov_alert_banner_alert_banner_save(Drupal\Core\Entity\EntityInter
 }
 
 /**
- * Implements HOOK_form_alter
+ * Implements HOOK_form_alter.
  */
-function localgov_alert_banner_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
+function localgov_alert_banner_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
   // Edit the alert banner entity form on the creation or edit mode
   if ($form_id == 'localgov_alert_banner_localgov_alert_banner_add_form' || $form_id == 'localgov_alert_banner_localgov_alert_banner_edit_form') {
 
-    // Create the vertical tabs like on node edit forms
+    // Create the vertical tabs like on node edit forms.
     // @src https://drupal.stackexchange.com/a/276907
     $form['#theme'][] = 'node_edit_form';
     $form['#attached']['library'] = ['node/drupal.node'];
@@ -148,7 +150,7 @@ function localgov_alert_banner_form_alter(&$form, \Drupal\Core\Form\FormStateInt
       $elbowRoomConfig = Drupal::configFactory()->get('elbow_room.settings');
       $form['#attached']['drupalSettings']['elbow_room']['default'] = $elbowRoomConfig->get('default');
 
-      // Add node form classes for elbow room to function
+      // Add node form classes for elbow room to function.
       $form['#attributes']['class'][] = 'node-form';
     }
 
@@ -172,13 +174,13 @@ function localgov_alert_banner_form_alter(&$form, \Drupal\Core\Form\FormStateInt
       '#group' => 'advanced',
       '#weight' => 90,
       '#optional' => 1,
-      '#open' => true,
+      '#open' => TRUE,
       '#attributes' => [
         'class' => ['entity-form-author'],
       ],
     ];
 
-    // Move the authoring info into sidebar like nodes
+    // Move the authoring info into sidebar like nodes.
     $form['user_id']['#group'] = 'author';
     $form['created']['#group'] = 'author';
     $form['revision_log_message']['#group'] = 'author';
@@ -189,15 +191,15 @@ function localgov_alert_banner_form_alter(&$form, \Drupal\Core\Form\FormStateInt
     // Change the Title label
     unset($form['title']['widget'][0]['value']['#description']);
 
-    // Change the Link text description
+    // Change the Link text description.
     $form['link']['widget'][0]['title']['#description'] = t("If you don't write anything here, we will use: More information");
 
-    // Set the flags details group to open and change title
-    $form['flag']['#open'] = true;
+    // Set the flags details group to open and change title.
+    $form['flag']['#open'] = TRUE;
     $form['flag']['#title'] = t('Publishing options');
 
-    // Change put live description
-    $form['flag']['set_live']['#description'] = t('Tick this box to put the banner on our website.').'<br>'.t('Untick this box if you want to remove the banner from the website.');
+    // Change put live description.
+    $form['flag']['set_live']['#description'] = t('Tick this box to put the banner on our website.') . '<br>' . t('Untick this box if you want to remove the banner from the website.');
   }
 }
 
@@ -206,8 +208,8 @@ function localgov_alert_banner_form_alter(&$form, \Drupal\Core\Form\FormStateInt
  */
 function localgov_alert_banner_uninstall() {
 
-  // Remove configuration
-  $configs = array(
+  // Remove configuration.
+  $configs = [
     "block.block.views_block__alert_banner_alert_banner_block",
     "core.entity_form_display.alert_banner.alert_banner.default",
     "core.entity_view_display.alert_banner.alert_banner.default",
@@ -215,13 +217,13 @@ function localgov_alert_banner_uninstall() {
     "system.action.flag_action.set_live_flag",
     "system.action.flag_action.set_live_unflag",
     "user.role.emergency_publisher",
-    "views.view.alert_banner"
-  );
-  foreach($configs as $config) {
+    "views.view.alert_banner",
+  ];
+  foreach ($configs as $config) {
     \Drupal::configFactory()->getEditable($config)->delete();
   }
 
-  // Remove custom entity
+  // Remove custom entity.
   $entity_update_manager = \Drupal::entityDefinitionUpdateManager();
   $entity_type = $entity_update_manager->getEntityType('localgov_alert_banner');
   $entity_update_manager->uninstallEntityType($entity_type);
