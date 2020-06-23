@@ -125,7 +125,7 @@ function _localgov_alert_banner_alert_banner_save(EntityInterface $entity) {
  */
 function localgov_alert_banner_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
-  // Edit the alert banner entity form on the creation or edit mode
+  // Edit the alert banner entity form on the creation or edit mode.
   if ($form_id == 'localgov_alert_banner_localgov_alert_banner_add_form' || $form_id == 'localgov_alert_banner_localgov_alert_banner_edit_form') {
 
     // Create the vertical tabs like on node edit forms.
@@ -151,11 +151,11 @@ function localgov_alert_banner_form_alter(&$form, FormStateInterface $form_state
       $form['#attributes']['class'][] = 'node-form';
     }
 
-    // Alert details group
+    // Alert details group.
     $form['alert_details'] = [
       '#type' => 'fieldset',
       '#title' => t('Alert details'),
-      '#open' => true,
+      '#open' => TRUE,
       '#weight' => -5,
     ];
     $form['alert_type']['#group'] = 'alert_details';
@@ -164,7 +164,7 @@ function localgov_alert_banner_form_alter(&$form, FormStateInterface $form_state
 
     $form['remove_hide_link']['#group'] = 'flag';
 
-    // Set authoring information into sidebar
+    // Set authoring information into sidebar.
     $form['author'] = [
       '#type' => 'details',
       '#title' => t('Authoring information'),
@@ -185,7 +185,7 @@ function localgov_alert_banner_form_alter(&$form, FormStateInterface $form_state
     // Move new revision into author group.
     $form['new_revision']['#group'] = 'author';
 
-    // Change the Title label
+    // Change the Title label.
     unset($form['title']['widget'][0]['value']['#description']);
 
     // Change the Link text description.
