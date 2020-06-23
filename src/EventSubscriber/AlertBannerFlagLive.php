@@ -23,26 +23,26 @@ class AlertBannerFlagLive implements EventSubscriberInterface {
    *
    * @var \Drupal\flag\FlagServiceInterface
    */
-  protected $flag_service;
+  protected $flagService;
 
   /**
    * Entity type manager object.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
-  protected $entity_type_manager;
+  protected $entityTypeManager;
 
   /**
    * Alert Banner State object.
    *
    * @var \Drupal\localgov_alert_banner\AlertBannerState
    */
-  protected $alert_banner_state;
+  protected $alertBannerState;
 
   /**
    * Class contructor.
    *
-   * @param \Drupal\flag\FlagServiceInterfaceFlagServiceInterface $flag_service
+   * @param \Drupal\flag\FlagServiceInterface $flag_service
    *   Flag service.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   Entity Type Manager.
@@ -50,9 +50,9 @@ class AlertBannerFlagLive implements EventSubscriberInterface {
    *   Localgov Alert banner state.
    */
   public function __construct(FlagServiceInterface $flag_service, EntityTypeManagerInterface $entity_type_manager, AlertBannerState $alert_banner_state) {
-    $this->flag_service = $flag_service;
-    $this->entity_type_manager = $entity_type_manager;
-    $this->alert_banner_state = $alert_banner_state;
+    $this->flagService = $flag_service;
+    $this->entityTypeManager = $entity_type_manager;
+    $this->alertBannerState = $alert_banner_state;
   }
 
   /**
@@ -69,7 +69,7 @@ class AlertBannerFlagLive implements EventSubscriberInterface {
     // Make sure we only act on the put live flag.
     if ($flagType == 'set_live') {
 
-      $flag = $this->flag_service->getFlagById($flagType);
+      $flag = $this->flagService->getFlagById($flagType);
 
       // Get existing flagging entity ids.
       $existingFlagIds = $this->getExistingFlagIds($flagging->id(), $flagType);
@@ -78,7 +78,7 @@ class AlertBannerFlagLive implements EventSubscriberInterface {
       $this->unflagExistingFlags($flag, $existingFlagIds);
 
       // Regenerate JS token.
-      $this->alert_banner_state->generateToken($flagging->getFlaggable())->save();
+      $this->alertBannerState->generateToken($flagging->getFlaggable())->save();
 
     }
   }
@@ -96,7 +96,7 @@ class AlertBannerFlagLive implements EventSubscriberInterface {
    */
   private function getExistingFlagIds(int $id, string $flagType) {
 
-    $flagQuery = $this->entity_type_manager->getStorage('flagging')->getQuery();
+    $flagQuery = $this->entityTypeManager->getStorage('flagging')->getQuery();
     $existingFlagIds = $flagQuery->condition('flag_id', $flagType)
       ->condition('id', $id, '!=')
       ->execute();
@@ -116,13 +116,13 @@ class AlertBannerFlagLive implements EventSubscriberInterface {
    */
   private function unflagExistingFlags(FlagInterface $flag, array $existingFlagIds) {
 
-    $existingFlags = \Drupal::entityTypeManager()->getStorage('flagging')->loadMultiple($existingFlagIds);
+    $existingFlags = $this->entityTypeManager->getStorage('flagging')->loadMultiple($existingFlagIds);
 
     // Unflag any live alert banner
     // Ideally, this should only be a previously flagged alert banner.
     foreach ($existingFlags as $existingFlagEntity) {
       $existingFlaggedBanner = $existingFlagEntity->getFlaggable();
-      $this->flag_service->unflag($flag, $existingFlaggedBanner);
+      $this->flagService->unflag($flag, $existingFlaggedBanner);
     }
   }
 
