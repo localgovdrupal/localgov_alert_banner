@@ -19,33 +19,34 @@ use Drupal\localgov_alert_banner\AlertBannerState;
 class AlertBannerFlagLive implements EventSubscriberInterface {
 
   /**
-   * Flag service object
+   * Flag service object.
    *
    * @var \Drupal\flag\FlagServiceInterface
    */
   protected $flag_service;
 
   /**
-   * Entity type manager object
+   * Entity type manager object.
    *
    * @var \Drupal\Core\Entity\EntityTypeManagerInterface
    */
   protected $entity_type_manager;
 
   /**
-   * Alert Banner State object
+   * Alert Banner State object.
    *
    * @var \Drupal\localgov_alert_banner\AlertBannerState
    */
   protected $alert_banner_state;
 
   /**
-   * Class contructor
-   * @param \Drupal\flag\FlagServiceInterfaceFlagServiceInterface  $flag_service
+   * Class contructor.
+   *
+   * @param \Drupal\flag\FlagServiceInterfaceFlagServiceInterface $flag_service
    *   Flag service.
-   * @param \Drupal\Core\Entity\EntityTypeManagerInterface  $entity_type_manager
+   * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   Entity Type Manager.
-   * @param \Drupal\localgov_alert_banner\AlertBannerState  $alert_banner_state
+   * @param \Drupal\localgov_alert_banner\AlertBannerState $alert_banner_state
    *   Localgov Alert banner state.
    */
   public function __construct(FlagServiceInterface $flag_service, EntityTypeManagerInterface $entity_type_manager, AlertBannerState $alert_banner_state) {
