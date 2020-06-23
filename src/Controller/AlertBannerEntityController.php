@@ -6,6 +6,7 @@ use Drupal\Component\Utility\Xss;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Url;
+use Drupal\Core\Link;
 use Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -118,13 +119,13 @@ class AlertBannerEntityController extends ControllerBase implements ContainerInj
         // Use revision link to link to revisions that are not active.
         $date = $this->dateFormatter->format($revision->getRevisionCreationTime(), 'short');
         if ($vid != $localgov_alert_banner->getRevisionId()) {
-          $link = $this->l($date, new Url('entity.localgov_alert_banner.revision', [
+          $link = Link::fromTextAndUrl($date, new Url('entity.localgov_alert_banner.revision', [
             'localgov_alert_banner' => $localgov_alert_banner->id(),
             'localgov_alert_banner_revision' => $vid,
           ]));
         }
         else {
-          $link = $localgov_alert_banner->link($date);
+          $link = $localgov_alert_banner->toLink($date)->toString();
         }
 
         $row = [];

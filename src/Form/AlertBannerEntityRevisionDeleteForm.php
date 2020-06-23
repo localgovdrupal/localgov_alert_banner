@@ -36,12 +36,20 @@ class AlertBannerEntityRevisionDeleteForm extends ConfirmFormBase {
   protected $connection;
 
   /**
+   * Date formatter service.
+   *
+   * @var \Drupal\Core\Datetime\DateFormatInterface
+   */
+  protected $dateFormatter;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
     $instance->alertBannerEntityStorage = $container->get('entity_type.manager')->getStorage('localgov_alert_banner');
     $instance->connection = $container->get('database');
+    $instance->dateFormatter = $container->get('date.formatter');
     return $instance;
   }
 
@@ -57,7 +65,7 @@ class AlertBannerEntityRevisionDeleteForm extends ConfirmFormBase {
    */
   public function getQuestion() {
     return $this->t('Are you sure you want to delete the revision from %revision-date?', [
-      '%revision-date' => format_date($this->revision->getRevisionCreationTime()),
+      '%revision-date' => $this->dateFormatter->format($this->revision->getRevisionCreationTime()),
     ]);
   }
 
@@ -92,7 +100,7 @@ class AlertBannerEntityRevisionDeleteForm extends ConfirmFormBase {
     $this->AlertBannerEntityStorage->deleteRevision($this->revision->getRevisionId());
 
     $this->logger('content')->notice('Alert banner: deleted %title revision %revision.', ['%title' => $this->revision->label(), '%revision' => $this->revision->getRevisionId()]);
-    $this->messenger()->addMessage($this->t('Revision from %revision-date of Alert banner %title has been deleted.', ['%revision-date' => format_date($this->revision->getRevisionCreationTime()), '%title' => $this->revision->label()]));
+    $this->messenger()->addMessage($this->t('Revision from %revision-date of Alert banner %title has been deleted.', ['%revision-date' => $this->dateFormatter->format($this->revision->getRevisionCreationTime()), '%title' => $this->revision->label()]));
     $form_state->setRedirect(
       'entity.localgov_alert_banner.canonical',
        ['localgov_alert_banner' => $this->revision->id()]
