@@ -127,7 +127,7 @@ function _localgov_alert_banner_alert_banner_save(Drupal\Core\Entity\EntityInter
 function localgov_alert_banner_form_alter(&$form, \Drupal\Core\Form\FormStateInterface $form_state, $form_id) {
 
   // Edit the alert banner entity form on the creation or edit mode
-  if ($form_id == 'alert_banner_alert_banner_form' || $form_id == 'alert_banner_alert_banner_edit_form' || $form_id == 'localgov_alert_banner_add_form' || $form_id == 'localgov_alert_banner_edit_form') {
+  if ($form_id == 'localgov_alert_banner_localgov_alert_banner_add_form' || $form_id == 'localgov_alert_banner_localgov_alert_banner_edit_form') {
 
     // Create the vertical tabs like on node edit forms
     // @src https://drupal.stackexchange.com/a/276907
@@ -151,6 +151,19 @@ function localgov_alert_banner_form_alter(&$form, \Drupal\Core\Form\FormStateInt
       // Add node form classes for elbow room to function
       $form['#attributes']['class'][] = 'node-form';
     }
+
+    // Alert details group
+    $form['alert_details'] = [
+      '#type' => 'fieldset',
+      '#title' => t('Alert details'),
+      '#open' => true,
+      '#weight' => -5,
+    ];
+    $form['alert_type']['#group'] = 'alert_details';
+    $form['title']['#group'] = 'alert_details';
+    $form['short_description']['#group'] = 'alert_details';
+
+    $form['remove_hide_link']['#group'] = 'alert_details';
 
     // Set authoring information into sidebar
     $form['author'] = [
