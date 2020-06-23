@@ -1,0 +1,33 @@
+<?php
+
+/**
+ * @file
+ * Contains localgov_alert_banner.install.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function localgov_alert_banner_uninstall() {
+
+  // Remove configuration.
+  $configs = [
+    "block.block.views_block__alert_banner_alert_banner_block",
+    "core.entity_form_display.alert_banner.alert_banner.default",
+    "core.entity_view_display.alert_banner.alert_banner.default",
+    "flag.flag.set_live",
+    "system.action.flag_action.set_live_flag",
+    "system.action.flag_action.set_live_unflag",
+    "user.role.emergency_publisher",
+    "views.view.alert_banner",
+  ];
+  foreach ($configs as $config) {
+    \Drupal::configFactory()->getEditable($config)->delete();
+  }
+
+  // Remove custom entity.
+  $entity_update_manager = \Drupal::entityDefinitionUpdateManager();
+  $entity_type = $entity_update_manager->getEntityType('localgov_alert_banner');
+  $entity_update_manager->uninstallEntityType($entity_type);
+
+}
