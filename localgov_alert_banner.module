@@ -163,7 +163,7 @@ function localgov_alert_banner_form_alter(&$form, \Drupal\Core\Form\FormStateInt
     $form['title']['#group'] = 'alert_details';
     $form['short_description']['#group'] = 'alert_details';
 
-    $form['remove_hide_link']['#group'] = 'alert_details';
+    $form['remove_hide_link']['#group'] = 'flag';
 
     // Set authoring information into sidebar
     $form['author'] = [
@@ -193,7 +193,6 @@ function localgov_alert_banner_form_alter(&$form, \Drupal\Core\Form\FormStateInt
     $form['flag']['#open'] = true;
     $form['flag']['#title'] = t('Publishing options');
     unset($form['flag']['#group']);
-
     // Change put live description
     $form['flag']['set_live']['#description'] = t('Tick this box to put the banner on our website.').'<br>'.t('Untick this box if you want to remove the banner from the website.');
   }
