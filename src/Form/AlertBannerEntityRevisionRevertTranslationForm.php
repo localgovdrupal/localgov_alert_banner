@@ -3,7 +3,7 @@
 namespace Drupal\localgov_alert_banner\Form;
 
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\localgov_alert_banner\Entity\AlertBannerInterface;
+use Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @ingroup localgov_alert_banner
  */
-class AlertBannerRevisionRevertTranslationForm extends AlertBannerRevisionRevertForm {
+class AlertBannerEntityRevisionRevertTranslationForm extends AlertBannerEntityRevisionRevertForm {
 
   /**
    * The language to be reverted.
@@ -72,11 +72,11 @@ class AlertBannerRevisionRevertTranslationForm extends AlertBannerRevisionRevert
   /**
    * {@inheritdoc}
    */
-  protected function prepareRevertedRevision(AlertBannerInterface $revision, FormStateInterface $form_state) {
+  protected function prepareRevertedRevision(AlertBannerEntityInterface $revision, FormStateInterface $form_state) {
     $revert_untranslated_fields = $form_state->getValue('revert_untranslated_fields');
 
-    /** @var \Drupal\localgov_alert_banner\Entity\AlertBannerInterface $default_revision */
-    $latest_revision = $this->AlertBannerStorage->load($revision->id());
+    /** @var \Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface $default_revision */
+    $latest_revision = $this->AlertBannerEntityStorage->load($revision->id());
     $latest_revision_translation = $latest_revision->getTranslation($this->langcode);
 
     $revision_translation = $revision->getTranslation($this->langcode);

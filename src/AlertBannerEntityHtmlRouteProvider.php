@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Route;
  * @see \Drupal\Core\Entity\Routing\AdminHtmlRouteProvider
  * @see \Drupal\Core\Entity\Routing\DefaultHtmlRouteProvider
  */
-class AlertBannerHtmlRouteProvider extends AdminHtmlRouteProvider {
+class AlertBannerEntityHtmlRouteProvider extends AdminHtmlRouteProvider {
 
   /**
    * {@inheritdoc}
@@ -64,7 +64,7 @@ class AlertBannerHtmlRouteProvider extends AdminHtmlRouteProvider {
       $route
         ->setDefaults([
           '_title' => "{$entity_type->getLabel()} revisions",
-          '_controller' => '\Drupal\localgov_alert_banner\Controller\AlertBannerController::revisionOverview',
+          '_controller' => '\Drupal\localgov_alert_banner\Controller\AlertBannerEntityController::revisionOverview',
         ])
         ->setRequirement('_permission', 'view all alert banner revisions')
         ->setOption('_admin_route', TRUE);
@@ -87,8 +87,8 @@ class AlertBannerHtmlRouteProvider extends AdminHtmlRouteProvider {
       $route = new Route($entity_type->getLinkTemplate('revision'));
       $route
         ->setDefaults([
-          '_controller' => '\Drupal\localgov_alert_banner\Controller\AlertBannerController::revisionShow',
-          '_title_callback' => '\Drupal\localgov_alert_banner\Controller\AlertBannerController::revisionPageTitle',
+          '_controller' => '\Drupal\localgov_alert_banner\Controller\AlertBannerEntityController::revisionShow',
+          '_title_callback' => '\Drupal\localgov_alert_banner\Controller\AlertBannerEntityController::revisionPageTitle',
         ])
         ->setRequirement('_permission', 'view all alert banner revisions')
         ->setOption('_admin_route', TRUE);
@@ -111,7 +111,7 @@ class AlertBannerHtmlRouteProvider extends AdminHtmlRouteProvider {
       $route = new Route($entity_type->getLinkTemplate('revision_revert'));
       $route
         ->setDefaults([
-          '_form' => '\Drupal\localgov_alert_banner\Form\AlertBannerRevisionRevertForm',
+          '_form' => '\Drupal\localgov_alert_banner\Form\AlertBannerEntityRevisionRevertForm',
           '_title' => 'Revert to earlier revision',
         ])
         ->setRequirement('_permission', 'revert all alert banner revisions')
@@ -135,7 +135,7 @@ class AlertBannerHtmlRouteProvider extends AdminHtmlRouteProvider {
       $route = new Route($entity_type->getLinkTemplate('revision_delete'));
       $route
         ->setDefaults([
-          '_form' => '\Drupal\localgov_alert_banner\Form\AlertBannerRevisionDeleteForm',
+          '_form' => '\Drupal\localgov_alert_banner\Form\AlertBannerEntityRevisionDeleteForm',
           '_title' => 'Delete earlier revision',
         ])
         ->setRequirement('_permission', 'delete all alert banner revisions')
@@ -159,7 +159,7 @@ class AlertBannerHtmlRouteProvider extends AdminHtmlRouteProvider {
       $route = new Route($entity_type->getLinkTemplate('translation_revert'));
       $route
         ->setDefaults([
-          '_form' => '\Drupal\localgov_alert_banner\Form\AlertBannerRevisionRevertTranslationForm',
+          '_form' => '\Drupal\localgov_alert_banner\Form\AlertBannerEntityRevisionRevertTranslationForm',
           '_title' => 'Revert to earlier revision of a translation',
         ])
         ->setRequirement('_permission', 'revert all alert banner revisions')
@@ -183,7 +183,7 @@ class AlertBannerHtmlRouteProvider extends AdminHtmlRouteProvider {
       $route = new Route("/admin/structure/{$entity_type->id()}/settings");
       $route
         ->setDefaults([
-          '_form' => 'Drupal\localgov_alert_banner\Form\AlertBannerSettingsForm',
+          '_form' => 'Drupal\localgov_alert_banner\Form\AlertBannerEntitySettingsForm',
           '_title' => "{$entity_type->getLabel()} settings",
         ])
         ->setRequirement('_permission', $entity_type->getAdminPermission())

@@ -6,11 +6,11 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Class AlertBannerSettingsForm.
+ * Class AlertBannerEntitySettingsForm.
  *
  * @ingroup localgov_alert_banner
  */
-class AlertBannerSettingsForm extends FormBase {
+class AlertBannerEntitySettingsForm extends FormBase {
 
   /**
    * Returns a unique string identifying the form.
@@ -19,7 +19,7 @@ class AlertBannerSettingsForm extends FormBase {
    *   The unique string identifying the form.
    */
   public function getFormId() {
-    return 'alertbanner_settings';
+    return 'alertbannerentity_settings';
   }
 
   /**
@@ -46,7 +46,7 @@ class AlertBannerSettingsForm extends FormBase {
    *   Form definition array.
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $form['alertbanner_settings']['#markup'] = 'Settings form for Alert banner entities. Manage field settings here.';
+    $form['alertbannerentity_settings']['#markup'] = 'Settings form for Alert banner entities. Manage field settings here.';
     return $form;
   }
 

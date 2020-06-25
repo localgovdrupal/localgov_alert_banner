@@ -9,7 +9,7 @@ use Drupal\Core\Entity\ContentEntityDeleteForm;
  *
  * @ingroup localgov_alert_banner
  */
-class AlertBannerDeleteForm extends ContentEntityDeleteForm {
+class AlertBannerEntityDeleteForm extends ContentEntityDeleteForm {
 
 
 }

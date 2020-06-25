@@ -1,8 +1,4 @@
 # Alert banner routing definition
-localgov_alert_banner.settings_tab:
-  route_name: localgov_alert_banner.settings
-  title: 'Settings'
-  base_route: localgov_alert_banner.settings
 
 entity.localgov_alert_banner.canonical:
   route_name: entity.localgov_alert_banner.canonical

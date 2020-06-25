@@ -1,4 +1,4 @@
-entity.localgov_alert_banner.add_page:
+entity.localgov_alert_banner.add_form:
   route_name: entity.localgov_alert_banner.add_page
   title: 'Add Alert banner'
   appears_on:

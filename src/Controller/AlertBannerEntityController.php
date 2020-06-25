@@ -6,16 +6,15 @@ use Drupal\Component\Utility\Xss;
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
 use Drupal\Core\Url;
-use Drupal\Core\Link;
-use Drupal\localgov_alert_banner\Entity\AlertBannerInterface;
+use Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * Class AlertBannerController.
+ * Class AlertBannerEntityController.
  *
  *  Returns responses for Alert banner routes.
  */
-class AlertBannerController extends ControllerBase implements ContainerInjectionInterface {
+class AlertBannerEntityController extends ControllerBase implements ContainerInjectionInterface {
 
   /**
    * The date formatter.
@@ -79,18 +78,18 @@ class AlertBannerController extends ControllerBase implements ContainerInjection
   /**
    * Generates an overview table of older revisions of a Alert banner.
    *
-   * @param \Drupal\localgov_alert_banner\Entity\AlertBannerInterface $localgov_alert_banner
+   * @param \Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface $localgov_alert_banner
    *   A Alert banner object.
    *
    * @return array
    *   An array as expected by drupal_render().
    */
-  public function revisionOverview(AlertBannerInterface $localgov_alert_banner) {
+  public function revisionOverview(AlertBannerEntityInterface $localgov_alert_banner) {
     $account = $this->currentUser();
     $localgov_alert_banner_storage = $this->entityTypeManager()->getStorage('localgov_alert_banner');
 
     $langcode = $localgov_alert_banner->language()->getId();
-    $langname = $localgov_alert_banner->language()->getName();
+    $langname = $localgov_alert_banner->language()->getTitle();
     $languages = $localgov_alert_banner->getTranslationLanguages();
     $has_translations = (count($languages) > 1);
     $build['#title'] = $has_translations ? $this->t('@langname revisions for %title', ['@langname' => $langname, '%title' => $localgov_alert_banner->label()]) : $this->t('Revisions for %title', ['%title' => $localgov_alert_banner->label()]);
@@ -106,7 +105,7 @@ class AlertBannerController extends ControllerBase implements ContainerInjection
     $latest_revision = TRUE;
 
     foreach (array_reverse($vids) as $vid) {
-      /** @var \Drupal\localgov_alert_banner\AlertBannerInterface $revision */
+      /** @var \Drupal\localgov_alert_banner\AlertBannerEntityInterface $revision */
       $revision = $localgov_alert_banner_storage->loadRevision($vid);
       // Only show revisions that are affected by the language that is being
       // displayed.
@@ -119,13 +118,13 @@ class AlertBannerController extends ControllerBase implements ContainerInjection
         // Use revision link to link to revisions that are not active.
         $date = $this->dateFormatter->format($revision->getRevisionCreationTime(), 'short');
         if ($vid != $localgov_alert_banner->getRevisionId()) {
-          $link = Link::fromTextAndUrl($date, new Url('entity.localgov_alert_banner.revision', [
+          $link = $this->l($date, new Url('entity.localgov_alert_banner.revision', [
             'localgov_alert_banner' => $localgov_alert_banner->id(),
             'localgov_alert_banner_revision' => $vid,
           ]));
         }
         else {
-          $link = $localgov_alert_banner->toLink($date)->toString();
+          $link = $localgov_alert_banner->link($date);
         }
 
         $row = [];

@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.localgov_alert_banner.field_alert_short_description
+    - localgov_alert_banner.localgov_alert_banner_type.localgov_alert_banner
+  module:
+    - text
+id: localgov_alert_banner.localgov_alert_banner.field_alert_short_description
+field_name: field_alert_short_description
+entity_type: localgov_alert_banner
+bundle: localgov_alert_banner
+label: 'Short description'
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

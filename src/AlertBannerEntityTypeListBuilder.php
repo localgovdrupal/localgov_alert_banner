@@ -8,7 +8,7 @@ use Drupal\Core\Entity\EntityInterface;
 /**
  * Provides a listing of Alert banner type entities.
  */
-class AlertBannerTypeListBuilder extends ConfigEntityListBuilder {
+class AlertBannerEntityTypeListBuilder extends ConfigEntityListBuilder {
 
   /**
    * {@inheritdoc}

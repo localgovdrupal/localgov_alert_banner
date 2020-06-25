@@ -1,0 +1,32 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - localgov_alert_banner
+    - options
+id: localgov_alert_banner.field_alert_type_of_alert
+field_name: field_alert_type_of_alert
+entity_type: localgov_alert_banner
+type: list_string
+settings:
+  allowed_values:
+    -
+      value: 00--announcement
+      label: Annoucement
+    -
+      value: 20--minor
+      label: 'Minor alert'
+    -
+      value: 50--major
+      label: Emergency
+    -
+      value: 90--notable-person
+      label: 'Death of a notable person'
+  allowed_values_function: ''
+module: options
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

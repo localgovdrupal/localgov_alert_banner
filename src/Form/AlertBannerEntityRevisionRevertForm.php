@@ -5,7 +5,7 @@ namespace Drupal\localgov_alert_banner\Form;
 use Drupal\Core\Form\ConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
-use Drupal\localgov_alert_banner\Entity\AlertBannerInterface;
+use Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -13,12 +13,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @ingroup localgov_alert_banner
  */
-class AlertBannerRevisionRevertForm extends ConfirmFormBase {
+class AlertBannerEntityRevisionRevertForm extends ConfirmFormBase {
 
   /**
    * The Alert banner revision.
    *
-   * @var \Drupal\localgov_alert_banner\Entity\AlertBannerInterface
+   * @var \Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface
    */
   protected $revision;
 
@@ -27,7 +27,7 @@ class AlertBannerRevisionRevertForm extends ConfirmFormBase {
    *
    * @var \Drupal\Core\Entity\EntityStorageInterface
    */
-  protected $alertBannerStorage;
+  protected $alertBannerEntityStorage;
 
   /**
    * The date formatter service.
@@ -41,7 +41,7 @@ class AlertBannerRevisionRevertForm extends ConfirmFormBase {
    */
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
-    $instance->alertBannerStorage = $container->get('entity_type.manager')->getStorage('localgov_alert_banner');
+    $instance->alertBannerEntityStorage = $container->get('entity_type.manager')->getStorage('localgov_alert_banner');
     $instance->dateFormatter = $container->get('date.formatter');
     return $instance;
   }
@@ -87,7 +87,7 @@ class AlertBannerRevisionRevertForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, $localgov_alert_banner_revision = NULL) {
-    $this->revision = $this->AlertBannerStorage->loadRevision($localgov_alert_banner_revision);
+    $this->revision = $this->AlertBannerEntityStorage->loadRevision($localgov_alert_banner_revision);
     $form = parent::buildForm($form, $form_state);
 
     return $form;
@@ -108,7 +108,7 @@ class AlertBannerRevisionRevertForm extends ConfirmFormBase {
     $this->revision->save();
 
     $this->logger('content')->notice('Alert banner: reverted %title revision %revision.', ['%title' => $this->revision->label(), '%revision' => $this->revision->getRevisionId()]);
-    $this->messenger()->addMessage($this->t('Alert banner %title has been reverted to the revision from %revision-date.', ['%title' => $this->revision->label(), '%revision-date' => $this->dateFormatter->format($original_revision_timestamp)]));
+    $this->messenger()->addMessage(t('Alert banner %title has been reverted to the revision from %revision-date.', ['%title' => $this->revision->label(), '%revision-date' => $this->dateFormatter->format($original_revision_timestamp)]));
     $form_state->setRedirect(
       'entity.localgov_alert_banner.version_history',
       ['localgov_alert_banner' => $this->revision->id()]
@@ -118,15 +118,15 @@ class AlertBannerRevisionRevertForm extends ConfirmFormBase {
   /**
    * Prepares a revision to be reverted.
    *
-   * @param \Drupal\localgov_alert_banner\Entity\AlertBannerInterface $revision
+   * @param \Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface $revision
    *   The revision to be reverted.
    * @param \Drupal\Core\Form\FormStateInterface $form_state
    *   The current state of the form.
    *
-   * @return \Drupal\localgov_alert_banner\Entity\AlertBannerInterface
+   * @return \Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface
    *   The prepared revision ready to be stored.
    */
-  protected function prepareRevertedRevision(AlertBannerInterface $revision, FormStateInterface $form_state) {
+  protected function prepareRevertedRevision(AlertBannerEntityInterface $revision, FormStateInterface $form_state) {
     $revision->setNewRevision();
     $revision->isDefaultRevision(TRUE);
     $revision->setRevisionCreationTime(REQUEST_TIME);

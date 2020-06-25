@@ -9,7 +9,7 @@ use Drupal\Core\Url;
 /**
  * Builds the form to delete Alert banner type entities.
  */
-class AlertBannerTypeDeleteForm extends EntityConfirmFormBase {
+class AlertBannerEntityTypeDeleteForm extends EntityConfirmFormBase {
 
   /**
    * {@inheritdoc}
@@ -22,7 +22,7 @@ class AlertBannerTypeDeleteForm extends EntityConfirmFormBase {
    * {@inheritdoc}
    */
   public function getCancelUrl() {
-    return new Url('entity.localgov_alert_banner.collection');
+    return new Url('entity.localgov_alert_banner_type.collection');
   }
 
   /**

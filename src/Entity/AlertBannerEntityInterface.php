@@ -13,7 +13,7 @@ use Drupal\user\EntityOwnerInterface;
  *
  * @ingroup localgov_alert_banner
  */
-interface AlertBannerInterface extends ContentEntityInterface, RevisionLogInterface, EntityChangedInterface, EntityPublishedInterface, EntityOwnerInterface {
+interface AlertBannerEntityInterface extends ContentEntityInterface, RevisionLogInterface, EntityChangedInterface, EntityPublishedInterface, EntityOwnerInterface {
 
   /**
    * Add get/set methods for your configuration properties here.
@@ -25,18 +25,18 @@ interface AlertBannerInterface extends ContentEntityInterface, RevisionLogInterf
    * @return string
    *   Name of the Alert banner.
    */
-  public function getName();
+  public function getTitle();
 
   /**
    * Sets the Alert banner name.
    *
-   * @param string $name
+   * @param string $title
    *   The Alert banner name.
    *
-   * @return \Drupal\localgov_alert_banner\Entity\AlertBannerInterface
+   * @return \Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface
    *   The called Alert banner entity.
    */
-  public function setName($name);
+  public function setTitle($title);
 
   /**
    * Gets the Alert banner creation timestamp.
@@ -52,7 +52,7 @@ interface AlertBannerInterface extends ContentEntityInterface, RevisionLogInterf
    * @param int $timestamp
    *   The Alert banner creation timestamp.
    *
-   * @return \Drupal\localgov_alert_banner\Entity\AlertBannerInterface
+   * @return \Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface
    *   The called Alert banner entity.
    */
   public function setCreatedTime($timestamp);
@@ -71,7 +71,7 @@ interface AlertBannerInterface extends ContentEntityInterface, RevisionLogInterf
    * @param int $timestamp
    *   The UNIX timestamp of when this revision was created.
    *
-   * @return \Drupal\localgov_alert_banner\Entity\AlertBannerInterface
+   * @return \Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface
    *   The called Alert banner entity.
    */
   public function setRevisionCreationTime($timestamp);
@@ -90,7 +90,7 @@ interface AlertBannerInterface extends ContentEntityInterface, RevisionLogInterf
    * @param int $uid
    *   The user ID of the revision author.
    *
-   * @return \Drupal\localgov_alert_banner\Entity\AlertBannerInterface
+   * @return \Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface
    *   The called Alert banner entity.
    */
   public function setRevisionUserId($uid);
