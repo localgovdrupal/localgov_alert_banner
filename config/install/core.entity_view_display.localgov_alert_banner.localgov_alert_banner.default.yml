@@ -2,9 +2,9 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.localgov_alert_banner.localgov_alert_banner.field_alert_link
-    - field.field.localgov_alert_banner.localgov_alert_banner.field_alert_short_description
-    - field.field.localgov_alert_banner.localgov_alert_banner.field_alert_type_of_alert
+    - field.field.localgov_alert_banner.localgov_alert_banner.field_localgov_link
+    - field.field.localgov_alert_banner.localgov_alert_banner.field_localgov_short_description
+    - field.field.localgov_alert_banner.localgov_alert_banner.field_localgov_type_of_alert
     - localgov_alert_banner.localgov_alert_banner_type.localgov_alert_banner
   module:
     - link
@@ -14,7 +14,7 @@ targetEntityType: localgov_alert_banner
 bundle: localgov_alert_banner
 mode: default
 content:
-  field_alert_link:
+  field_localgov_link:
     weight: 2
     label: hidden
     settings:
@@ -26,7 +26,7 @@ content:
     third_party_settings: {  }
     type: link
     region: content
-  field_alert_short_description:
+  field_localgov_short_description:
     weight: 1
     label: hidden
     settings: {  }
@@ -42,5 +42,5 @@ content:
       link_to_entity: false
     third_party_settings: {  }
 hidden:
-  field_alert_type_of_alert: true
+  field_localgov_type_of_alert: true
   uid: true

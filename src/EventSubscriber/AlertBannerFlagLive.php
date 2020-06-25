@@ -67,7 +67,7 @@ class AlertBannerFlagLive implements EventSubscriberInterface {
     $flagType = $flagging->getFlagId();
 
     // Make sure we only act on the put live flag.
-    if ($flagType == 'set_live') {
+    if ($flagType == 'localgov_put_live') {
 
       $flag = $this->flagService->getFlagById($flagType);
 

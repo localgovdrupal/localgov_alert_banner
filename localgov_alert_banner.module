@@ -105,7 +105,7 @@ function localgov_alert_banner_alert_banner_update(EntityInterface $entity) {
 function _localgov_alert_banner_alert_banner_save(EntityInterface $entity) {
 
   // Check if the entity is flagged as live.
-  $flag = \Drupal::service('flag')->getFlagById('set_live');
+  $flag = \Drupal::service('flag')->getFlagById('localgov_put_live');
   if (!empty($flag)) {
     $flaggings = \Drupal::service('flag')->getEntityFlaggings($flag, $entity);
 
@@ -158,9 +158,9 @@ function localgov_alert_banner_form_alter(&$form, FormStateInterface $form_state
       '#open' => TRUE,
       '#weight' => -5,
     ];
-    $form['field_alert_type_of_alert']['#group'] = 'alert_details';
+    $form['field_localgov_type_of_alert']['#group'] = 'alert_details';
     $form['title']['#group'] = 'alert_details';
-    $form['field_alert_short_description']['#group'] = 'alert_details';
+    $form['field_localgov_short_description']['#group'] = 'alert_details';
 
     // Set authoring information into sidebar.
     $form['author'] = [
@@ -187,7 +187,7 @@ function localgov_alert_banner_form_alter(&$form, FormStateInterface $form_state
     unset($form['title']['widget'][0]['value']['#description']);
 
     // Change the Link text description.
-    $form['field_alert_link']['widget'][0]['title']['#description'] = t("If you don't write anything here, we will use: More information");
+    $form['field_localgov_link']['widget'][0]['title']['#description'] = t("If you don't write anything here, we will use: More information");
 
     // @TODO Set publishing options group.
     /*
@@ -216,7 +216,7 @@ function localgov_alert_banner_form_alter(&$form, FormStateInterface $form_state
     unset($form['status']);
 
     // Change put live description.
-    $form['flag']['set_live']['#description'] = t('Tick this box to put the banner on our website.') . '<br>' . t('Untick this box if you want to remove the banner from the website.');
+    $form['flag']['localgov_put_live']['#description'] = t('Tick this box to put the banner on our website.') . '<br>' . t('Untick this box if you want to remove the banner from the website.');
 
   }
 }
