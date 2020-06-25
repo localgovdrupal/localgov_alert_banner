@@ -192,19 +192,19 @@ function localgov_alert_banner_form_alter(&$form, FormStateInterface $form_state
     // @TODO Set publishing options group.
     /*
     $form['publishing_options'] = [
-      '#type' => 'details',
-      '#title' => t('Publishing options.'),
-      '#group' => 'advanced',
-      '#weight' => 10,
-      '#optional' => 1,
-      '#open' => TRUE,
-      '#attributes' => [
-        'class' => ['entity-form-publishing'],
-      ],
+    '#type' => 'details',
+    '#title' => t('Publishing options.'),
+    '#group' => 'advanced',
+    '#weight' => 10,
+    '#optional' => 1,
+    '#open' => TRUE,
+    '#attributes' => [
+    'class' => ['entity-form-publishing'],
+    ],
     ];*/
 
     // @TEMP Set the flags details group to open and change title
-    $form['flag']['#open'] = true;
+    $form['flag']['#open'] = TRUE;
     $form['flag']['#title'] = t('Publishing options');
 
     // Move publihsing options into sidebar like nodes.

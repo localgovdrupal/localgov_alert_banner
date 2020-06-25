@@ -241,7 +241,7 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
       ->setDisplayConfigurable('view', TRUE)
       ->setRequired(TRUE);
 
-    // Remove hide link
+    // Remove hide link.
     $fields['display_title'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Display title'))
       ->setDescription(t('Show the title on the alert banner.'))
@@ -259,10 +259,10 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', FALSE);
 
-    // Remove hide link
+    // Remove hide link.
     $fields['remove_hide_link'] = BaseFieldDefinition::create('boolean')
       ->setLabel(t('Remove hide link'))
-      ->setDescription(t('This will remove the hide link that appears on alert banners '))
+      ->setDescription(t('This will remove the hide link that appears on alert banners.'))
       ->setRevisionable(TRUE)
       ->setDefaultValue(0)
       ->setDisplayOptions('view', [

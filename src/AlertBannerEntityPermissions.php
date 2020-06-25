@@ -5,14 +5,12 @@ namespace Drupal\localgov_alert_banner;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
 use Drupal\localgov_alert_banner\Entity\AlertBannerEntity;
 
-
 /**
  * Provides dynamic permissions for Alert banner of different types.
  *
  * @ingroup localgov_alert_banner
- *
  */
-class AlertBannerEntityPermissions{
+class AlertBannerEntityPermissions {
 
   use StringTranslationTrait;
 
@@ -64,11 +62,11 @@ class AlertBannerEntityPermissions{
       ],
       "$type_id view revisions" => [
         'title' => $this->t('View %type_name revisions', $type_params),
-        'description' => t('To view a revision, you also need permission to view the entity item.'),
+        'description' => $this->t('To view a revision, you also need permission to view the entity item.'),
       ],
       "$type_id revert revisions" => [
         'title' => $this->t('Revert %type_name revisions', $type_params),
-        'description' => t('To revert a revision, you also need permission to edit the entity item.'),
+        'description' => $this->t('To revert a revision, you also need permission to edit the entity item.'),
       ],
       "$type_id delete revisions" => [
         'title' => $this->t('Delete %type_name revisions', $type_params),

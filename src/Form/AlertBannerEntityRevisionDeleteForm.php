@@ -92,7 +92,7 @@ class AlertBannerEntityRevisionDeleteForm extends ConfirmFormBase {
     $this->AlertBannerEntityStorage->deleteRevision($this->revision->getRevisionId());
 
     $this->logger('content')->notice('Alert banner: deleted %title revision %revision.', ['%title' => $this->revision->label(), '%revision' => $this->revision->getRevisionId()]);
-    $this->messenger()->addMessage(t('Revision from %revision-date of Alert banner %title has been deleted.', ['%revision-date' => format_date($this->revision->getRevisionCreationTime()), '%title' => $this->revision->label()]));
+    $this->messenger()->addMessage($this->t('Revision from %revision-date of Alert banner %title has been deleted.', ['%revision-date' => format_date($this->revision->getRevisionCreationTime()), '%title' => $this->revision->label()]));
     $form_state->setRedirect(
       'entity.localgov_alert_banner.canonical',
        ['localgov_alert_banner' => $this->revision->id()]

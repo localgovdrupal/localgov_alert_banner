@@ -72,8 +72,16 @@ class AlertBannerEntityAccessControlHandler extends EntityAccessControlHandler {
    * Test for given 'own' permission.
    *
    * @param \Drupal\Core\Entity\EntityInterface $entity
-   * @param $operation
+   *   Alert banner enetity.
+   * @param string $operation
+   *   Operation
+   *   - create.
+   *   - view unpublished.
+   *   - view.
+   *   - update.
+   *   - delete.
    * @param \Drupal\Core\Session\AccountInterface $account
+   *   User account.
    *
    * @return string|null
    *   The permission string indicating it's allowed.
