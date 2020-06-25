@@ -278,6 +278,7 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
       ->setDisplayConfigurable('view', FALSE);
 
     $fields['status']->setDescription(t('A boolean indicating whether the Alert banner is published.'))
+      ->setDefaultValue(0)
       ->setDisplayOptions('form', [
         'type' => 'boolean_checkbox',
         'weight' => -3,
