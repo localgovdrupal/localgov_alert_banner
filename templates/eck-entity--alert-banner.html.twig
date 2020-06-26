@@ -22,10 +22,10 @@
 #}
 {{ attach_library('localgov_alert_banner/alert_banner') }}
 {%
-  set alert_type = eck_entity.get('field_localgov_type_of_alert').value
+  set alert_type = eck_entity.get('type_of_alert').value
 %}
 {%
-  set has_link = eck_entity.get('field_localgov_link') is not empty
+  set has_link = eck_entity.get('link') is not empty
 %}
 {% set classes = [
   'alert-banner',
@@ -41,15 +41,15 @@
     <div class="alert-banner--inner">
       <div class="alert-banner--inner--content">
         {% if alert_type == 'minor' %}
-          <p><strong class="alert-banner--content-heading--inline">{{ eck_entity.label()|trim }}:</strong> <span class="alert-banner--content-body--inline">{{ content.field_localgov_short_description }}</span></p>
+          <p><strong class="alert-banner--content-heading--inline">{{ eck_entity.label()|trim }}:</strong> <span class="alert-banner--content-body--inline">{{ content.short_description }}</span></p>
         {% else %}
           <h2 class="alert-banner--content-heading">{{ content.title }}</h2>
-          <p class="alert-banner--content-body">{{ content.field_localgov_short_description }}</p>
+          <p class="alert-banner--content-body">{{ content.short_description }}</p>
         {% endif %}
       </div>
       <div class="alert-banner--actions paragraph">
         {% if has_link %}
-          <div class="alert-banner--content-link">{{ content.field_localgov_link }}</div>
+          <div class="alert-banner--content-link">{{ content.link }}</div>
         {% endif %}
         {% if not remove_hide_link %}
           <div class="alert-banner--dismiss">

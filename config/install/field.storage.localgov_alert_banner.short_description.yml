@@ -4,8 +4,8 @@ dependencies:
   module:
     - localgov_alert_banner
     - text
-id: localgov_alert_banner.field_localgov_short_description
-field_name: field_localgov_short_description
+id: localgov_alert_banner.short_description
+field_name: short_description
 entity_type: localgov_alert_banner
 type: text_long
 settings: {  }

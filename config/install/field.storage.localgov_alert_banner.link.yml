@@ -4,8 +4,8 @@ dependencies:
   module:
     - link
     - localgov_alert_banner
-id: localgov_alert_banner.field_localgov_link
-field_name: field_localgov_link
+id: localgov_alert_banner.link
+field_name: link
 entity_type: localgov_alert_banner
 type: link
 settings: {  }

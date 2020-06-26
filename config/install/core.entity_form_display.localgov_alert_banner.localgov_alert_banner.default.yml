@@ -2,9 +2,9 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.field.localgov_alert_banner.localgov_alert_banner.field_localgov_link
-    - field.field.localgov_alert_banner.localgov_alert_banner.field_localgov_short_description
-    - field.field.localgov_alert_banner.localgov_alert_banner.field_localgov_type_of_alert
+    - field.field.localgov_alert_banner.localgov_alert_banner.link
+    - field.field.localgov_alert_banner.localgov_alert_banner.short_description
+    - field.field.localgov_alert_banner.localgov_alert_banner.type_of_alert
     - localgov_alert_banner.localgov_alert_banner_type.localgov_alert_banner
   module:
     - link
@@ -21,7 +21,7 @@ content:
     settings:
       display_label: true
     third_party_settings: {  }
-  field_localgov_link:
+  link:
     weight: 4
     settings:
       placeholder_url: ''
@@ -29,7 +29,7 @@ content:
     third_party_settings: {  }
     type: link_default
     region: content
-  field_localgov_short_description:
+  short_description:
     weight: 3
     settings:
       rows: 5
@@ -37,7 +37,7 @@ content:
     third_party_settings: {  }
     type: text_textarea
     region: content
-  field_localgov_type_of_alert:
+  type_of_alert:
     type: options_select
     weight: 0
     region: content

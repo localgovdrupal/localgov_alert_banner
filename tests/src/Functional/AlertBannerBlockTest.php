@@ -37,9 +37,9 @@ class AlertBannerBlockTest extends BrowserTestBase {
       ->create([
         'type' => 'localgov_alert_banner',
         'title' => $title,
-        'field_localgov_short_description' => $alert_message,
-        'field_localgov_type_of_alert' => 'minor',
-        // 'field_localgov_link' => 'https://localgovdrupal.org/'.
+        'short_description' => $alert_message,
+        'type_of_alert' => 'minor',
+        // 'link' => 'https://localgovdrupal.org/'.
       ]);
     $alert->save();
 
@@ -64,9 +64,9 @@ class AlertBannerBlockTest extends BrowserTestBase {
       ->create([
         'type' => 'localgov_alert_banner',
         'title' => $title,
-        'field_localgov_short_description' => $alert_message,
-        'field_localgov_type_of_alert' => 'minor',
-        // 'field_localgov_link' => 'https://localgovdrupal.org/'.
+        'short_description' => $alert_message,
+        'type_of_alert' => 'minor',
+        // 'link' => 'https://localgovdrupal.org/'.
       ]);
     $alert->save();
 
