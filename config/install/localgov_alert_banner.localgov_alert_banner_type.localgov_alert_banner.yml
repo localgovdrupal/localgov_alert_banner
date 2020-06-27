@@ -2,4 +2,4 @@ langcode: en
 status: true
 dependencies: {  }
 id: localgov_alert_banner
-label: 'Alert Banner'
+label: 'Alert banner'
