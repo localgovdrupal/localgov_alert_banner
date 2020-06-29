@@ -3,7 +3,7 @@
 namespace Drupal\localgov_alert_banner;
 
 use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\localgov_alert_banner\Entity\AlertBannerEntity;
+use Drupal\localgov_alert_banner\Entity\AlertBannerEntityType;
 
 /**
  * Provides dynamic permissions for Alert banner of different types.
@@ -24,7 +24,7 @@ class AlertBannerEntityPermissions {
   public function generatePermissions() {
     $perms = [];
 
-    foreach (AlertBannerEntity::loadMultiple() as $type) {
+    foreach (AlertBannerEntityType::loadMultiple() as $type) {
       $perms += $this->buildPermissions($type);
     }
 
@@ -40,7 +40,7 @@ class AlertBannerEntityPermissions {
    * @return array
    *   An associative array of permission names and descriptions.
    */
-  protected function buildPermissions(AlertBannerEntity $type) {
+  protected function buildPermissions(AlertBannerEntityType $type) {
     $type_id = $type->id();
     $type_params = ['%type_name' => $type->label()];
 
