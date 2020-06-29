@@ -9,14 +9,46 @@
  * Available variables:
  * - content: A list of content items. Use 'content' to print all content, or
  * - attributes: HTML attributes for the container element.
+ * - display_title: Boolean indicating if alert banner title should be displayed
+ * - remove_hide_link: Boolean indicating if the link to close the banner should be hidden
+ * - type_of_alert: Type of alert banner
  *
  * @see template_preprocess_localgov_alert_banner()
  *
  * @ingroup themeable
  */
 #}
-<div{{ attributes.addClass('localgov_alert_banner') }}>
-  {% if content %}
-    {{- content -}}
-  {% endif %}
+{{ attach_library('localgov_alert_banner/alert_banner') }}
+{%
+  set has_link = content.link is not empty
+%}
+{% set classes = [
+  'js-alert-banner',
+  'localgov_alert_banner--' ~ type_of_alert,
+  is_front ? 'localgov_alert_banner--homepage' : '',
+  has_link ? 'localgov_alert_banner--has-link' : 'localgov_alert_banner--no-link'
+] %}
+<!-- Alert Banner-->
+<div class="localgov_alert_banner" role="alert">
+  <div{{ attributes.addClass(classes) }}>
+    <div class="localgov_alert_banner--inner">
+      <div class="localgov_alert_banner--inner--content">
+        {% if display_title.value %}
+          <h2 class="localgov_alert_banner--content-heading">{{ content.title }}</h2>
+        {% endif %}
+        <p class="localgov_alert_banner--content-body">{{ content.short_description }}</p>
+      </div>
+      <div class="localgov_alert_banner--actions paragraph">
+        {% if content.link %}
+          <div class="localgov_alert_banner--content-link">{{ content.link }}</div>
+        {% endif %}
+        {% if not remove_hide_link.value %}
+          <div class="localgov_alert_banner--dismiss">
+            <a href="#" class="js-alert-banner-close">Hide <span class="sr-only">Notifications</span></a>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
 </div>
+  <!-- END Alert Banner -->
