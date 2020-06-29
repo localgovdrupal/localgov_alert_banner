@@ -27,4 +27,10 @@ function template_preprocess_localgov_alert_banner(array &$variables) {
   foreach (Element::children($variables['elements']) as $key) {
     $variables['content'][$key] = $variables['elements'][$key];
   }
+  /** @var \Drupal\localgov_alert_banner\Entity\AlertBannerEntity $entity */
+  $entity = $variables['elements']['#localgov_alert_banner'];
+  $variables['display_title'] = $entity->display_title->getValue();
+  $variables['remove_hide_link'] = $entity->remove_hide_link->getValue();
+  $variables['type_of_alert'] = $entity->type_of_alert->getString();
+
 }
