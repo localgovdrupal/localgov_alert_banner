@@ -68,7 +68,7 @@ function localgov_alert_banner_entity_build_defaults_alter(array &$build, Entity
  */
 function localgov_alert_banner_preprocess(&$variables) {
 
-  if (isset($variables['elements']['localgov_alert_banner'])) {
+  if (isset($variables['elements']['#localgov_alert_banner'])) {
 
     // Get token.
     $token = \Drupal::service('localgov_alert_banner.state')->getToken();
