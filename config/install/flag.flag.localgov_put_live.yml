@@ -1,6 +1,6 @@
 langcode: en
 status: true
-id: set_live
+id: localgov_put_live
 label: 'Set alert banner live'
 bundles: {  }
 entity_type: localgov_alert_banner

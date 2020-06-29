@@ -5,8 +5,10 @@ namespace Drupal\localgov_alert_banner\EventSubscriber;
 use Drupal\flag\FlagInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Drupal\flag\FlagServiceInterface;
+use Drupal\flag\FlaggingInterface;
 use Drupal\flag\Event\FlagEvents;
 use Drupal\flag\Event\FlaggingEvent;
+use Drupal\flag\Event\UnFlaggingEvent;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\localgov_alert_banner\AlertBannerState;
 
@@ -67,7 +69,7 @@ class AlertBannerFlagLive implements EventSubscriberInterface {
     $flagType = $flagging->getFlagId();
 
     // Make sure we only act on the put live flag.
-    if ($flagType == 'set_live') {
+    if ($flagType == 'localgov_put_live') {
 
       $flag = $this->flagService->getFlagById($flagType);
 
@@ -80,6 +82,8 @@ class AlertBannerFlagLive implements EventSubscriberInterface {
       // Regenerate JS token.
       $this->alertBannerState->generateToken($flagging->getFlaggable())->save();
 
+      // Set alert banner status to publish.
+      $this->publishBanner($flagging);
     }
   }
 
@@ -127,11 +131,39 @@ class AlertBannerFlagLive implements EventSubscriberInterface {
   }
 
   /**
+   * Publish the banner based on flag.
+   *
+   * @param \Drupal\flag\FlaggingInterface $flagging
+   *   Flagging Object.
+   */
+  private function publishBanner(FlaggingInterface $flagging) {
+    $alert_banner = $flagging->getFlaggable();
+    $alert_banner->set('status', 1);
+    $alert_banner->save();
+  }
+
+  /**
+   * Un Flag event.
+   *
+   * @param \Drupal\flag\Event\UnflaggingEvent $event
+   *   Flag event.
+   */
+  public function unFlag(UnflaggingEvent $event) {
+    $flagging = $event->getFlaggings();
+    foreach ($flagging as $indv_flagging) {
+      $alert_banner = $indv_flagging->getFlaggable();
+      $alert_banner->set('status', 0);
+      $alert_banner->save();
+    }
+  }
+
+  /**
    * {@inheritdoc}
    */
   public static function getSubscribedEvents() {
     $events = [];
     $events[FlagEvents::ENTITY_FLAGGED][] = ['onFlag'];
+    $events[FlagEvents::ENTITY_UNFLAGGED][] = ['unFlag'];
     return $events;
   }
 

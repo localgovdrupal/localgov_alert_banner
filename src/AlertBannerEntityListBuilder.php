@@ -11,15 +11,14 @@ use Drupal\Core\Link;
  *
  * @ingroup localgov_alert_banner
  */
-class AlertBannerListBuilder extends EntityListBuilder {
+class AlertBannerEntityListBuilder extends EntityListBuilder {
 
   /**
    * {@inheritdoc}
    */
   public function buildHeader() {
     $header['id'] = $this->t('Alert banner ID');
-    $header['title'] = $this->t('Title');
-    $header['type'] = $this->t('Type');
+    $header['title'] = $this->t('title');
     return $header + parent::buildHeader();
   }
 
@@ -27,14 +26,13 @@ class AlertBannerListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    /* @var \Drupal\localgov_alert_banner\Entity\AlertBanner $entity */
+    /* @var \Drupal\localgov_alert_banner\Entity\AlertBannerEntity $entity */
     $row['id'] = $entity->id();
     $row['title'] = Link::createFromRoute(
       $entity->label(),
       'entity.localgov_alert_banner.edit_form',
       ['localgov_alert_banner' => $entity->id()]
     );
-    $row['type'] = $entity->getType();
     return $row + parent::buildRow($entity);
   }
 

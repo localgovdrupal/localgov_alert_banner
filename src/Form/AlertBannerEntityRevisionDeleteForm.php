@@ -12,12 +12,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @ingroup localgov_alert_banner
  */
-class AlertBannerRevisionDeleteForm extends ConfirmFormBase {
+class AlertBannerEntityRevisionDeleteForm extends ConfirmFormBase {
 
   /**
    * The Alert banner revision.
    *
-   * @var \Drupal\localgov_alert_banner\Entity\AlertBannerInterface
+   * @var \Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface
    */
   protected $revision;
 
@@ -26,7 +26,7 @@ class AlertBannerRevisionDeleteForm extends ConfirmFormBase {
    *
    * @var \Drupal\Core\Entity\EntityStorageInterface
    */
-  protected $alertBannerStorage;
+  protected $alertBannerEntityStorage;
 
   /**
    * The database connection.
@@ -47,7 +47,7 @@ class AlertBannerRevisionDeleteForm extends ConfirmFormBase {
    */
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
-    $instance->alertBannerStorage = $container->get('entity_type.manager')->getStorage('localgov_alert_banner');
+    $instance->alertBannerEntityStorage = $container->get('entity_type.manager')->getStorage('localgov_alert_banner');
     $instance->connection = $container->get('database');
     $instance->dateFormatter = $container->get('date.formatter');
     return $instance;
@@ -87,7 +87,7 @@ class AlertBannerRevisionDeleteForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state, $localgov_alert_banner_revision = NULL) {
-    $this->revision = $this->AlertBannerStorage->loadRevision($localgov_alert_banner_revision);
+    $this->revision = $this->AlertBannerEntityStorage->loadRevision($localgov_alert_banner_revision);
     $form = parent::buildForm($form, $form_state);
 
     return $form;
@@ -97,7 +97,7 @@ class AlertBannerRevisionDeleteForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $this->AlertBannerStorage->deleteRevision($this->revision->getRevisionId());
+    $this->AlertBannerEntityStorage->deleteRevision($this->revision->getRevisionId());
 
     $this->logger('content')->notice('Alert banner: deleted %title revision %revision.', ['%title' => $this->revision->label(), '%revision' => $this->revision->getRevisionId()]);
     $this->messenger()->addMessage($this->t('Revision from %revision-date of Alert banner %title has been deleted.', ['%revision-date' => $this->dateFormatter->format($this->revision->getRevisionCreationTime()), '%title' => $this->revision->label()]));

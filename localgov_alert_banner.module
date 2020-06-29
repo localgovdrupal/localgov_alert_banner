@@ -105,7 +105,7 @@ function localgov_alert_banner_alert_banner_update(EntityInterface $entity) {
 function _localgov_alert_banner_alert_banner_save(EntityInterface $entity) {
 
   // Check if the entity is flagged as live.
-  $flag = \Drupal::service('flag')->getFlagById('set_live');
+  $flag = \Drupal::service('flag')->getFlagById('localgov_put_live');
   if (!empty($flag)) {
     $flaggings = \Drupal::service('flag')->getEntityFlaggings($flag, $entity);
 
@@ -158,11 +158,9 @@ function localgov_alert_banner_form_alter(&$form, FormStateInterface $form_state
       '#open' => TRUE,
       '#weight' => -5,
     ];
-    $form['alert_type']['#group'] = 'alert_details';
+    $form['type_of_alert']['#group'] = 'alert_details';
     $form['title']['#group'] = 'alert_details';
     $form['short_description']['#group'] = 'alert_details';
-
-    $form['remove_hide_link']['#group'] = 'flag';
 
     // Set authoring information into sidebar.
     $form['author'] = [
@@ -178,7 +176,7 @@ function localgov_alert_banner_form_alter(&$form, FormStateInterface $form_state
     ];
 
     // Move the authoring info into sidebar like nodes.
-    $form['user_id']['#group'] = 'author';
+    $form['uid']['#group'] = 'author';
     $form['created']['#group'] = 'author';
     $form['revision_log_message']['#group'] = 'author';
 
@@ -191,11 +189,68 @@ function localgov_alert_banner_form_alter(&$form, FormStateInterface $form_state
     // Change the Link text description.
     $form['link']['widget'][0]['title']['#description'] = t("If you don't write anything here, we will use: More information");
 
-    // Set the flags details group to open and change title.
+    // @TODO Set publishing options group.
+    /*
+    $form['publishing_options'] = [
+    '#type' => 'details',
+    '#title' => t('Publishing options.'),
+    '#group' => 'advanced',
+    '#weight' => 10,
+    '#optional' => 1,
+    '#open' => TRUE,
+    '#attributes' => [
+    'class' => ['entity-form-publishing'],
+    ],
+    ];*/
+
+    // @TEMP Set the flags details group to open and change title
     $form['flag']['#open'] = TRUE;
     $form['flag']['#title'] = t('Publishing options');
 
+    // Move publihsing options into sidebar like nodes.
+    $form['display_title']['#group'] = 'flag';
+    $form['remove_hide_link']['#group'] = 'flag';
+    $form['status']['#group'] = 'flag';
+
+    // @TEMP unset publish field (to replace flag).
+    unset($form['status']);
+
     // Change put live description.
-    $form['flag']['set_live']['#description'] = t('Tick this box to put the banner on our website.') . '<br>' . t('Untick this box if you want to remove the banner from the website.');
+    $form['flag']['localgov_put_live']['#description'] = t('Tick this box to put the banner on our website.') . '<br>' . t('Untick this box if you want to remove the banner from the website.');
+
   }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function localgov_alert_banner_theme() {
+  $theme = [];
+  $theme['localgov_alert_banner'] = [
+    'render element' => 'elements',
+    'file' => 'localgov_alert_banner.page.inc',
+    'template' => 'localgov_alert_banner',
+  ];
+  $theme['localgov_alert_banner_content_add_list'] = [
+    'render element' => 'content',
+    'variables' => ['content' => NULL],
+    'file' => 'localgov_alert_banner.page.inc',
+  ];
+  return $theme;
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK().
+ */
+function localgov_alert_banner_theme_suggestions_localgov_alert_banner(array $variables) {
+  $suggestions = [];
+  $entity = $variables['elements']['#localgov_alert_banner'];
+  $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
+
+  $suggestions[] = 'localgov_alert_banner__' . $sanitized_view_mode;
+  $suggestions[] = 'localgov_alert_banner__' . $entity->bundle();
+  $suggestions[] = 'localgov_alert_banner__' . $entity->bundle() . '__' . $sanitized_view_mode;
+  $suggestions[] = 'localgov_alert_banner__' . $entity->id();
+  $suggestions[] = 'localgov_alert_banner__' . $entity->id() . '__' . $sanitized_view_mode;
+  return $suggestions;
 }

@@ -11,7 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @ingroup localgov_alert_banner
  */
-class AlertBannerForm extends ContentEntityForm {
+class AlertBannerEntityForm extends ContentEntityForm {
 
   /**
    * The current user account.
@@ -34,7 +34,7 @@ class AlertBannerForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    /* @var \Drupal\localgov_alert_banner\Entity\AlertBanner $entity */
+    /* @var \Drupal\localgov_alert_banner\Entity\AlertBannerEntity $entity */
     $form = parent::buildForm($form, $form_state);
 
     if (!$this->entity->isNew()) {

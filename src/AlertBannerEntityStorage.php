@@ -5,7 +5,7 @@ namespace Drupal\localgov_alert_banner;
 use Drupal\Core\Entity\Sql\SqlContentEntityStorage;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Language\LanguageInterface;
-use Drupal\localgov_alert_banner\Entity\AlertBannerInterface;
+use Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface;
 
 /**
  * Defines the storage handler class for Alert banner entities.
@@ -15,12 +15,12 @@ use Drupal\localgov_alert_banner\Entity\AlertBannerInterface;
  *
  * @ingroup localgov_alert_banner
  */
-class AlertBannerStorage extends SqlContentEntityStorage implements AlertBannerStorageInterface {
+class AlertBannerEntityStorage extends SqlContentEntityStorage implements AlertBannerEntityStorageInterface {
 
   /**
    * {@inheritdoc}
    */
-  public function revisionIds(AlertBannerInterface $entity) {
+  public function revisionIds(AlertBannerEntityInterface $entity) {
     return $this->database->query(
       'SELECT vid FROM {localgov_alert_banner_revision} WHERE id=:id ORDER BY vid',
       [':id' => $entity->id()]
@@ -40,7 +40,7 @@ class AlertBannerStorage extends SqlContentEntityStorage implements AlertBannerS
   /**
    * {@inheritdoc}
    */
-  public function countDefaultLanguageRevisions(AlertBannerInterface $entity) {
+  public function countDefaultLanguageRevisions(AlertBannerEntityInterface $entity) {
     return $this->database->query('SELECT COUNT(*) FROM {localgov_alert_banner_field_revision} WHERE id = :id AND default_langcode = 1', [':id' => $entity->id()])
       ->fetchField();
   }

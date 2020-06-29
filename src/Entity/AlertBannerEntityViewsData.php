@@ -7,7 +7,7 @@ use Drupal\views\EntityViewsData;
 /**
  * Provides Views data for Alert banner entities.
  */
-class AlertBannerViewsData extends EntityViewsData {
+class AlertBannerEntityViewsData extends EntityViewsData {
 
   /**
    * {@inheritdoc}

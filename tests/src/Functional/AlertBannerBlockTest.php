@@ -38,14 +38,14 @@ class AlertBannerBlockTest extends BrowserTestBase {
         'type' => 'localgov_alert_banner',
         'title' => $title,
         'short_description' => $alert_message,
-        'alert_type' => 'minor',
+        'type_of_alert' => 'minor',
         // 'link' => 'https://localgovdrupal.org/'.
       ]);
     $alert->save();
 
     // Flag the alert banner to put it live.
     $flag_service = $this->container->get('flag');
-    $flag = $flag_service->getFlagById('set_live');
+    $flag = $flag_service->getFlagById('localgov_put_live');
     $flag_service->flag($flag, $alert);
 
     // Load the front page and check the banner is displayed.
@@ -65,7 +65,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
         'type' => 'localgov_alert_banner',
         'title' => $title,
         'short_description' => $alert_message,
-        'alert_type' => 'minor',
+        'type_of_alert' => 'minor',
         // 'link' => 'https://localgovdrupal.org/'.
       ]);
     $alert->save();

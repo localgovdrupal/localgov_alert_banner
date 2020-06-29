@@ -15,9 +15,9 @@ function localgov_alert_banner_uninstall() {
     "block.block.views_block__alert_banner_alert_banner_block",
     "core.entity_form_display.alert_banner.alert_banner.default",
     "core.entity_view_display.alert_banner.alert_banner.default",
-    "flag.flag.set_live",
-    "system.action.flag_action.set_live_flag",
-    "system.action.flag_action.set_live_unflag",
+    "flag.flag.localgov_put_live",
+    "system.action.flag_action.localgov_put_live_flag",
+    "system.action.flag_action.localgov_put_live_unflag",
     "user.role.emergency_publisher",
     "views.view.alert_banner",
   ];
