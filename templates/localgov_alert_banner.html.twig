@@ -22,13 +22,23 @@
 {%
   set has_link = content.link is not empty
 %}
-{% set classes = [
-  'wrapper',
-  'js-alert-banner',
-  'localgov_alert_banner--' ~ type_of_alert,
-  is_front ? 'localgov_alert_banner--homepage' : '',
-  has_link ? 'localgov_alert_banner--has-link' : 'localgov_alert_banner--no-link'
-] %}
+{%
+  set classes = [
+    'wrapper',
+    'js-alert-banner',
+    'localgov_alert_banner--' ~ type_of_alert,
+    is_front ? 'localgov_alert_banner--homepage' : '',
+    has_link ? 'localgov_alert_banner--has-link' : 'localgov_alert_banner--no-link'
+  ]
+%}
+{% if content.link %}
+  {% set link_url = content.link[0]['#url']  %}
+  {% if content.link[0]['#title'] == content.link[0]['#url'].toString %}
+    {% set link_title = 'More information' %}
+  {% else %}
+    {% set link_title = content.link[0]['#title'] %}
+  {% endif %}
+{% endif %}
 <!-- Alert Banner-->
 <div class="localgov_alert_banner" role="alert">
   <div{{ attributes.addClass(classes) }}>
@@ -41,7 +51,7 @@
       </div>
       <div class="localgov_alert_banner--actions paragraph">
         {% if content.link %}
-          <div class="localgov_alert_banner--content-link">{{ content.link }}</div>
+          <div class="localgov_alert_banner--content-link"><a href="{{ link_url }}">{{ link_title }}</a></div>
         {% endif %}
         {% if not remove_hide_link.value %}
           <div class="localgov_alert_banner--dismiss">
