@@ -19,11 +19,9 @@
  */
 #}
 {{ attach_library('localgov_alert_banner/alert_banner') }}
-{%
-  set has_link = content.link is not empty
-%}
-{%
-  set classes = [
+{% set has_link = content.link is not empty %}
+{% set type_of_alert =  type_of_alert|split('--')[1] %}
+{% set classes = [
     'wrapper',
     'js-alert-banner',
     'localgov_alert_banner--' ~ type_of_alert,
@@ -31,29 +29,21 @@
     has_link ? 'localgov_alert_banner--has-link' : 'localgov_alert_banner--no-link'
   ]
 %}
-{% if content.link %}
-  {% set link_url = content.link[0]['#url']  %}
-  {% if content.link[0]['#title'] == content.link[0]['#url'].toString %}
-    {% set link_title = 'More information' %}
-  {% else %}
-    {% set link_title = content.link[0]['#title'] %}
-  {% endif %}
-{% endif %}
 <!-- Alert Banner-->
 <div class="localgov_alert_banner" role="alert">
   <div{{ attributes.addClass(classes) }}>
     <div class="localgov_alert_banner--inner">
       <div class="localgov_alert_banner--inner--content">
-        {% if display_title.value %}
+        {% if display_title %}
           <h2 class="localgov_alert_banner--content-heading">{{ content.title }}</h2>
         {% endif %}
         <p class="localgov_alert_banner--content-body">{{ content.short_description }}</p>
       </div>
       <div class="localgov_alert_banner--actions paragraph">
         {% if content.link %}
-          <div class="localgov_alert_banner--content-link"><a href="{{ link_url }}">{{ link_title }}</a></div>
+          <div class="localgov_alert_banner--content-link">{{ content.link }}</div>
         {% endif %}
-        {% if not remove_hide_link.value %}
+        {% if not remove_hide_link %}
           <div class="localgov_alert_banner--dismiss">
             <a href="#" class="js-alert-banner-close">Hide <span class="sr-only">Notifications</span></a>
           </div>
