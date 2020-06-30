@@ -38,11 +38,11 @@
           <h2 class="localgov_alert_banner--content-heading">{{ content.title }}</h2>
         {% endif %}
         <p class="localgov_alert_banner--content-body">{{ content.short_description }}</p>
-      </div>
-      <div class="localgov_alert_banner--actions paragraph">
         {% if content.link %}
           <div class="localgov_alert_banner--content-link">{{ content.link }}</div>
         {% endif %}
+      </div>
+      <div class="localgov_alert_banner--actions paragraph">
         {% if not remove_hide_link %}
           <div class="localgov_alert_banner--dismiss">
             <a href="#" class="js-alert-banner-close">Hide <span class="sr-only">Notifications</span></a>
