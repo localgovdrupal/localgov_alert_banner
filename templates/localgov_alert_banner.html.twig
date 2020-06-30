@@ -23,6 +23,7 @@
   set has_link = content.link is not empty
 %}
 {% set classes = [
+  'wrapper',
   'js-alert-banner',
   'localgov_alert_banner--' ~ type_of_alert,
   is_front ? 'localgov_alert_banner--homepage' : '',

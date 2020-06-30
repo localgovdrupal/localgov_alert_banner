@@ -1,0 +1,22 @@
+.localgov_alert_banner {
+  background-color: #fc3;
+  color: #000;
+}
+.localgov_alert_banner .wrapper {
+  margin: 0 auto;
+  max-width: 73.125rem;
+}
+.localgov_alert_banner--inner {
+  display: flex;
+  justify-content: space-between;
+  margin: 0rem 0.9375rem;
+  padding: 0.625rem 0rem;
+}
+.localgov_alert_banner--actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.localgov_alert_banner--actions .localgov_alert_banner--content-link {
+  margin-right: 0.625rem;
+}
