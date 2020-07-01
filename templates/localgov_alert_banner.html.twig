@@ -37,7 +37,7 @@
         {% if display_title %}
           <h2 class="localgov_alert_banner--content-heading">{{ content.title }}</h2>
         {% endif %}
-        <p class="localgov_alert_banner--content-body">{{ content.short_description }}</p>
+        <div class="localgov_alert_banner--content-body">{{ content|without('link', 'title') }}</div>
         {% if content.link %}
           <div class="localgov_alert_banner--content-link">{{ content.link }}</div>
         {% endif %}
