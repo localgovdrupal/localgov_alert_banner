@@ -42,13 +42,13 @@
           <div class="localgov_alert_banner--content-link">{{ content.link }}</div>
         {% endif %}
       </div>
-      <div class="localgov_alert_banner--actions paragraph">
-        {% if not remove_hide_link %}
+      {% if not remove_hide_link %}
+      <div class="localgov_alert_banner--actions">
           <div class="localgov_alert_banner--dismiss">
             <a href="#" class="js-alert-banner-close">Hide <span class="sr-only">Notifications</span></a>
           </div>
-        {% endif %}
       </div>
+      {% endif %}
     </div>
   </div>
 </div>
