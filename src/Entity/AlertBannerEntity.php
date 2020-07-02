@@ -247,11 +247,6 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
       ->setDescription(t('Show the title on the alert banner.'))
       ->setRevisionable(TRUE)
       ->setDefaultValue(1)
-      ->setDisplayOptions('view', [
-        'label' => 'above',
-        'type' => 'string',
-        'weight' => -4,
-      ])
       ->setDisplayOptions('form', [
         'type' => 'boolean_checkbox',
         'weight' => -4,
@@ -265,11 +260,6 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
       ->setDescription(t('This will remove the hide link that appears on alert banners.'))
       ->setRevisionable(TRUE)
       ->setDefaultValue(0)
-      ->setDisplayOptions('view', [
-        'label' => 'above',
-        'type' => 'string',
-        'weight' => -4,
-      ])
       ->setDisplayOptions('form', [
         'type' => 'boolean_checkbox',
         'weight' => -4,

@@ -1,5 +1,8 @@
 alert_banner:
   version: VERSION
+  css:
+    layout:
+      css/localgov-alert-banner.css: {}
   js:
     js/alert_banner.js: {}
   dependencies:
