@@ -12,21 +12,21 @@ function localgov_alert_banner_uninstall() {
 
   // Remove configuration.
   $configs = [
-    "block.block.views_block__alert_banner_alert_banner_block.yml",
-    "core.entity_form_display.localgov_alert_banner.localgov_alert_banner.default.yml",
-    "core.entity_view_display.localgov_alert_banner.localgov_alert_banner.default.yml",
-    "field.field.localgov_alert_banner.localgov_alert_banner.link.yml",
-    "field.field.localgov_alert_banner.localgov_alert_banner.short_description.yml",
-    "field.field.localgov_alert_banner.localgov_alert_banner.type_of_alert.yml",
-    "field.storage.localgov_alert_banner.link.yml",
-    "field.storage.localgov_alert_banner.short_description.yml",
-    "field.storage.localgov_alert_banner.type_of_alert.yml",
-    "flag.flag.localgov_put_live.yml",
-    "localgov_alert_banner.localgov_alert_banner_type.localgov_alert_banner.yml",
-    "system.action.flag_action.localgov_put_live_flag.yml",
-    "system.action.flag_action.localgov_put_live_unflag.yml",
-    "user.role.emergency_publisher.yml",
-    "views.view.alert_banner.yml",
+    "block.block.views_block__alert_banner_alert_banner_block",
+    "core.entity_form_display.localgov_alert_banner.localgov_alert_banner.default",
+    "core.entity_view_display.localgov_alert_banner.localgov_alert_banner.default",
+    "field.field.localgov_alert_banner.localgov_alert_banner.link",
+    "field.field.localgov_alert_banner.localgov_alert_banner.short_description",
+    "field.field.localgov_alert_banner.localgov_alert_banner.type_of_alert",
+    "field.storage.localgov_alert_banner.link",
+    "field.storage.localgov_alert_banner.short_description",
+    "field.storage.localgov_alert_banner.type_of_alert",
+    "flag.flag.localgov_put_live",
+    "localgov_alert_banner.localgov_alert_banner_type.localgov_alert_banner",
+    "system.action.flag_action.localgov_put_live_flag",
+    "system.action.flag_action.localgov_put_live_unflag",
+    "user.role.emergency_publisher",
+    "views.view.alert_banner",
   ];
   foreach ($configs as $config) {
     \Drupal::configFactory()->getEditable($config)->delete();
