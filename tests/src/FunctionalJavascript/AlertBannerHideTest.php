@@ -63,6 +63,16 @@ class AlertBannerHideJavascriptTest extends WebDriverTestBase {
     // Test on login page
     $this->drupalGet('/user');
     $this->assertSession()->pageTextNotContains($alert_message);
+
+    // Update alert message
+    $title = $this->randomMachineName(8);
+    $alert->set('title', ['value' => $title]);
+    $alert->save();
+
+    // Load the front page and check that banner displays and cookie token is no longer valid
+    $this->drupalGet('<front>');
+    $this->assertSession()->pageTextContains($title);
+
   }
 
 }
