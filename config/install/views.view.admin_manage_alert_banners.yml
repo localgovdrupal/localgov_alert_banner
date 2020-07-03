@@ -694,7 +694,18 @@ display:
           entity_field: id
           plugin_id: standard
       title: 'Manage Alert Banners'
-      header: {  }
+      header:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: 'Add Alert banner link'
+          empty: true
+          tokenize: false
+          content: '<div><a href="/admin/content/alert-banner/localgov_alert_banner/add" class="button button--action button--primary" data-drupal-link-system-path="admin/content/alert-banner/localgov_alert_banner/add">Add Alert banner</a></div>'
+          plugin_id: text_custom
       footer: {  }
       empty: {  }
       relationships:
