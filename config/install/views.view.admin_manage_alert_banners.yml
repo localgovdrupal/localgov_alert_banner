@@ -10,6 +10,7 @@ dependencies:
     - flag
     - localgov_alert_banner
     - options
+    - user
 id: admin_manage_alert_banners
 label: 'Manage Alert Banners'
 module: views
@@ -25,8 +26,9 @@ display:
     position: 0
     display_options:
       access:
-        type: none
-        options: {  }
+        type: perm
+        options:
+          perm: 'access alert banner listing page'
       cache:
         type: tag
         options: {  }
@@ -730,6 +732,7 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user.permissions
       tags:
         - 'config:field.storage.localgov_alert_banner.type_of_alert'
   localgov_alert_banner_admin_list:
@@ -756,5 +759,6 @@ display:
         - 'languages:language_interface'
         - url
         - url.query_args
+        - user.permissions
       tags:
         - 'config:field.storage.localgov_alert_banner.type_of_alert'
