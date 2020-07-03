@@ -86,23 +86,23 @@ function localgov_alert_banner_preprocess(&$variables) {
 }
 
 /**
- * Implements hook_alert_banner_create().
+ * Implements hook_ENTITY_TYPE_create().
  */
-function localgov_alert_banner_alert_banner_create(EntityInterface $entity) {
-  _localgov_alert_banner_alert_banner_save($entity);
+function localgov_alert_banner_localgov_alert_banner_create(EntityInterface $entity) {
+  _localgov_alert_banner_localgov_alert_banner_save($entity);
 }
 
 /**
- * Implements hook_alert_banner_update().
+ * Implements hook_ENTITY_TYPE_update().
  */
-function localgov_alert_banner_alert_banner_update(EntityInterface $entity) {
-  _localgov_alert_banner_alert_banner_save($entity);
+function localgov_alert_banner_localgov_alert_banner_update(EntityInterface $entity) {
+  _localgov_alert_banner_localgov_alert_banner_save($entity);
 }
 
 /**
  * Common function when alert banner entity saved.
  */
-function _localgov_alert_banner_alert_banner_save(EntityInterface $entity) {
+function _localgov_alert_banner_localgov_alert_banner_save(EntityInterface $entity) {
 
   // Check if the entity is flagged as live.
   $flag = \Drupal::service('flag')->getFlagById('localgov_put_live');
@@ -110,7 +110,6 @@ function _localgov_alert_banner_alert_banner_save(EntityInterface $entity) {
     $flaggings = \Drupal::service('flag')->getEntityFlaggings($flag, $entity);
 
     if (!empty($flaggings)) {
-
       // Regenerate a JS token for the updated alert banner.
       \Drupal::service('localgov_alert_banner.state')->generateToken($entity)->save();
     }
