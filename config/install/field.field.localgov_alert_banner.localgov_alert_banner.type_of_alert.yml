@@ -4,8 +4,10 @@ dependencies:
   config:
     - field.storage.localgov_alert_banner.type_of_alert
     - localgov_alert_banner.localgov_alert_banner_type.localgov_alert_banner
+  enforced:
+    module:
+      - localgov_alert_banner
   module:
-    - localgov_alert_banner
     - options
 id: localgov_alert_banner.localgov_alert_banner.type_of_alert
 field_name: type_of_alert

@@ -3,9 +3,11 @@ status: true
 dependencies:
   config:
     - flag.flag.localgov_put_live
+  enforced:
+    module:
+      - localgov_alert_banner
   module:
     - flag
-    - localgov_alert_banner
 id: alert_banner
 label: 'Alert banner'
 module: views

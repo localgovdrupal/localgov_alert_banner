@@ -1,7 +1,8 @@
 langcode: en
 status: true
 dependencies:
-  module:
-    - localgov_alert_banner
+  enforced:
+    module:
+      - localgov_alert_banner
 id: localgov_alert_banner
 label: 'Alert banner'
