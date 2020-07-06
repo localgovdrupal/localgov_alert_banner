@@ -5,6 +5,7 @@ dependencies:
     - flag.flag.localgov_put_live
   module:
     - flag
+    - localgov_alert_banner
 id: alert_banner
 label: 'Alert banner'
 module: views

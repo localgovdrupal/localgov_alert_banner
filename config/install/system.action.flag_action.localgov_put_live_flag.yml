@@ -3,6 +3,7 @@ status: true
 dependencies:
   module:
     - flag
+    - localgov_alert_banner
 id: flag_action.localgov_put_live_flag
 label: 'Put alert banner live'
 type: localgov_alert_banner

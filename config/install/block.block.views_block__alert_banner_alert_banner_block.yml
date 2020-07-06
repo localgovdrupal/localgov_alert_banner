@@ -4,6 +4,7 @@ dependencies:
   config:
     - views.view.alert_banner
   module:
+    - localgov_alert_banner
     - views
   theme:
     - localgov_theme

@@ -8,6 +8,7 @@ dependencies:
     - localgov_alert_banner.localgov_alert_banner_type.localgov_alert_banner
   module:
     - link
+    - localgov_alert_banner
     - text
 id: localgov_alert_banner.localgov_alert_banner.default
 targetEntityType: localgov_alert_banner

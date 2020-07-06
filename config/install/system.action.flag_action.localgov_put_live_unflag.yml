@@ -3,6 +3,7 @@ status: true
 dependencies:
   module:
     - flag
+    - localgov_alert_banner
 id: flag_action.localgov_put_live_unflag
 label: 'Remove alert banner'
 type: localgov_alert_banner

@@ -5,6 +5,7 @@ dependencies:
     - field.storage.localgov_alert_banner.short_description
     - localgov_alert_banner.localgov_alert_banner_type.localgov_alert_banner
   module:
+    - localgov_alert_banner
     - text
 id: localgov_alert_banner.localgov_alert_banner.short_description
 field_name: short_description
