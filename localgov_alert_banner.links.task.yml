@@ -15,6 +15,13 @@ entity.localgov_alert_banner.version_history:
   base_route: entity.localgov_alert_banner.canonical
   title: 'Revisions'
 
+entity.localgov_alert_banner.status_form:
+  route_name:  entity.localgov_alert_banner.status_form
+  base_route:  entity.localgov_alert_banner.canonical
+  title: 'Status'
+  weight: 10
+  class: '\Drupal\localgov_alert_banner\Plugin\Menu\LocalTask\StatusFormTab'
+
 entity.localgov_alert_banner.delete_form:
   route_name:  entity.localgov_alert_banner.delete_form
   base_route:  entity.localgov_alert_banner.canonical

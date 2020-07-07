@@ -32,6 +32,7 @@ use Drupal\user\UserInterface;
  *       "add" = "Drupal\localgov_alert_banner\Form\AlertBannerEntityForm",
  *       "edit" = "Drupal\localgov_alert_banner\Form\AlertBannerEntityForm",
  *       "delete" = "Drupal\localgov_alert_banner\Form\AlertBannerEntityDeleteForm",
+ *       "status" = "Drupal\localgov_alert_banner\Form\AlertBannerEntityStatusForm",
  *     },
  *     "route_provider" = {
  *       "html" = "Drupal\localgov_alert_banner\AlertBannerEntityHtmlRouteProvider",
@@ -61,6 +62,7 @@ use Drupal\user\UserInterface;
  *     "add-form" = "/admin/content/alert-banner/localgov_alert_banner/add/{localgov_alert_banner_type}",
  *     "edit-form" = "/admin/content/alert-banner/localgov_alert_banner/{localgov_alert_banner}/edit",
  *     "delete-form" = "/admin/content/alert-banner/localgov_alert_banner/{localgov_alert_banner}/delete",
+ *     "status-form" = "/admin/content/alert-banner/localgov_alert_banner/{localgov_alert_banner}/status",
  *     "version-history" = "/admin/content/alert-banner/localgov_alert_banner/{localgov_alert_banner}/revisions",
  *     "revision" = "/admin/content/alert-banner/localgov_alert_banner/{localgov_alert_banner}/revisions/{localgov_alert_banner_revision}/view",
  *     "revision_revert" = "/admin/content/alert-banner/localgov_alert_banner/{localgov_alert_banner}/revisions/{localgov_alert_banner_revision}/revert",
