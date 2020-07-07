@@ -1,16 +1,18 @@
 langcode: en
 status: true
 dependencies:
+  enforced:
+    module:
+      - localgov_alert_banner
   config:
     - field.storage.localgov_alert_banner.type_of_alert
-    - flag.flag.localgov_put_live
     - localgov_alert_banner.localgov_alert_banner_type.localgov_alert_banner
     - system.menu.admin
   module:
-    - flag
-    - localgov_alert_banner
     - options
     - user
+_core:
+  default_config_hash: pJmCjeC7KNRB79o3Mw2GbvGHKQy9OVCxeK1SnhuVdNU
 id: admin_manage_alert_banners
 label: 'Manage Alert Banners'
 module: views
@@ -398,14 +400,14 @@ display:
           entity_type: localgov_alert_banner
           entity_field: changed
           plugin_id: field
-        link_flag:
-          id: link_flag
-          table: flagging
-          field: link_flag
-          relationship: flag_relationship
+        status:
+          id: status
+          table: localgov_alert_banner_field_data
+          field: status
+          relationship: none
           group_type: group
           admin_label: ''
-          label: Live
+          label: Status
           exclude: false
           alter:
             alter_text: false
@@ -446,8 +448,25 @@ display:
           hide_empty: false
           empty_zero: false
           hide_alter_empty: true
-          entity_type: flagging
-          plugin_id: flag_link
+          click_sort_column: value
+          type: boolean
+          settings:
+            format: custom
+            format_custom_true: Live
+            format_custom_false: 'Off'
+          group_column: value
+          group_columns: {  }
+          group_rows: true
+          delta_limit: 0
+          delta_offset: 0
+          delta_reversed: false
+          delta_first_last: false
+          multi_type: separator
+          separator: ', '
+          field_api_classes: false
+          entity_type: localgov_alert_banner
+          entity_field: status
+          plugin_id: field
         operations:
           id: operations
           table: localgov_alert_banner
@@ -512,55 +531,6 @@ display:
           expose:
             operator_limit_selection: false
             operator_list: {  }
-        flagged:
-          id: flagged
-          table: flagging
-          field: flagged
-          relationship: flag_relationship
-          group_type: group
-          admin_label: ''
-          operator: '='
-          value: '1'
-          group: 1
-          exposed: true
-          expose:
-            operator_id: ''
-            label: Flagged
-            description: ''
-            use_operator: false
-            operator: flagged_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: flagged
-            required: true
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              emergency_publisher: '0'
-              anonymous: '0'
-          is_grouped: true
-          group_info:
-            label: Live
-            description: ''
-            identifier: flagged
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items:
-              1:
-                title: Live
-                operator: '='
-                value: '1'
-              2:
-                title: Unpublished
-                operator: '='
-                value: '0'
-          entity_type: flagging
-          plugin_id: flag_filter
         title:
           id: title
           table: localgov_alert_banner_field_data
@@ -699,19 +669,7 @@ display:
       header: {  }
       footer: {  }
       empty: {  }
-      relationships:
-        flag_relationship:
-          id: flag_relationship
-          table: localgov_alert_banner_field_data
-          field: flag_relationship
-          relationship: none
-          group_type: group
-          admin_label: Flags
-          required: false
-          flag: localgov_put_live
-          user_scope: any
-          entity_type: localgov_alert_banner
-          plugin_id: flag_relationship
+      relationships: {  }
       arguments: {  }
       display_extenders: {  }
     cache_metadata:

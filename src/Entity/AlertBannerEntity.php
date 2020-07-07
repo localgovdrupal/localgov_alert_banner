@@ -78,6 +78,13 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
   use EntityPublishedTrait;
 
   /**
+   * Gets the alert banner state service.
+   */
+  protected function alertBannerState() {
+    return \Drupal::service('localgov_alert_banner.state');
+  }
+
+  /**
    * {@inheritdoc}
    */
   public static function preCreate(EntityStorageInterface $storage_controller, array &$values) {
@@ -123,6 +130,39 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
     if (!$this->getRevisionUser()) {
       $this->setRevisionUserId($this->getOwnerId());
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
+    parent::postSave($storage, $update);
+
+    if ($this->get('status')->value) {
+      // Regenerate a JS token for the updated alert banner.
+      $this->alertBannerState()->generateToken($this)->save();
+
+      // Unpublish any other updates.
+      // Should only ever be one.
+      $entity_query = $this->entityTypeManager()
+        ->getStorage($this->entityTypeId)
+        ->getQuery();
+      $entity_query->accessCheck(FALSE);
+      $entity_query->condition('status', TRUE);
+      $entity_query->condition('id', $this->id(), '<>');
+      $published_entities = $entity_query->execute();
+      if (!empty($published_entities)) {
+        foreach ($published_entities as $published) {
+          $current = self::load($published);
+          $current->set('status', FALSE);
+          $current->save();
+        }
+      }
+
+    }
+
+    // Better to use cache tags instead of doing a full flush?
+    drupal_flush_all_caches();
   }
 
   /**

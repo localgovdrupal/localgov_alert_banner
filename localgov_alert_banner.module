@@ -5,7 +5,6 @@
  * Contains localgov_alert_banner.module.
  */
 
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 
@@ -22,17 +21,6 @@ function localgov_alert_banner_help($route_name, RouteMatchInterface $route_matc
       return $output;
 
     default:
-  }
-}
-
-/**
- * Implements hook_module_implements_alter().
- */
-function localgov_alert_banner_module_implements_alter(&$implementations, $hook) {
-  if ($hook == 'form_alter') {
-    // Move localgov alert banner to last hook.
-    unset($implementations['localgov_alert_banner']);
-    $implementations['localgov_alert_banner'] = NULL;
   }
 }
 
@@ -81,141 +69,6 @@ function localgov_alert_banner_preprocess(&$variables) {
 
     // Ensure token is accessible by javascript.
     $variables['#attached']['drupalSettings']['localgov_alert_banner']['token'] = $token;
-
-  }
-}
-
-/**
- * Implements hook_ENTITY_TYPE_create().
- */
-function localgov_alert_banner_localgov_alert_banner_create(EntityInterface $entity) {
-  _localgov_alert_banner_localgov_alert_banner_save($entity);
-}
-
-/**
- * Implements hook_ENTITY_TYPE_update().
- */
-function localgov_alert_banner_localgov_alert_banner_update(EntityInterface $entity) {
-  _localgov_alert_banner_localgov_alert_banner_save($entity);
-}
-
-/**
- * Common function when alert banner entity saved.
- */
-function _localgov_alert_banner_localgov_alert_banner_save(EntityInterface $entity) {
-
-  // Check if the entity is flagged as live.
-  $flag = \Drupal::service('flag')->getFlagById('localgov_put_live');
-  if (!empty($flag)) {
-    $flaggings = \Drupal::service('flag')->getEntityFlaggings($flag, $entity);
-
-    if (!empty($flaggings)) {
-      // Regenerate a JS token for the updated alert banner.
-      \Drupal::service('localgov_alert_banner.state')->generateToken($entity)->save();
-    }
-  }
-
-  // Better to use cache tags instead of doing a full flush?
-  drupal_flush_all_caches();
-}
-
-/**
- * Implements hook_form_alter().
- */
-function localgov_alert_banner_form_alter(&$form, FormStateInterface $form_state, $form_id) {
-
-  // Edit the alert banner entity form on the creation or edit mode.
-  if ($form_id == 'localgov_alert_banner_localgov_alert_banner_add_form' || $form_id == 'localgov_alert_banner_localgov_alert_banner_edit_form') {
-
-    // Create the vertical tabs like on node edit forms.
-    // @src https://drupal.stackexchange.com/a/276907
-    $form['#theme'][] = 'node_edit_form';
-    $form['#attached']['library'] = ['node/drupal.node'];
-    $form['advanced'] = [
-      '#type' => 'container',
-      '#weight' => 99,
-      '#attributes' => [
-        'class' => ['entity-meta'],
-      ],
-    ];
-
-    // Support Elbow room module if it's installed.
-    $module_handler = \Drupal::service('module_handler');
-    if ($module_handler->moduleExists('elbow_room')) {
-      $form['#attached']['library'][] = 'elbow_room/base';
-      $elbowRoomConfig = Drupal::configFactory()->get('elbow_room.settings');
-      $form['#attached']['drupalSettings']['elbow_room']['default'] = $elbowRoomConfig->get('default');
-
-      // Add node form classes for elbow room to function.
-      $form['#attributes']['class'][] = 'node-form';
-    }
-
-    // Alert details group.
-    $form['alert_details'] = [
-      '#type' => 'fieldset',
-      '#title' => t('Alert details'),
-      '#open' => TRUE,
-      '#weight' => -5,
-    ];
-    $form['type_of_alert']['#group'] = 'alert_details';
-    $form['title']['#group'] = 'alert_details';
-    $form['short_description']['#group'] = 'alert_details';
-
-    // Set authoring information into sidebar.
-    $form['author'] = [
-      '#type' => 'details',
-      '#title' => t('Authoring information'),
-      '#group' => 'advanced',
-      '#weight' => 90,
-      '#optional' => 1,
-      '#open' => TRUE,
-      '#attributes' => [
-        'class' => ['entity-form-author'],
-      ],
-    ];
-
-    // Move the authoring info into sidebar like nodes.
-    $form['uid']['#group'] = 'author';
-    $form['created']['#group'] = 'author';
-    $form['revision_log_message']['#group'] = 'author';
-
-    // Move new revision into author group.
-    $form['new_revision']['#group'] = 'author';
-
-    // Change the Title label.
-    unset($form['title']['widget'][0]['value']['#description']);
-
-    // Change the Link text description.
-    $form['link']['widget'][0]['title']['#description'] = t("If you don't write anything here, we will use: More information");
-
-    // @TODO Set publishing options group.
-    /*
-    $form['publishing_options'] = [
-    '#type' => 'details',
-    '#title' => t('Publishing options.'),
-    '#group' => 'advanced',
-    '#weight' => 10,
-    '#optional' => 1,
-    '#open' => TRUE,
-    '#attributes' => [
-    'class' => ['entity-form-publishing'],
-    ],
-    ];*/
-
-    // @TEMP Set the flags details group to open and change title
-    $form['flag']['#open'] = TRUE;
-    $form['flag']['#title'] = t('Publishing options');
-
-    // Move publihsing options into sidebar like nodes.
-    $form['display_title']['#group'] = 'flag';
-    $form['remove_hide_link']['#group'] = 'flag';
-    $form['status']['#group'] = 'flag';
-
-    // @TEMP unset publish field (to replace flag).
-    unset($form['status']);
-
-    // Change put live description.
-    $form['flag']['localgov_put_live']['#description'] = t('Tick this box to put the banner on our website.') . '<br>' . t('Untick this box if you want to remove the banner from the website.');
 
   }
 }
