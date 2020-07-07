@@ -1,6 +1,9 @@
 langcode: en
 status: true
 dependencies:
+  enforced:
+    module:
+      - localgov_alert_banner
   module:
     - flag
 id: flag_action.localgov_put_live_flag

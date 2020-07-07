@@ -1,8 +1,10 @@
 langcode: en
 status: true
 dependencies:
+  enforced:
+    module:
+      - localgov_alert_banner
   module:
-    - localgov_alert_banner
     - text
 id: localgov_alert_banner.short_description
 field_name: short_description
