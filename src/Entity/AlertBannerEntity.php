@@ -55,6 +55,11 @@ use Drupal\user\UserInterface;
  *     "langcode" = "langcode",
  *     "published" = "status",
  *   },
+ *   revision_metadata_keys = {
+ *     "revision_user" = "revision_uid",
+ *     "revision_created" = "revision_timestamp",
+ *     "revision_log_message" = "revision_log",
+ *   },
  *   links = {
  *     "canonical" = "/admin/content/alert-banner/localgov_alert_banner/{localgov_alert_banner}",
  *     "add-page" = "/admin/content/alert-banner/localgov_alert_banner/add",
