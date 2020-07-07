@@ -23,7 +23,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  *     },
  *   },
  *   config_prefix = "localgov_alert_banner_type",
- *   admin_permission = "administer site configuration",
+ *   admin_permission = "administer localgov alert banner types",
  *   bundle_of = "localgov_alert_banner",
  *   entity_keys = {
  *     "id" = "id",

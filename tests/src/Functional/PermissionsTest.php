@@ -67,6 +67,10 @@ class PermissionsTest extends BrowserTestBase {
     $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1');
     $this->assertResponse(Response::HTTP_FORBIDDEN);
 
+    // Check that anonymous user cannot access the alert banner types.
+    $this->drupalGet('admin/structure/alert-banner-types/localgov_alert_banner_type');
+    $this->assertResponse(Response::HTTP_FORBIDDEN);
+
     $normalAdminUser = $this->createUser(['access administration pages']);
     $this->drupalLogin($normalAdminUser);
 
@@ -86,6 +90,10 @@ class PermissionsTest extends BrowserTestBase {
 
     // Check that authenticated user cannot view the alert banner main page.
     $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1');
+    $this->assertResponse(Response::HTTP_FORBIDDEN);
+
+    // Check that authenticated user cannot access the alert banner types.
+    $this->drupalGet('admin/structure/alert-banner-types/localgov_alert_banner_type');
     $this->assertResponse(Response::HTTP_FORBIDDEN);
 
     $this->drupalLogout();
@@ -112,6 +120,10 @@ class PermissionsTest extends BrowserTestBase {
     // Check that emergency publisher user can view the alert banner main page.
     $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1');
     $this->assertResponse(Response::HTTP_OK);
+
+    // Check that emergency publisher user cannot access the alert banner types.
+    $this->drupalGet('admin/structure/alert-banner-types/localgov_alert_banner_type');
+    $this->assertResponse(Response::HTTP_FORBIDDEN);
 
     $this->drupalLogout();
 
@@ -140,6 +152,19 @@ class PermissionsTest extends BrowserTestBase {
 
     // Check that emergency publisher user can view the alert banner main page.
     $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1');
+    $this->assertResponse(Response::HTTP_OK);
+
+    $this->drupalLogout();
+
+    // Test an admin user can access the alert banner types.
+    $adminUser = $this->createUser([
+      'access administration pages',
+      'administer localgov alert banner types',
+    ]);
+    $this->drupalLogin($adminUser);
+
+    // Check that the admin user can access the alert banner types.
+    $this->drupalGet('admin/structure/alert-banner-types/localgov_alert_banner_type');
     $this->assertResponse(Response::HTTP_OK);
   }
 
