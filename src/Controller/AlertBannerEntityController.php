@@ -77,7 +77,7 @@ class AlertBannerEntityController extends ControllerBase implements ContainerInj
   }
 
   /**
-   * Generates an overview table of older revisions of a Alert banner.
+   * Generates an overview table of older revisions of an Alert banner.
    *
    * @param \Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface $localgov_alert_banner
    *   A Alert banner object.
@@ -92,12 +92,13 @@ class AlertBannerEntityController extends ControllerBase implements ContainerInj
     $langcode = $localgov_alert_banner->language()->getId();
     $langname = $localgov_alert_banner->language()->getName();
     $languages = $localgov_alert_banner->getTranslationLanguages();
+    $type_id = $localgov_alert_banner->getType();
     $has_translations = (count($languages) > 1);
     $build['#title'] = $has_translations ? $this->t('@langname revisions for %title', ['@langname' => $langname, '%title' => $localgov_alert_banner->label()]) : $this->t('Revisions for %title', ['%title' => $localgov_alert_banner->label()]);
 
     $header = [$this->t('Revision'), $this->t('Operations')];
-    $revert_permission = (($account->hasPermission("revert all alert banner revisions") || $account->hasPermission('administer alert banner entities')));
-    $delete_permission = (($account->hasPermission("delete all alert banner revisions") || $account->hasPermission('administer alert banner entities')));
+    $revert_permission = (($account->hasPermission("manage all localgov alert banner entities") || $account->hasPermission('manage localgov alert banner ' . $type_id . ' entities')));
+    $delete_permission = (($account->hasPermission("manage all localgov alert banner entities") || $account->hasPermission('manage localgov alert banner ' . $type_id . ' entities')));
 
     $rows = [];
 
