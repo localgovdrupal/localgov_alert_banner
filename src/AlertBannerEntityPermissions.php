@@ -46,12 +46,12 @@ class AlertBannerEntityPermissions {
 
     return [
       // View alert banner entities of type.
-      "localgov alert banner $type_id view entities" => [
+      "view localgov alert banner $type_id entities" => [
         'title' => $this->t('View alert banner entities of type %type_name', $type_params),
       ],
 
       // Manage the alert banner of type (full CRUD permissions).
-      "manange localgov alert banner $type_id entities" => [
+      "manage localgov alert banner $type_id entities" => [
         'title' => $this->t('Manage alert banner entities of type %type_name', $type_params),
       ],
     ];

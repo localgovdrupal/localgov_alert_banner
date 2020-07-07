@@ -88,8 +88,11 @@ class PermissionsTest extends BrowserTestBase {
     $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1');
     $this->assertResponse(Response::HTTP_FORBIDDEN);
 
+    $this->drupalLogout();
+
     $emergencyPublisherUser = $this->createUser();
     $emergencyPublisherUser->addRole('emergency_publisher');
+    $emergencyPublisherUser->save();
     $this->drupalLogin($emergencyPublisherUser);
 
     // Check that emergency publisher user has access to the overview page

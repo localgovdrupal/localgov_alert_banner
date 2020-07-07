@@ -9,11 +9,8 @@ label: 'Emergency publisher'
 weight: -2
 is_admin: null
 permissions:
-  - 'access alert_banner entity page'
-  - 'create alert_banner entities'
-  - 'edit any alert_banner entities'
-  - 'edit own alert_banner entities'
-  - 'flag localgov_put_live'
-  - 'unflag localgov_put_live'
-  - 'view any alert_banner entities'
-  - 'view own alert_banner entities'
+  - 'access administration pages'
+  - 'access localgov alert banner listing page'
+  - 'administer localgov alert banner types'
+  - 'manage all localgov alert banner entities'
+  - 'view all localgov alert banner entities'
