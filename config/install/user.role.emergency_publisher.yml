@@ -1,6 +1,9 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  enforced:
+    module:
+      - localgov_alert_banner
 id: emergency_publisher
 label: 'Emergency publisher'
 weight: -2

@@ -1,12 +1,3 @@
-# Alert banner menu items definition
-entity.localgov_alert_banner.collection:
-  title: 'Alert banner list'
-  route_name: entity.localgov_alert_banner.collection
-  description: 'List Alert banner entities'
-  parent: system.admin_structure
-  weight: 100
-
-
 # Alert banner type menu items definition
 entity.localgov_alert_banner_type.collection:
   title: 'Alert banner types'

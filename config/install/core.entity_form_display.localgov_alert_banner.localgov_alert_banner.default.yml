@@ -6,6 +6,9 @@ dependencies:
     - field.field.localgov_alert_banner.localgov_alert_banner.short_description
     - field.field.localgov_alert_banner.localgov_alert_banner.type_of_alert
     - localgov_alert_banner.localgov_alert_banner_type.localgov_alert_banner
+  enforced:
+    module:
+      - localgov_alert_banner
   module:
     - link
     - text
