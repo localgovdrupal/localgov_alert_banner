@@ -1,8 +1,10 @@
 langcode: en
 status: true
 dependencies:
+  enforced:
+    module:
+      - localgov_alert_banner
   module:
-    - localgov_alert_banner
     - options
 id: localgov_alert_banner.type_of_alert
 field_name: type_of_alert

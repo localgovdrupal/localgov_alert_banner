@@ -4,6 +4,9 @@ dependencies:
   config:
     - field.storage.localgov_alert_banner.link
     - localgov_alert_banner.localgov_alert_banner_type.localgov_alert_banner
+  enforced:
+    module:
+      - localgov_alert_banner
   module:
     - link
 id: localgov_alert_banner.localgov_alert_banner.link
