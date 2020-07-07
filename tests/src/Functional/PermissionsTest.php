@@ -113,6 +113,34 @@ class PermissionsTest extends BrowserTestBase {
     $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1');
     $this->assertResponse(Response::HTTP_OK);
 
+    $this->drupalLogout();
+
+    // Test a user with only the per banner permissions.
+    $bannerUser = $this->createUser([
+      'access administration pages',
+      'access localgov alert banner listing page',
+      'manage localgov alert banner localgov_alert_banner entities',
+      'view localgov alert banner localgov_alert_banner entities',
+    ]);
+    $this->drupalLogin($bannerUser);
+
+    // Check that emergency publisher user has access to the overview page
+    $this->drupalGet('admin/content/alert-banners');
+    $this->assertResponse(Response::HTTP_OK);
+
+    // Check that emergency publisher user has CRUD page access
+    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/add/localgov_alert_banner');
+    $this->assertResponse(Response::HTTP_OK);
+    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1/edit');
+    $this->assertResponse(Response::HTTP_OK);
+    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1/revisions');
+    $this->assertResponse(Response::HTTP_OK);
+    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1/delete');
+    $this->assertResponse(Response::HTTP_OK);
+
+    // Check that emergency publisher user can view the alert banner main page.
+    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1');
+    $this->assertResponse(Response::HTTP_OK);
   }
 
 }

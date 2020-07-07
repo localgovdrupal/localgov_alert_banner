@@ -95,7 +95,7 @@ class AlertBannerEntityHtmlRouteProvider extends AdminHtmlRouteProvider {
           '_title' => "{$entity_type->getLabel()} revisions",
           '_controller' => '\Drupal\localgov_alert_banner\Controller\AlertBannerEntityController::revisionOverview',
         ])
-        ->setRequirement('_permission', 'manage all localgov alert banner entities')
+        ->setRequirement('_entity_access', 'localgov_alert_banner.update')
         ->setOption('_admin_route', TRUE);
 
       return $route;
@@ -119,7 +119,7 @@ class AlertBannerEntityHtmlRouteProvider extends AdminHtmlRouteProvider {
           '_controller' => '\Drupal\localgov_alert_banner\Controller\AlertBannerEntityController::revisionShow',
           '_title_callback' => '\Drupal\localgov_alert_banner\Controller\AlertBannerEntityController::revisionPageTitle',
         ])
-        ->setRequirement('_permission', 'manage all localgov alert banner entities')
+        ->setRequirement('_entity_access', 'localgov_alert_banner.update')
         ->setOption('_admin_route', TRUE);
 
       return $route;
@@ -143,7 +143,7 @@ class AlertBannerEntityHtmlRouteProvider extends AdminHtmlRouteProvider {
           '_form' => '\Drupal\localgov_alert_banner\Form\AlertBannerEntityRevisionRevertForm',
           '_title' => 'Revert to earlier revision',
         ])
-        ->setRequirement('_permission', 'manage all localgov alert banner entities')
+        ->setRequirement('_entity_access', 'localgov_alert_banner.update')
         ->setOption('_admin_route', TRUE);
 
       return $route;
@@ -167,7 +167,7 @@ class AlertBannerEntityHtmlRouteProvider extends AdminHtmlRouteProvider {
           '_form' => '\Drupal\localgov_alert_banner\Form\AlertBannerEntityRevisionDeleteForm',
           '_title' => 'Delete earlier revision',
         ])
-        ->setRequirement('_permission', 'manage all localgov alert banner entities')
+        ->setRequirement('_entity_access', 'localgov_alert_banner.update')
         ->setOption('_admin_route', TRUE);
 
       return $route;
@@ -191,7 +191,7 @@ class AlertBannerEntityHtmlRouteProvider extends AdminHtmlRouteProvider {
           '_form' => '\Drupal\localgov_alert_banner\Form\AlertBannerEntityRevisionRevertTranslationForm',
           '_title' => 'Revert to earlier revision of a translation',
         ])
-        ->setRequirement('_permission', 'manage all localgov alert banner entities')
+        ->setRequirement('_entity_access', 'localgov_alert_banner.update')
         ->setOption('_admin_route', TRUE);
 
       return $route;
