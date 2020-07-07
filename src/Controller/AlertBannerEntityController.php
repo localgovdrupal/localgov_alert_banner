@@ -92,7 +92,7 @@ class AlertBannerEntityController extends ControllerBase implements ContainerInj
     $langcode = $localgov_alert_banner->language()->getId();
     $langname = $localgov_alert_banner->language()->getName();
     $languages = $localgov_alert_banner->getTranslationLanguages();
-    $type_id = $localgov_alert_banner->getType();
+    $type_id = $localgov_alert_banner->bundle();
     $has_translations = (count($languages) > 1);
     $build['#title'] = $has_translations ? $this->t('@langname revisions for %title', ['@langname' => $langname, '%title' => $localgov_alert_banner->label()]) : $this->t('Revisions for %title', ['%title' => $localgov_alert_banner->label()]);
 
