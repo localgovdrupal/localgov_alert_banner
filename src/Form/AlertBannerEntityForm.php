@@ -46,6 +46,86 @@ class AlertBannerEntityForm extends ContentEntityForm {
       ];
     }
 
+    // Create the vertical tabs like on node edit forms.
+    // @src https://drupal.stackexchange.com/a/276907
+    $form['#theme'][] = 'node_edit_form';
+    $form['#attached']['library'] = ['node/drupal.node'];
+    $form['advanced'] = [
+      '#type' => 'container',
+      '#weight' => 99,
+      '#attributes' => [
+        'class' => ['entity-meta'],
+      ],
+    ];
+
+    // Support Elbow room module if it's installed.
+    $module_handler = \Drupal::service('module_handler');
+    if ($module_handler->moduleExists('elbow_room')) {
+      $form['#attached']['library'][] = 'elbow_room/base';
+      $elbowRoomConfig = Drupal::configFactory()->get('elbow_room.settings');
+      $form['#attached']['drupalSettings']['elbow_room']['default'] = $elbowRoomConfig->get('default');
+
+      // Add node form classes for elbow room to function.
+      $form['#attributes']['class'][] = 'node-form';
+    }
+
+    // Alert details group.
+    $form['alert_details'] = [
+      '#type' => 'fieldset',
+      '#title' => $this->t('Alert details'),
+      '#open' => TRUE,
+      '#weight' => -5,
+    ];
+    $form['type_of_alert']['#group'] = 'alert_details';
+    $form['title']['#group'] = 'alert_details';
+    $form['short_description']['#group'] = 'alert_details';
+
+    // Set authoring information into sidebar.
+    $form['author'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Authoring information'),
+      '#group' => 'advanced',
+      '#weight' => 90,
+      '#optional' => 1,
+      '#open' => TRUE,
+      '#attributes' => [
+        'class' => ['entity-form-author'],
+      ],
+    ];
+
+    // Move the authoring info into sidebar like nodes.
+    $form['uid']['#group'] = 'author';
+    $form['created']['#group'] = 'author';
+    $form['revision_log_message']['#group'] = 'author';
+
+    // Move new revision into author group.
+    $form['new_revision']['#group'] = 'author';
+
+    // Change the Title label.
+    unset($form['title']['widget'][0]['value']['#description']);
+
+    // Change the Link text description.
+    $form['link']['widget'][0]['title']['#description'] = $this->t("If you don't write anything here, we will use: More information");
+
+    $form['publishing_options'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Publishing options.'),
+      '#group' => 'advanced',
+      '#weight' => 10,
+      '#optional' => 1,
+      '#open' => TRUE,
+      '#attributes' => [
+        'class' => ['entity-form-publishing'],
+      ],
+    ];
+
+    // Move publishing options into sidebar like nodes.
+    $form['display_title']['#group'] = 'publishing_options';
+    $form['remove_hide_link']['#group'] = 'publishing_options';
+    // TODO Follow up action confirmation of publishing and
+    // unset($form['status']); or similar.
+    $form['status']['#group'] = 'publishing_options';
+
     return $form;
   }
 
