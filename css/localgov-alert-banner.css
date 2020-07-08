@@ -17,22 +17,3 @@
   justify-content: space-between;
   align-items: flex-end;
 }
-.localgov_alert_banner--actions button {
-  background: #77bb55;
-  border: none;
-  color: #000;
-  font-weight: bold;
-  padding: 0.4rem 0.8rem;
-}
-.localgov_alert_banner--actions button:focus {
-  background: #410541;
-  color: #fff;
- }
-.localgov_alert_banner--actions button:hover {
-  background: #006263;
-  color: #fff;
-  cursor: pointer;
-}
-.localgov_alert_banner--actions .localgov_alert_banner--content-link {
-  margin-right: 0.625rem;
-}
