@@ -30,6 +30,10 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  *     "label" = "label",
  *     "uuid" = "uuid"
  *   },
+ *   config_export = {
+ *     "id",
+ *     "label"
+ *   },
  *   links = {
  *     "canonical" = "/admin/structure/alert-banner-types/localgov_alert_banner_type/{localgov_alert_banner_type}",
  *     "add-form" = "/admin/structure/alert-banner-types/localgov_alert_banner_type/add",
