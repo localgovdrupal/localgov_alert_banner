@@ -48,9 +48,9 @@ class AlertBannerHideTest extends WebDriverTestBase {
 
     // Find and click hide link.
     $page = $this->getSession()->getPage();
-    $link = $page->findLink('Hide');
-    $this->assertNotEmpty($link);
-    $link->click();
+    $button = $page->findButton('Hide');
+    $this->assertNotEmpty($button);
+    $button->click();
 
     // Check cookie set and banner not visible.
     $this->assertSession()->CookieExists('hide-alert-banner-token');

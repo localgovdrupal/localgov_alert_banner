@@ -45,7 +45,7 @@ use Drupal\user\UserInterface;
  *   revision_data_table = "localgov_alert_banner_field_revision",
  *   translatable = TRUE,
  *   permission_granularity = "bundle",
- *   admin_permission = "administer alert banner entities",
+ *   admin_permission = "manage all localgov alert banner entities",
  *   entity_keys = {
  *     "id" = "id",
  *     "revision" = "vid",
@@ -55,6 +55,11 @@ use Drupal\user\UserInterface;
  *     "uid" = "uid",
  *     "langcode" = "langcode",
  *     "published" = "status",
+ *   },
+ *   revision_metadata_keys = {
+ *     "revision_user" = "revision_uid",
+ *     "revision_created" = "revision_timestamp",
+ *     "revision_log_message" = "revision_log",
  *   },
  *   links = {
  *     "canonical" = "/admin/content/alert-banner/localgov_alert_banner/{localgov_alert_banner}",

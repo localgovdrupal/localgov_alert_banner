@@ -26,7 +26,7 @@
 
     $('.js-alert-banner-close').click(function(e) {
       e.preventDefault();
-      $(this).closest('.js-alert-banner').slideUp('fast');
+      $(this).closest('.js-alert-banner').attr("aria-hidden", "true").slideUp('fast');
       setAlertBannerHideCookie(token);
     });
 
