@@ -10,7 +10,6 @@
 use Drupal\Core\Render\Element;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
-use Drupal\localgov_alert_banner\Entity\AlertBannerEntity;
 
 /**
  * Prepares variables for Alert banner templates.
@@ -31,20 +30,20 @@ function template_preprocess_localgov_alert_banner(array &$variables) {
     $variables['content'][$key] = $variables['elements'][$key];
   }
 
-  /** @var AlertBannerEntity $entity */
+  /** @var \Drupal\localgov_alert_banner\Entity\AlertBannerEntity $entity */
   $entity = $variables['elements']['#localgov_alert_banner'];
 
-  // Set default link text if field exists
+  // Set default link text if field exists.
   if ($entity->hasField('link')) {
     if ($entity->get('link')->title === '') {
       $variables['content']['link'] = Link::fromTextAndUrl(t('More information'), Url::fromUri($entity->get('link')->uri))->toString();
     }
   }
 
-  // Non-content variables
+  // Non-content variables.
   $variables['display_title'] = $entity->get('display_title')->value;
   $variables['remove_hide_link'] = $entity->get('remove_hide_link')->value;
-  // Type of alert is an optional field and may not exist
+  // Type of alert is an optional field and may not exist.
   if ($entity->hasField('type_of_alert')) {
     $variables['type_of_alert'] = $entity->get('type_of_alert')->value;
   }

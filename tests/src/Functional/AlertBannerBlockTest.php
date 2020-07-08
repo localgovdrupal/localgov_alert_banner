@@ -40,13 +40,9 @@ class AlertBannerBlockTest extends BrowserTestBase {
         'short_description' => $alert_message,
         'type_of_alert' => 'minor',
         // 'link' => 'https://localgovdrupal.org/'.
+        'status' => TRUE,
       ]);
     $alert->save();
-
-    // Flag the alert banner to put it live.
-    $flag_service = $this->container->get('flag');
-    $flag = $flag_service->getFlagById('localgov_put_live');
-    $flag_service->flag($flag, $alert);
 
     // Load the front page and check the banner is displayed.
     $this->drupalGet('<front>');
@@ -67,11 +63,11 @@ class AlertBannerBlockTest extends BrowserTestBase {
         'short_description' => $alert_message,
         'type_of_alert' => 'minor',
         // 'link' => 'https://localgovdrupal.org/'.
+        'status' => FALSE,
       ]);
     $alert->save();
 
-    // Load the front page and check the banner is not displayed
-    // (will not be flagged).
+    // Load the front page and check the banner is not displayed.
     $this->drupalGet('<front>');
     $this->assertSession()->pageTextNotContains($alert_message);
   }
@@ -88,20 +84,16 @@ class AlertBannerBlockTest extends BrowserTestBase {
         'title' => $title,
         'short_description' => $alert_message,
         'type_of_alert' => 'minor',
-        'display_title' => 1
+        'display_title' => 1,
+        'status' => TRUE,
       ]);
     $alert->save();
 
-    // Flag the alert banner to put it live.
-    $flag_service = $this->container->get('flag');
-    $flag = $flag_service->getFlagById('localgov_put_live');
-    $flag_service->flag($flag, $alert);
-
-    // Check title is shown when display title is true
+    // Check title is shown when display title is true.
     $this->drupalGet('<front>');
     $this->assertSession()->pageTextContains($title);
 
-    // Check title is not shown when display title is false
+    // Check title is not shown when display title is false.
     $alert->set('display_title', ['value' => 0]);
     $alert->save();
     $this->drupalGet('<front>');
@@ -120,21 +112,17 @@ class AlertBannerBlockTest extends BrowserTestBase {
         'title' => $title,
         'short_description' => $alert_message,
         'type_of_alert' => 'minor',
-        'remove_hide_link' => 0
+        'remove_hide_link' => 0,
+        'status' => TRUE,
       ]);
     $alert->save();
 
-    // Flag the alert banner to put it live.
-    $flag_service = $this->container->get('flag');
-    $flag = $flag_service->getFlagById('localgov_put_live');
-    $flag_service->flag($flag, $alert);
-
-    // Check hide link is shown when remove_hide_link is not set
+    // Check hide link is shown when remove_hide_link is not set.
     $this->drupalGet('<front>');
     $this->assertSession()->responseContains('js-alert-banner-close');
     $this->assertSession()->pageTextContains('Hide');
 
-    // Check title is not shown when remove_hide_link is set
+    // Check title is not shown when remove_hide_link is set.
     $alert->set('remove_hide_link', ['value' => 1]);
     $alert->save();
     $this->drupalGet('<front>');
