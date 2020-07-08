@@ -34,7 +34,7 @@ class AlertBannerEntityPermissions {
   /**
    * Returns a list of node permissions for a given node type.
    *
-   * @param \Drupal\localgov_alert_banner\Entity\AlertBannerEntity $type
+   * @param \Drupal\localgov_alert_banner\Entity\AlertBannerEntityType $type
    *   The AlertBannerEntity type.
    *
    * @return array
