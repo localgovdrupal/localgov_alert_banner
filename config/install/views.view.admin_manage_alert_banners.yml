@@ -11,8 +11,6 @@ dependencies:
   module:
     - options
     - user
-_core:
-  default_config_hash: pJmCjeC7KNRB79o3Mw2GbvGHKQy9OVCxeK1SnhuVdNU
 id: admin_manage_alert_banners
 label: 'Manage Alert Banners'
 module: views
@@ -30,7 +28,7 @@ display:
       access:
         type: perm
         options:
-          perm: 'access alert banner listing page'
+          perm: 'access localgov alert banner listing page'
       cache:
         type: tag
         options: {  }

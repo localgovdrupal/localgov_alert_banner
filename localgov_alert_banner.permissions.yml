@@ -1,36 +1,22 @@
-access alert banner listing page:
+# Access the admin view at /admin/content/alert-banners
+access localgov alert banner listing page:
   title: 'View list of Alert banners'
 
-add alert banner entities:
-  title: 'Create new Alert banner entities'
-
-administer alert banner entities:
-  title: 'Administer Alert banner entities'
+# Administer alert banner bundles.
+administer localgov alert banner types:
+  title: 'Administer Alert banner types'
   description: 'Allow to access the administration form to configure Alert banner entities.'
   restrict access: true
 
-delete alert banner entities:
-  title: 'Delete Alert banner entities'
+# View all alert banners
+view all localgov alert banner entities:
+  title: 'View All alert banner entities'
 
-edit alert banner entities:
-  title: 'Edit Alert banner entities'
+# Manage all alert banners.
+manage all localgov alert banner entities:
+  title: 'Manage All alert banner entities'
+  restrict access: true
 
-view published alert banner entities:
-  title: 'View published Alert banner entities'
-
-view unpublished alert banner entities:
-  title: 'View unpublished Alert banner entities'
-
-view all alert banner revisions:
-  title: 'View all Alert banner revisions'
-
-revert all alert banner revisions:
-  title: 'Revert all Alert banner revisions'
-  description: 'Role requires permission <em>view Alert banner revisions</em> and <em>edit rights</em> for alert banner entities in question or <em>administer alert banner entities</em>.'
-
-delete all alert banner revisions:
-  title: 'Delete all revisions'
-  description: 'Role requires permission to <em>view Alert banner revisions</em> and <em>delete rights</em> for alert banner entities in question or <em>administer alert banner entities</em>.'
-
+# Per bundle permissions.
 permission_callbacks:
   - \Drupal\localgov_alert_banner\AlertBannerEntityPermissions::generatePermissions

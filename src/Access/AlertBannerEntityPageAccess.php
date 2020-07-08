@@ -18,7 +18,7 @@ class AlertBannerEntityPageAccess implements AccessInterface {
    */
   public function access(AccountInterface $account) {
 
-    if ($account->hasPermission('access alert_banner entity page')) {
+    if ($account->hasPermission('access localgov alert banner entity page')) {
       return AccessResult::allowed();
     }
     else {
