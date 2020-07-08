@@ -21,12 +21,28 @@ class AlertBannerEntityForm extends ContentEntityForm {
   protected $account;
 
   /**
+   * Module handler service.
+   *
+   * @var Drupal\Core\Extension\ModuleHandlerInterface
+   */
+  protected $moduleHandler;
+
+  /**
+   * Configuration service.
+   *
+   * @var Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $configFactory;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     // Instantiates this form class.
     $instance = parent::create($container);
     $instance->account = $container->get('current_user');
+    $instance->moduleHandler = $container->get('module_handler');
+    $instance->configFactory = $container->get('config.factory');
     return $instance;
   }
 
@@ -59,10 +75,9 @@ class AlertBannerEntityForm extends ContentEntityForm {
     ];
 
     // Support Elbow room module if it's installed.
-    $module_handler = \Drupal::service('module_handler');
-    if ($module_handler->moduleExists('elbow_room')) {
+    if ($this->moduleHandler->moduleExists('elbow_room')) {
       $form['#attached']['library'][] = 'elbow_room/base';
-      $elbowRoomConfig = Drupal::configFactory()->get('elbow_room.settings');
+      $elbowRoomConfig = $this->configFactory()->get('elbow_room.settings');
       $form['#attached']['drupalSettings']['elbow_room']['default'] = $elbowRoomConfig->get('default');
 
       // Add node form classes for elbow room to function.
