@@ -22,7 +22,7 @@
 {% set has_link = content.link is not empty %}
 {% set type_of_alert =  type_of_alert|split('--')[1] %}
 {% set classes = [
-    'wrapper',
+    'localgov_alert_banner',
     'js-alert-banner',
     type_of_alert ? 'localgov_alert_banner--' ~ type_of_alert : '',
     is_front ? 'localgov_alert_banner--homepage' : '',
@@ -30,8 +30,8 @@
   ]
 %}
 <!-- Alert Banner-->
-<div class="localgov_alert_banner" role="alert">
-  <div{{ attributes.addClass(classes) }}>
+<div {{ attributes.addClass(classes) }} role="alert">
+  <div class="wrapper">
     <div class="localgov_alert_banner--inner">
       <div class="localgov_alert_banner--inner--content">
         {% if display_title %}

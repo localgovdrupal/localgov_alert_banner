@@ -1,7 +1,44 @@
+/**
+ * @file
+ * Style rules for alert banners
+ */
+
+/* Default */
 .localgov_alert_banner {
-  background-color: #fc3;
-  color: #000;
+  background-color: #00856A;
 }
+.localgov_alert_banner,
+.localgov_alert_banner a {
+  color: #fefefe;
+}
+.localgov_alert_banner button {
+  color: #121212;
+}
+
+/* Announcement */
+.localgov_alert_banner--announcement {
+  background-color: #00856A;
+}
+
+/* Minor */
+.localgov_alert_banner--minor {
+  background-color: #fc3;
+  color: #121212;
+}
+.localgov_alert_banner--minor a {
+  color: #121212;
+}
+
+/* Major */
+.localgov_alert_banner--major {
+  background-color: #C00010;
+}
+
+/* Death of a notable person */
+.localgov_alert_banner--notable-person {
+  background-color: #000;
+}
+
 .localgov_alert_banner .wrapper {
   margin: 0 auto;
   max-width: 73.125rem;
