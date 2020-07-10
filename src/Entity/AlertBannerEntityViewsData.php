@@ -15,8 +15,15 @@ class AlertBannerEntityViewsData extends EntityViewsData {
   public function getViewsData() {
     $data = parent::getViewsData();
 
-    // Additional information for Views integration, such as table joins, can be
-    // put here.
+    $data['localgov_alert_banner']['status_confirm_page'] = [
+      'field' => [
+        'title' => $this->t('Link to publish or unpublish confirmation page'),
+        'help' => $this->t('Provide a simple link to change the status of the alert.'),
+        'id' => 'localgov_alert_banner_status_page',
+        'click sortable' => FALSE,
+      ],
+    ];
+
     return $data;
   }
 

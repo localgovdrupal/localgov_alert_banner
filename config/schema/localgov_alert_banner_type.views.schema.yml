@@ -1,0 +1,12 @@
+# Schema for the views plugins of the Alert Banner module.
+
+views.field.localgov_alert_banner_status_page:
+  type: views_field
+  label: 'Link to publish unpublish confirmation page'
+  mapping:
+    publish_text:
+      type: label
+      label: 'Publish text to display'
+    unpublish_text:
+      type: label
+      label: 'Unpublish text to display'

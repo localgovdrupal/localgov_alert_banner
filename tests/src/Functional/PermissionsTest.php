@@ -50,7 +50,7 @@ class PermissionsTest extends BrowserTestBase {
   public function testAlertBannerUserAccess() {
 
     // Check that anonymous user cannot access to the overview page.
-    $this->drupalGet('admin/content/alert-banners');
+    $this->drupalGet('admin/content/alert-banner');
     $this->assertResponse(Response::HTTP_FORBIDDEN);
 
     // Check that anonymous user does not have CRUD page access.
@@ -75,7 +75,7 @@ class PermissionsTest extends BrowserTestBase {
     $this->drupalLogin($normalAdminUser);
 
     // Check that authenticated user cannot access to the overview page.
-    $this->drupalGet('admin/content/alert-banners');
+    $this->drupalGet('admin/content/alert-banner');
     $this->assertResponse(Response::HTTP_FORBIDDEN);
 
     // Check that authenticated user does not have CRUD page access.
@@ -104,7 +104,7 @@ class PermissionsTest extends BrowserTestBase {
     $this->drupalLogin($emergencyPublisherUser);
 
     // Check that emergency publisher user has access to the overview page.
-    $this->drupalGet('admin/content/alert-banners');
+    $this->drupalGet('admin/content/alert-banner');
     $this->assertResponse(Response::HTTP_OK);
 
     // Check that emergency publisher user has CRUD page access.
@@ -137,7 +137,7 @@ class PermissionsTest extends BrowserTestBase {
     $this->drupalLogin($bannerUser);
 
     // Check that emergency publisher user has access to the overview page.
-    $this->drupalGet('admin/content/alert-banners');
+    $this->drupalGet('admin/content/alert-banner');
     $this->assertResponse(Response::HTTP_OK);
 
     // Check that emergency publisher user has CRUD page access.
