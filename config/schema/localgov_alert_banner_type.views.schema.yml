@@ -10,6 +10,3 @@ views.field.localgov_alert_banner_status_page:
     unpublish_text:
       type: label
       label: 'Unpublish text to display'
-
-
-
