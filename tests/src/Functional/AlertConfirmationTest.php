@@ -63,6 +63,7 @@ class AlertConfirmationTest extends BrowserTestBase {
     $this->getSession()->getPage()->pressButton('Confirm');
     $this->assertSession()->pageTextContains('The alert banner ' . $title . ' has been set live');
 
+    $this->drupalGet($alert->toUrl('canonical')->toString());
     $this->clickLink('Remove banner');
     $this->assertSession()->addressEquals($alert->toUrl('status-form')->toString());
     $this->assertSession()->pageTextContains('Remove current alert banner ' . $title);
