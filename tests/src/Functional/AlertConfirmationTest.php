@@ -71,4 +71,66 @@ class AlertConfirmationTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains('The alert banner ' . $title . ' has been removed.');
   }
 
+  /**
+   * Test save alert with a state change redirects to the confimation page.
+   */
+  public function testSaveAlertRedirect() {
+
+    // Set up an alert banner.
+    $title = $this->randomMachineName(8);
+    $alert_message = 'Alert message: ' . $this->randomMachineName(16);
+    $alert = AlertBannerEntity::create([
+      'type' => 'localgov_alert_banner',
+      'title' => $title,
+      'short_description' => $alert_message,
+      'type_of_alert' => 'minor',
+      'status' => FALSE,
+    ]);
+    $alert->save();
+
+    // Set the banner live and verify redirect to confirm page.
+    $edit_url = $alert->toUrl('edit-form')->toString();
+    $form_vars = [
+      'status-change' => 1,
+    ];
+    $this->drupalPostForm($edit_url, $form_vars, 'Save');
+    $this->assertSession()->addressEquals($alert->toUrl('status-form')->toString());
+    $this->getSession()->getPage()->pressButton('Confirm');
+
+    // Remove the banner live and verify redirect to confirm page.
+    // Is this just the same operation? Duplicate test and can be removed?
+    $edit_url = $alert->toUrl('edit-form')->toString();
+    $form_vars = [
+      'status-change' => 1,
+    ];
+    $this->drupalPostForm($edit_url, $form_vars, 'Save');
+    $this->assertSession()->addressEquals($alert->toUrl('status-form')->toString());
+    $this->getSession()->getPage()->pressButton('Confirm');
+
+    // Do not change the banner state and verify that is does not go to the
+    // confirmation page.
+    $edit_url = $alert->toUrl('edit-form')->toString();
+    $form_vars = [
+      'status-change' => 0,
+    ];
+    $this->drupalPostForm($edit_url, $form_vars, 'Save');
+    $this->assertSession()->addressNotEquals($alert->toUrl('status-form')->toString());
+
+    // Change the status of the banner with a destination paremeter and verify
+    // that it still goes to the confirm form and then to the destination.
+    $edit_url = $alert->toUrl('edit-form')->toString();
+    $options = [
+      'query' => [
+        'destination' => '/admin',
+      ],
+    ];
+    $form_vars = [
+      'status-change' => 1,
+    ];
+    $this->drupalPostForm($edit_url, $form_vars, 'Save', $options);
+    $this->assertSession()->addressEquals($alert->toUrl('status-form')->toString());
+    $this->getSession()->getPage()->pressButton('Confirm');
+    $this->assertSession()->addressEquals('/admin');
+  }
+
 }

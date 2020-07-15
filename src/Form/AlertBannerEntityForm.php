@@ -36,6 +36,13 @@ class AlertBannerEntityForm extends ContentEntityForm {
   protected $configFactory;
 
   /**
+   * Request stack service.
+   *
+   * @var Symfony\Component\HttpFoundation\Request
+   */
+  protected $request;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
@@ -44,6 +51,7 @@ class AlertBannerEntityForm extends ContentEntityForm {
     $instance->account = $container->get('current_user');
     $instance->moduleHandler = $container->get('module_handler');
     $instance->configFactory = $container->get('config.factory');
+    $instance->request = $container->get('request_stack');
     return $instance;
   }
 
@@ -198,7 +206,10 @@ class AlertBannerEntityForm extends ContentEntityForm {
     }
 
     if ($form_state->getValue('status-change') == TRUE) {
-      $form_state->setRedirect('entity.localgov_alert_banner.status_form', ['localgov_alert_banner' => $entity->id()]);
+      // Remove destination query and pass it through to the confirmation form.
+      $destination = $this->request->getCurrentRequest()->query->get('destination');
+      $this->request->getCurrentRequest()->query->remove('destination');
+      $form_state->setRedirect('entity.localgov_alert_banner.status_form', ['localgov_alert_banner' => $entity->id()], ['query' => ['destination' => $destination]]);
     }
     else {
       $form_state->setRedirect('entity.localgov_alert_banner.collection', ['localgov_alert_banner' => $entity->id()]);
