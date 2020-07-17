@@ -107,8 +107,8 @@ class AlertConfirmationTest extends BrowserTestBase {
     $this->assertSession()->addressEquals($alert->toUrl('status-form')->toString());
     $this->getSession()->getPage()->pressButton('Confirm');
 
-    // Do not change the banner state and verify that is does not go to the
-    // confirmation page.
+    // Do not change the banner state and verify that user is not redirected to
+    // the confirmation form page.
     $edit_url = $alert->toUrl('edit-form')->toString();
     $form_vars = [
       'status-change' => 0,
