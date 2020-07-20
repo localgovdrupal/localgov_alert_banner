@@ -4,6 +4,7 @@ namespace Drupal\localgov_alert_banner\Form;
 
 use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\localgov_alert_banner\Entity\AlertBannerEntity;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -35,6 +36,13 @@ class AlertBannerEntityForm extends ContentEntityForm {
   protected $configFactory;
 
   /**
+   * Request stack service.
+   *
+   * @var Symfony\Component\HttpFoundation\Request
+   */
+  protected $request;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
@@ -43,6 +51,7 @@ class AlertBannerEntityForm extends ContentEntityForm {
     $instance->account = $container->get('current_user');
     $instance->moduleHandler = $container->get('module_handler');
     $instance->configFactory = $container->get('config.factory');
+    $instance->request = $container->get('request_stack');
     return $instance;
   }
 
@@ -50,10 +59,11 @@ class AlertBannerEntityForm extends ContentEntityForm {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    /* @var \Drupal\localgov_alert_banner\Entity\AlertBannerEntity $entity */
     $form = parent::buildForm($form, $form_state);
+    $entity = $this->entity;
+    assert($entity instanceof AlertBannerEntity);
 
-    if (!$this->entity->isNew()) {
+    if (!$entity->isNew()) {
       $form['new_revision'] = [
         '#type' => 'checkbox',
         '#title' => $this->t('Create new revision'),
@@ -137,9 +147,27 @@ class AlertBannerEntityForm extends ContentEntityForm {
     // Move publishing options into sidebar like nodes.
     $form['display_title']['#group'] = 'publishing_options';
     $form['remove_hide_link']['#group'] = 'publishing_options';
-    // TODO Follow up action confirmation of publishing and
-    // unset($form['status']); or similar.
-    $form['status']['#group'] = 'publishing_options';
+    // Status.
+    unset($form['status']);
+    if ($entity->isNew()) {
+      $status_message = $this->t('New %type', ['%type' => $entity->getEntityType()->getLabel()]);
+    }
+    elseif ($entity->isPublished()) {
+      $status_message = $this->t('Live %type', ['%type' => $entity->getEntityType()->getLabel()]);
+    }
+    else {
+      $status_message = $this->t('Stored %type', ['%type' => $entity->getEntityType()->getLabel()]);
+    }
+    $form['publishing_options']['status-message'] = [
+      '#type' => 'markup',
+      '#markup' => $status_message,
+      '#weight' => -10,
+    ];
+    $form['publishing_options']['status-change'] = [
+      '#type' => 'checkbox',
+      '#title' => $entity->isPublished() ? $this->t('Remove') : $this->t('Set live'),
+      '#description' => $this->t('On submission proceed to confirmation form to change the live status.'),
+    ];
 
     return $form;
   }
@@ -176,7 +204,16 @@ class AlertBannerEntityForm extends ContentEntityForm {
           '%label' => $entity->label(),
         ]));
     }
-    $form_state->setRedirect('entity.localgov_alert_banner.canonical', ['localgov_alert_banner' => $entity->id()]);
+
+    if ($form_state->getValue('status-change') == TRUE) {
+      // Remove destination query and pass it through to the confirmation form.
+      $destination = $this->request->getCurrentRequest()->query->get('destination');
+      $this->request->getCurrentRequest()->query->remove('destination');
+      $form_state->setRedirect('entity.localgov_alert_banner.status_form', ['localgov_alert_banner' => $entity->id()], ['query' => ['destination' => $destination]]);
+    }
+    else {
+      $form_state->setRedirect('entity.localgov_alert_banner.collection', ['localgov_alert_banner' => $entity->id()]);
+    }
   }
 
 }

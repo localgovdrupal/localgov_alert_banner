@@ -81,6 +81,8 @@ class AlertBannerEntityStatusForm extends ContentEntityConfirmFormBase {
     $message = $this->getStatusChangedMessage();
     $this->messenger()->addStatus($message);
     $this->logStatusChanged();
+
+    $form_state->setRedirect('entity.localgov_alert_banner.collection', ['localgov_alert_banner' => $entity->id()]);
   }
 
   /**

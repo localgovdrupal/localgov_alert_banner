@@ -8,6 +8,7 @@ dependencies:
   - drupal:field
   - drupal:field_group
   - drupal:link
+  - drupal:node
   - drupal:options
   - drupal:user
   - drupal:views
