@@ -37,7 +37,7 @@ class AdminViewTest extends BrowserTestBase {
 
     // Check this is the view by making sure certian view only text is present.
     // @todo Work out how to make sure this is the view path (Kernal test?).
-    $this->assertText('Manage Alert Banners');
+    $this->assertRaw('Manage Alert Banners');
 
     // Check that loading the collection URL loads the admin dashboard.
     $collectionUrl = Url::fromRoute('entity.localgov_alert_banner.collection');

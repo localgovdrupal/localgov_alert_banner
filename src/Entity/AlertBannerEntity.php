@@ -73,7 +73,7 @@ use Drupal\user\UserInterface;
  *     "revision_revert" = "/admin/content/alert-banner/localgov_alert_banner/{localgov_alert_banner}/revisions/{localgov_alert_banner_revision}/revert",
  *     "revision_delete" = "/admin/content/alert-banner/localgov_alert_banner/{localgov_alert_banner}/revisions/{localgov_alert_banner_revision}/delete",
  *     "translation_revert" = "/admin/content/alert-banner/localgov_alert_banner/{localgov_alert_banner}/revisions/{localgov_alert_banner_revision}/revert/{langcode}",
- *     "collection" = "/admin/content/alert-banner/localgov_alert_banner",
+ *     "collection" = "/admin/content/alert-banner",
  *   },
  *   bundle_entity_type = "localgov_alert_banner_type",
  *   field_ui_base_route = "entity.localgov_alert_banner_type.edit_form"
