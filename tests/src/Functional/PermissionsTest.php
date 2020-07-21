@@ -6,7 +6,7 @@ use Drupal\Tests\BrowserTestBase;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Functional tests for LocalGovDrupal Alert banner block.
+ * Functional tests for LocalGovDrupal Alert banner permissions.
  */
 class PermissionsTest extends BrowserTestBase {
 
