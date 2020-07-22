@@ -54,17 +54,17 @@ class PermissionsTest extends BrowserTestBase {
     $this->assertResponse(Response::HTTP_FORBIDDEN);
 
     // Check that anonymous user does not have CRUD page access.
-    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/add/localgov_alert_banner');
+    $this->drupalGet('admin/content/alert-banner/add/localgov_alert_banner');
     $this->assertResponse(Response::HTTP_FORBIDDEN);
-    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1/edit');
+    $this->drupalGet('admin/content/alert-banner/1/edit');
     $this->assertResponse(Response::HTTP_FORBIDDEN);
-    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1/revisions');
+    $this->drupalGet('admin/content/alert-banner/1/revisions');
     $this->assertResponse(Response::HTTP_FORBIDDEN);
-    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1/delete');
+    $this->drupalGet('admin/content/alert-banner/1/delete');
     $this->assertResponse(Response::HTTP_FORBIDDEN);
 
     // Check that anonymous user cannot view the alert banner main page.
-    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1');
+    $this->drupalGet('admin/content/alert-banner/1');
     $this->assertResponse(Response::HTTP_FORBIDDEN);
 
     // Check that anonymous user cannot access the alert banner types.
@@ -79,17 +79,17 @@ class PermissionsTest extends BrowserTestBase {
     $this->assertResponse(Response::HTTP_FORBIDDEN);
 
     // Check that authenticated user does not have CRUD page access.
-    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/add/localgov_alert_banner');
+    $this->drupalGet('admin/content/alert-banner/add/localgov_alert_banner');
     $this->assertResponse(Response::HTTP_FORBIDDEN);
-    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1/edit');
+    $this->drupalGet('admin/content/alert-banner/1/edit');
     $this->assertResponse(Response::HTTP_FORBIDDEN);
-    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1/revisions');
+    $this->drupalGet('admin/content/alert-banner/1/revisions');
     $this->assertResponse(Response::HTTP_FORBIDDEN);
-    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1/delete');
+    $this->drupalGet('admin/content/alert-banner/1/delete');
     $this->assertResponse(Response::HTTP_FORBIDDEN);
 
     // Check that authenticated user cannot view the alert banner main page.
-    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1');
+    $this->drupalGet('admin/content/alert-banner/1');
     $this->assertResponse(Response::HTTP_FORBIDDEN);
 
     // Check that authenticated user cannot access the alert banner types.
@@ -108,17 +108,17 @@ class PermissionsTest extends BrowserTestBase {
     $this->assertResponse(Response::HTTP_OK);
 
     // Check that emergency publisher user has CRUD page access.
-    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/add/localgov_alert_banner');
+    $this->drupalGet('admin/content/alert-banner/add/localgov_alert_banner');
     $this->assertResponse(Response::HTTP_OK);
-    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1/edit');
+    $this->drupalGet('admin/content/alert-banner/1/edit');
     $this->assertResponse(Response::HTTP_OK);
-    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1/revisions');
+    $this->drupalGet('admin/content/alert-banner/1/revisions');
     $this->assertResponse(Response::HTTP_OK);
-    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1/delete');
+    $this->drupalGet('admin/content/alert-banner/1/delete');
     $this->assertResponse(Response::HTTP_OK);
 
     // Check that emergency publisher user can view the alert banner main page.
-    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1');
+    $this->drupalGet('admin/content/alert-banner/1');
     $this->assertResponse(Response::HTTP_OK);
 
     // Check that emergency publisher user cannot access the alert banner types.
@@ -141,17 +141,17 @@ class PermissionsTest extends BrowserTestBase {
     $this->assertResponse(Response::HTTP_OK);
 
     // Check that emergency publisher user has CRUD page access.
-    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/add/localgov_alert_banner');
+    $this->drupalGet('admin/content/alert-banner/add/localgov_alert_banner');
     $this->assertResponse(Response::HTTP_OK);
-    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1/edit');
+    $this->drupalGet('admin/content/alert-banner/1/edit');
     $this->assertResponse(Response::HTTP_OK);
-    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1/revisions');
+    $this->drupalGet('admin/content/alert-banner/1/revisions');
     $this->assertResponse(Response::HTTP_OK);
-    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1/delete');
+    $this->drupalGet('admin/content/alert-banner/1/delete');
     $this->assertResponse(Response::HTTP_OK);
 
     // Check that emergency publisher user can view the alert banner main page.
-    $this->drupalGet('admin/content/alert-banner/localgov_alert_banner/1');
+    $this->drupalGet('admin/content/alert-banner/1');
     $this->assertResponse(Response::HTTP_OK);
 
     $this->drupalLogout();
