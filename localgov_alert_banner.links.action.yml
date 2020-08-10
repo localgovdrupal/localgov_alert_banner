@@ -3,7 +3,7 @@ entity.localgov_alert_banner.add_form:
   title: 'Add Alert banner'
   appears_on:
     - entity.localgov_alert_banner.collection
-    - view.admin_manage_alert_banners.localgov_alert_banner_admin_list
+    - view.localgov_admin_manage_alert_banners.localgov_alert_banner_admin_list
 entity.localgov_alert_banner_type.add_form:
   route_name: entity.localgov_alert_banner_type.add_form
   title: 'Add Alert banner type'
