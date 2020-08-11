@@ -1,6 +1,6 @@
-name: 'LocalGovDrupal Alert banner'
+name: 'LocalGov Alert Banner'
 type: module
-description: 'LocalGovDrupal Alert banner module'
+description: 'Provides a sitewide alert banner for urgent alerts.'
 core_version_requirement: ^8.8 || ^9
 package: LocalGovDrupal
 dependencies:
