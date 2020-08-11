@@ -8,7 +8,7 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Block\BlockBase;
 
 /**
- * Provides the Alert Banner Block.
+ * Provides the Alert banner block.
  *
  * @Block(
  *   id = "localgov_alert_banner_block",
@@ -43,6 +43,8 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
   }
 
   /**
+   * Create the Alert banner block instance.
+   *
    * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
    *   Container object.
    * @param array $configuration
@@ -63,7 +65,6 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
     );
   }
 
-
   /**
    * {@inheritdoc}
    */
@@ -79,9 +80,9 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
     // Render the alert banner.
     $published_alert_banner_id = reset($published_alert_banner);
     $alert_banner = $this->entityTypeManager->getStorage('localgov_alert_banner')
-                                            ->load($published_alert_banner_id);
+      ->load($published_alert_banner_id);
     $build[] = $this->entityTypeManager->getViewBuilder('localgov_alert_banner')
-                                       ->view($alert_banner);
+      ->view($alert_banner);
 
     return $build;
   }
@@ -91,14 +92,15 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
    *
    * Note: We don't limit the number that is returned here to 1, as checking
    * only one is published is handled by the entity postSave method.
-   * @return Array
+   *
+   * @return array
    *   Array with the ID of any published alert banners.
    */
   protected function getCurrentAlertBanner() {
     $published_alert_banner = $this->entityTypeManager->getStorage('localgov_alert_banner')
-                                                      ->getQuery()
-                                                      ->condition('status', 1)
-                                                      ->execute();
+      ->getQuery()
+      ->condition('status', 1)
+      ->execute();
     return $published_alert_banner;
   }
 
