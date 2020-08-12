@@ -12,7 +12,7 @@ dependencies:
     - localgov_alert_banner
     - options
     - user
-id: admin_manage_alert_banners
+id: localgov_admin_manage_alert_banners
 label: 'Manage Alert Banners'
 module: views
 description: ''
