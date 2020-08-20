@@ -46,11 +46,6 @@ content:
     region: content
     settings: {  }
     third_party_settings: {  }
-  flag:
-    weight: 7
-    region: content
-    settings: {  }
-    third_party_settings: {  }
   remove_hide_link:
     type: boolean_checkbox
     weight: 6
