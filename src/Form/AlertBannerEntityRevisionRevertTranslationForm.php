@@ -28,11 +28,19 @@ class AlertBannerEntityRevisionRevertTranslationForm extends AlertBannerEntityRe
   protected $languageManager;
 
   /**
+   * The time service.
+   *
+   * @var \Drupal\Component\Datetime\TimeInterface
+   */
+  protected $dateTime;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
     $instance = parent::create($container);
     $instance->languageManager = $container->get('language_manager');
+    $instance->dateTime = $container->get('datetime.time');
     return $instance;
   }
 
@@ -89,7 +97,7 @@ class AlertBannerEntityRevisionRevertTranslationForm extends AlertBannerEntityRe
 
     $latest_revision_translation->setNewRevision();
     $latest_revision_translation->isDefaultRevision(TRUE);
-    $revision->setRevisionCreationTime(\Drupal::time()->getRequestTime());
+    $revision->setRevisionCreationTime($this->dateTime->getRequestTime());
 
     return $latest_revision_translation;
   }
