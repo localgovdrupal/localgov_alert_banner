@@ -14,7 +14,7 @@ settings:
   allowed_values:
     -
       value: 00--announcement
-      label: Annoucement
+      label: Announcement
     -
       value: 20--minor
       label: 'Minor alert'
