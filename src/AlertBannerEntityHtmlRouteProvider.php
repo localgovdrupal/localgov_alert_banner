@@ -47,7 +47,7 @@ class AlertBannerEntityHtmlRouteProvider extends AdminHtmlRouteProvider {
     }
 
     if ($settings_form_route = $this->getSettingsFormRoute($entity_type)) {
-      $collection->add("$entity_type_id.settings", $settings_form_route);
+      $collection->add("{$entity_type_id}.settings", $settings_form_route);
     }
 
     if ($status_form_route = $this->getStatusFormRoute($entity_type)) {
