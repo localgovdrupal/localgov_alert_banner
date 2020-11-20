@@ -211,8 +211,8 @@ class AlertBannerEntityController extends ControllerBase implements ContainerInj
   /**
    * Publish or Unpublish title for alert banner status change form.
    */
-  public function getStatusFormTitle(AlertBannerEntityInterface $alert_banner) {
-    return $alert_banner->isPublished() ? $this->t('Remove banner') : $this->t('Put banner live');
+  public function getStatusFormTitle(AlertBannerEntityInterface $localgov_alert_banner) {
+    return $localgov_alert_banner->isPublished() ? $this->t('Remove banner') : $this->t('Put banner live');
   }
 
 }
