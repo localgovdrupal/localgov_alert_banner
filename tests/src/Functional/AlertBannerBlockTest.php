@@ -12,19 +12,36 @@ class AlertBannerBlockTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'localgov_theme';
-
-  /**
-   * {@inheritdoc}
-   */
-  protected $profile = 'localgov';
+  protected $defaultTheme = 'classy';
 
   /**
    * {@inheritdoc}
    */
   public static $modules = [
+    'block',
+    'path',
+    'options',
     'localgov_alert_banner',
   ];
+
+  /**
+   * A user with the 'administer blocks' permission.
+   *
+   * @var \Drupal\user\UserInterface
+   */
+  protected $adminUser;
+
+  /**
+   * {@inheritdoc}
+   */
+  protected function setUp() {
+    parent::setUp();
+
+    $this->adminUser = $this->drupalCreateUser(['administer blocks']);
+    $this->drupalLogin($this->adminUser);
+    $this->drupalPlaceBlock('localgov_alert_banner_block');
+    $this->drupalLogout($this->adminUser);
+  }
 
   /**
    * Test alert banner block displays.
