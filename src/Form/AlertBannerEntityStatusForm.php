@@ -55,12 +55,18 @@ class AlertBannerEntityStatusForm extends ContentEntityConfirmFormBase {
           $published_titles[] = $alert->label();
         }
       }
+
+      // Add the unpublish other banners checkbox.
+      $form['unpublish_others'] = [
+        '#type' => 'checkbox',
+        '#title' => $this->t('Unpublish all other alerts.'),
+        '#default_value' => 1,
+      ];
+
       if (!empty($published_titles)) {
-        $form['description']['unpublish'] = [
-          '#markup' => $this->t('This will also remove the banner %title', [
-            '%title' => implode(', ', $published_titles),
-          ]),
-        ];
+        $form['unpublish_others']['#description'] = $this->t('This will also remove the banner %title', [
+          '%title' => implode(', ', $published_titles),
+        ]);
       }
     }
 
@@ -81,6 +87,24 @@ class AlertBannerEntityStatusForm extends ContentEntityConfirmFormBase {
     $message = $this->getStatusChangedMessage();
     $this->messenger()->addStatus($message);
     $this->logStatusChanged();
+
+    // If the unpublish checkbox set, unplublish other banners.
+    if ($form_state->hasValue('unpublish_others') && $form_state->getValue('unpublish_others') === 1) {
+      $entity_query = $this->entityTypeManager
+        ->getStorage($entity->getEntityTypeId())
+        ->getQuery();
+      $entity_query->accessCheck(FALSE);
+      $entity_query->condition('status', TRUE);
+      $entity_query->condition('id', $entity->id(), '<>');
+      $published_entities = $entity_query->execute();
+      if (!empty($published_entities)) {
+        foreach ($published_entities as $published) {
+          $current = AlertBannerEntity::load($published);
+          $current->set('status', FALSE);
+          $current->save();
+        }
+      }
+    }
 
     $form_state->setRedirect('entity.localgov_alert_banner.collection', ['localgov_alert_banner' => $entity->id()]);
   }

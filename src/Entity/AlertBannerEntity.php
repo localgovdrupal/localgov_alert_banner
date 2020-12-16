@@ -147,24 +147,8 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
 
     if ($this->get('status')->value) {
       // Regenerate a JS token for the updated alert banner.
+      // @todo: multiple banners so save to entity.
       $this->alertBannerState()->generateToken($this)->save();
-
-      // Unpublish any other updates.
-      // Should only ever be one.
-      $entity_query = $this->entityTypeManager()
-        ->getStorage($this->entityTypeId)
-        ->getQuery();
-      $entity_query->accessCheck(FALSE);
-      $entity_query->condition('status', TRUE);
-      $entity_query->condition('id', $this->id(), '<>');
-      $published_entities = $entity_query->execute();
-      if (!empty($published_entities)) {
-        foreach ($published_entities as $published) {
-          $current = self::load($published);
-          $current->set('status', FALSE);
-          $current->save();
-        }
-      }
 
     }
 

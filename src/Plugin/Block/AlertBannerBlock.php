@@ -70,19 +70,21 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
    */
   public function build() {
     // Fetch the current published banner.
-    $published_alert_banner = $this->getCurrentAlertBanner();
+    $published_alert_banners = $this->getCurrentAlertBanner();
 
     // If no banner found, return NULL so block is not rendered.
-    if (empty($published_alert_banner)) {
+    if (empty($published_alert_banners)) {
       return NULL;
     }
 
     // Render the alert banner.
-    $published_alert_banner_id = reset($published_alert_banner);
-    $alert_banner = $this->entityTypeManager->getStorage('localgov_alert_banner')
-      ->load($published_alert_banner_id);
-    $build[] = $this->entityTypeManager->getViewBuilder('localgov_alert_banner')
-      ->view($alert_banner);
+    $build = [];
+    foreach ($published_alert_banners as $published_alert_banner_id) {
+      $alert_banner = $this->entityTypeManager->getStorage('localgov_alert_banner')
+        ->load($published_alert_banner_id);
+      $build[] = $this->entityTypeManager->getViewBuilder('localgov_alert_banner')
+        ->view($alert_banner);
+    }
 
     return $build;
   }
