@@ -85,13 +85,6 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
   use EntityPublishedTrait;
 
   /**
-   * Gets the alert banner state service.
-   */
-  protected function alertBannerState() {
-    return \Drupal::service('localgov_alert_banner.state');
-  }
-
-  /**
    * {@inheritdoc}
    */
   public static function preCreate(EntityStorageInterface $storage_controller, array &$values) {

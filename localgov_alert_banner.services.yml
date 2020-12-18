@@ -1,7 +1,4 @@
 services:
-  localgov_alert_banner.state:
-    class: Drupal\localgov_alert_banner\AlertBannerState
-    arguments: ['@state']
   localgov_alert_banner.route_subscriber:
     class: Drupal\localgov_alert_banner\Routing\AlertBannerRouteSubscriber
     tags:
