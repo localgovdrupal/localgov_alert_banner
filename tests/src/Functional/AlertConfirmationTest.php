@@ -85,7 +85,7 @@ class AlertConfirmationTest extends BrowserTestBase {
     // Go to the alert confirmation page, tick the unpublish others.
     // Verifiy that the alert 2 banner is unpublished.
     $this->drupalPostForm($alert->toUrl('status-form')->toString(), [
-      'edit-unpublish-others' => 1
+      'edit-unpublish-others' => 1,
     ], 'Confirm');
 
     // Check for the presence of the Put banner live link.
@@ -95,7 +95,7 @@ class AlertConfirmationTest extends BrowserTestBase {
     // Go to the second alert confirmation page, do not unpublih others.
     // Verifiy that the alert banner remains published.
     $this->drupalPostForm($alert_2->toUrl('status-form')->toString(), [
-      'edit-unpublish-others' => 0
+      'edit-unpublish-others' => 0,
     ], 'Confirm');
 
     // Check for the presence of the Remove banner link.

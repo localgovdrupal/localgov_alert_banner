@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * @file
+ * LocalGov Alert Banner install file.
+ */
+
 use Drupal\Core\Field\BaseFieldDefinition;
 
 /**
