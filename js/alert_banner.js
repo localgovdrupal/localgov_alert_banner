@@ -9,25 +9,30 @@
 
   'use strict';
 
-  function setAlertBannerHideCookie(token) {
-    $.cookie('hide-alert-banner-token', token, { path: '/', expires: 30 });
+  function setAlertBannerHideCookie(cookie_tokens, token) {
+    cookie_tokens.push(token);
+    var new_cookie = cookie_tokens.join(',')
+    $.cookie('hide-alert-banner-token', new_cookie, { path: '/', expires: 30 });
   }
 
   $(document).ready(function() {
 
-    var token = drupalSettings.localgov_alert_banner.token;
     var cookie = $.cookie('hide-alert-banner-token');
+    var cookie_tokens = typeof cookie !== 'undefined' ? cookie.split(',') : [];
 
-    $('.js-alert-banner').removeClass('hidden');
-    // Hide if cookie matches token
-    if (cookie == token) {
-      $('[data-dismiss-alert-token="'+ cookie +'"]').hide();
-    }
+    $('.js-alert-banner').each(function() {
+      $(this).removeClass('hidden');
+      var token = $(this).data('dismiss-alert-token');
+      if ($.inArray(token, cookie_tokens) > -1) {
+        $(this).hide();
+      }
+    });
 
     $('.js-alert-banner-close').click(function(e) {
       e.preventDefault();
-      $(this).closest('.js-alert-banner').attr("aria-hidden", "true").slideUp('fast');
-      setAlertBannerHideCookie(token);
+      var banner = $(this).closest('.js-alert-banner');
+      banner.attr("aria-hidden", "true").slideUp('fast');
+      setAlertBannerHideCookie(cookie_tokens, banner.data('dismiss-alert-token'));
     });
 
   });

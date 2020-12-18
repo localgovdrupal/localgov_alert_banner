@@ -137,6 +137,13 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
     if (!$this->getRevisionUser()) {
       $this->setRevisionUserId($this->getOwnerId());
     }
+
+    // Regenerate a JS token for the updated alert banner.
+    if ($this->get('status')->value) {
+      $prefix = 'alert-' . $this->id() . '-';
+      $hash = sha1(uniqid('', TRUE));
+      $this->setToken($prefix . '-' . $hash);
+    }
   }
 
   /**
@@ -144,13 +151,6 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
    */
   public function postSave(EntityStorageInterface $storage, $update = TRUE) {
     parent::postSave($storage, $update);
-
-    if ($this->get('status')->value) {
-      // Regenerate a JS token for the updated alert banner.
-      // @todo: multiple banners so save to entity.
-      $this->alertBannerState()->generateToken($this)->save();
-
-    }
 
     // Better to use cache tags instead of doing a full flush?
     drupal_flush_all_caches();
@@ -183,6 +183,21 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
    */
   public function setCreatedTime($timestamp) {
     $this->set('created', $timestamp);
+    return $this;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getToken() {
+    return $this->get('token')->value;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setToken($token) {
+    $this->set('token', $token);
     return $this;
   }
 
@@ -319,6 +334,12 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
       ->setReadOnly(TRUE)
       ->setRevisionable(TRUE)
       ->setTranslatable(TRUE);
+
+    // Remove hide link.
+    $fields['token'] = BaseFieldDefinition::create('string')
+      ->setSetting('max_length', 64)
+      ->setDisplayConfigurable('form', FALSE)
+      ->setDisplayConfigurable('view', FALSE);
 
     return $fields;
   }
