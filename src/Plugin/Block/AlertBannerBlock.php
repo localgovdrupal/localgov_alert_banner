@@ -70,7 +70,7 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
    */
   public function build() {
     // Fetch the current published banner.
-    $published_alert_banners = $this->getCurrentAlertBanner();
+    $published_alert_banners = $this->getCurrentAlertBanners();
 
     // If no banner found, return NULL so block is not rendered.
     if (empty($published_alert_banners)) {
@@ -90,18 +90,20 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
   }
 
   /**
-   * Get current alert banner.
+   * Get current alert banner(s).
    *
-   * Note: We don't limit the number that is returned here to 1, as checking
-   * only one is published is handled by the entity postSave method.
+   * Note: Default order will be by the field type_of_alert
+   * (only on the default) and then updated date.
    *
    * @return array
-   *   Array with the ID of any published alert banners.
+   *   Array with the IDs of any published alert banners.
    */
-  protected function getCurrentAlertBanner() {
+  protected function getCurrentAlertBanners() {
     $published_alert_banner = $this->entityTypeManager->getStorage('localgov_alert_banner')
       ->getQuery()
       ->condition('status', 1)
+      ->sort('type_of_alert', 'DESC')
+      ->sort('changed', 'DESC')
       ->execute();
     return $published_alert_banner;
   }
