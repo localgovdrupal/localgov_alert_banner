@@ -2,7 +2,7 @@
 
 namespace Drupal\Tests\localgov_alert_banner\Kernel;
 
-use Drupal\Core\DateTime\DrupalDateTime;
+use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\KernelTests\KernelTestBase;
 
 /**
