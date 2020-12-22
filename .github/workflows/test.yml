@@ -15,7 +15,7 @@ jobs:
       - name: setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: '7.2'
           tools: composer:v1
           
       - name: Clone drupal_container
