@@ -4,6 +4,7 @@ namespace Drupal\Tests\localgov_alert_banner\Kernel;
 
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\KernelTests\KernelTestBase;
+use Drupal\localgov_alert_banner\Entity\AlertBannerEntity;
 
 /**
  * Kernel test for alert banner order.
@@ -56,20 +57,19 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
       '90--notable-person' => 'Death of a notable person',
     ];
 
-    $count = 1;
+    // Set up alert banners.
     foreach ($alert_details as $key => $value) {
       $alert_entity = $this->container->get('entity_type.manager')->getStorage('localgov_alert_banner')
         ->create([
           'type' => 'localgov_alert_banner',
-          'title' => $count,
+          'title' => $this->randomMachineName(8),
           'type_of_alert' => $key,
           'status' => TRUE,
           // Make sure post in past for further test.
           'changed' => (new DrupalDateTime('-2 hours'))->getTimestamp(),
         ]);
       $alert_entity->save();
-      $alert[] = $alert_entity;
-      $count++;
+      $alert[] = $alert_entity->id();
     }
 
     // Create a block instance of gthe alert banner block.
@@ -77,55 +77,72 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
     $config = [];
     $plugin_block = $block_manager->createInstance('localgov_alert_banner_block', $config);
 
+    // Render the block and get the alert banner IDs as an array.
     $render = $plugin_block->build();
     foreach ($render as $render_value) {
-      $result[] = $render_value['#localgov_alert_banner']->label();
+      $result[] = $render_value['#localgov_alert_banner']->id();
     }
 
     // Order should be RIP, Major, Minor, Annoucment.
-    $expected = ['4', '3', '2', '1'];
-
+    // The result should be the input array in reverse order.
+    $expected = [$alert[3], $alert[2], $alert[1], $alert[0]];
     $this->assertEquals($expected, $result);
 
     // More banners - Order should be type then most recent first.
-    $count = 5;
     foreach ($alert_details as $key => $value) {
       $alert_entity = $this->container->get('entity_type.manager')->getStorage('localgov_alert_banner')
         ->create([
           'type' => 'localgov_alert_banner',
-          'title' => $count,
+          'title' => $this->randomMachineName(8),
           'type_of_alert' => $key,
           'status' => TRUE,
           'changed' => (new DrupalDateTime('-1 hour'))->getTimestamp(),
         ]);
       $alert_entity->save();
-      $alert[] = $alert_entity;
-      $count++;
+      $alert_new[] = $alert_entity->id();
     }
 
+    // Render the block and get the alert banner IDs as an array.
     $render = $plugin_block->build();
     foreach ($render as $render_value) {
-      $result_2[] = $render_value['#localgov_alert_banner']->label();
+      $result_2[] = $render_value['#localgov_alert_banner']->id();
     }
 
     // Order should be RIP, Major, Minor, Annoucment - most recent first.
-    $expected_2 = ['8', '4', '7', '3', '6', '2', '5', '1'];
-
+    $expected_2 = [
+      $alert_new[3],
+      $alert[3],
+      $alert_new[2],
+      $alert[2],
+      $alert_new[1],
+      $alert[1],
+      $alert_new[0],
+      $alert[0],
+    ];
     $this->assertEquals($expected_2, $result_2);
 
     // Update the changed date of the first 4 banners to now.
     for ($i = 0; $i <= 3; $i++) {
-      $alert[$i]->set('changed', (new DrupalDateTime('now'))->getTimestamp())->save();
+      AlertBannerEntity::load($alert[$i])->set('changed', (new DrupalDateTime('now'))->getTimestamp())->save();
     }
 
+    // Render the block and get the alert banner IDs as an array.
     $render = $plugin_block->build();
     foreach ($render as $render_value) {
-      $result_3[] = $render_value['#localgov_alert_banner']->label();
+      $result_3[] = $render_value['#localgov_alert_banner']->id();
     }
 
     // Order will be flipped around.
-    $expected_3 = ['4', '8', '3', '7', '2', '6', '1', '5'];
-
+    $expected_3 = [
+      $alert[3],
+      $alert_new[3],
+      $alert[2],
+      $alert_new[2],
+      $alert[1],
+      $alert_new[1],
+      $alert[0],
+      $alert_new[0],
+    ];
     $this->assertEquals($expected_3, $result_3);
 
   }
