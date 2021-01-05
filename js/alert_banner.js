@@ -11,14 +11,14 @@
 
   function setAlertBannerHideCookie(cookie_tokens, token) {
     cookie_tokens.push(token);
-    var new_cookie = cookie_tokens.join(',')
+    var new_cookie = cookie_tokens.join('+')
     $.cookie('hide-alert-banner-token', new_cookie, { path: '/', expires: 30 });
   }
 
   $(document).ready(function() {
 
     var cookie = $.cookie('hide-alert-banner-token');
-    var cookie_tokens = typeof cookie !== 'undefined' ? cookie.split(',') : [];
+    var cookie_tokens = typeof cookie !== 'undefined' ? cookie.split('+') : [];
 
     $('.js-alert-banner').each(function() {
       $(this).removeClass('hidden');
