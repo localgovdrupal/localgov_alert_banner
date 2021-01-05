@@ -328,7 +328,7 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
       ->setRevisionable(TRUE)
       ->setTranslatable(TRUE);
 
-    // Remove hide link.
+    // Token used for the cookie when the banner is hidden.
     $fields['token'] = BaseFieldDefinition::create('string')
       ->setSetting('max_length', 64)
       ->setDisplayConfigurable('form', FALSE)
