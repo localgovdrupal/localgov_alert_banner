@@ -41,7 +41,7 @@ function localgov_alert_banner_entity_build_defaults_alter(array &$build, Entity
     $build['#cache']['contexts'][] = 'url.path:is_front';
 
     // Get token and use as a cache tag.
-    $token = \Drupal::service('localgov_alert_banner.state')->getToken();
+    $token = $entity->getToken();
     $build['#cache']['tags'][] = 'localgov.alert.banner.token:' . $token;
   }
 }
@@ -54,16 +54,13 @@ function localgov_alert_banner_preprocess(&$variables) {
   if (isset($variables['elements']['#localgov_alert_banner'])) {
 
     // Get token.
-    $token = \Drupal::service('localgov_alert_banner.state')->getToken();
+    $token = $variables['elements']['#localgov_alert_banner']->getToken();
 
     // Add a hidden class.
     $variables['attributes']['class'][] = 'hidden';
 
     // Token as attribute.
     $variables['attributes']['data-dismiss-alert-token'] = $token;
-
-    // Ensure token is accessible by javascript.
-    $variables['#attached']['drupalSettings']['localgov_alert_banner']['token'] = $token;
 
   }
 }
