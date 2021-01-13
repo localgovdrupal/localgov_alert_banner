@@ -69,6 +69,38 @@ class AlertConfirmationTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains('Remove current alert banner ' . $title);
     $this->getSession()->getPage()->pressButton('Confirm');
     $this->assertSession()->pageTextContains('The alert banner ' . $title . ' has been removed.');
+
+    // Set up a second alert banner.
+    $title_2 = $this->randomMachineName(8);
+    $alert_message_2 = 'Alert message: ' . $this->randomMachineName(16);
+    $alert_2 = AlertBannerEntity::create([
+      'type' => 'localgov_alert_banner',
+      'title' => $title_2,
+      'short_description' => $alert_message_2,
+      'type_of_alert' => 'minor',
+      'status' => TRUE,
+    ]);
+    $alert_2->save();
+
+    // Go to the alert confirmation page, tick the unpublish others.
+    // Verifiy that the alert 2 banner is unpublished.
+    $this->drupalPostForm($alert->toUrl('status-form')->toString(), [
+      'edit-unpublish-others' => 1,
+    ], 'Confirm');
+
+    // Check for the presence of the Put banner live link.
+    $this->drupalGet($alert_2->toUrl('canonical')->toString());
+    $this->assertSession()->pageTextContains('Put banner live');
+
+    // Go to the second alert confirmation page, do not unpublih others.
+    // Verifiy that the alert banner remains published.
+    $this->drupalPostForm($alert_2->toUrl('status-form')->toString(), [
+      'edit-unpublish-others' => 0,
+    ], 'Confirm');
+
+    // Check for the presence of the Remove banner link.
+    $this->drupalGet($alert->toUrl('canonical')->toString());
+    $this->assertSession()->pageTextContains('Remove banner');
   }
 
   /**

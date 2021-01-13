@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * LocalGov Alert Banner install file.
+ */
+
+use Drupal\Core\Field\BaseFieldDefinition;
+
+/**
+ * Update alert banner entity defination to include the token on the entity.
+ */
+function localgov_alert_banner_update_8801() {
+  $field_storage_definition = BaseFieldDefinition::create('string')
+    ->setSetting('max_length', 64)
+    ->setDisplayConfigurable('form', FALSE)
+    ->setDisplayConfigurable('view', FALSE);
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('token', 'localgov_alert_banner', 'localgov_alert_banner', $field_storage_definition);
+}

@@ -70,6 +70,49 @@ class AlertBannerHideTest extends WebDriverTestBase {
     $this->drupalGet('<front>');
     $this->assertSession()->pageTextContains($title);
 
+    // Set up a second alert banner.
+    $title_2 = $this->randomMachineName(8);
+    $alert_message_2 = 'Alert message: ' . $this->randomMachineName(16);
+    $alert_2 = $this->container->get('entity_type.manager')->getStorage('localgov_alert_banner')
+      ->create([
+        'type' => 'localgov_alert_banner',
+        'title' => $title_2,
+        'short_description' => $alert_message_2,
+        'type_of_alert' => 'minor',
+        'status' => TRUE,
+      ]);
+    $alert_2->save();
+
+    // Check both banners are displayed.
+    $this->drupalGet('<front>');
+    $this->assertSession()->pageTextContains($alert_message);
+    $this->assertSession()->pageTextContains($alert_message_2);
+
+    // Click the first alert hide button.
+    $page = $this->getSession()->getPage();
+    $button_1 = $page->find('css', '[data-dismiss-alert-token="' . $alert->getToken() . '"] button');
+    $button_1->click();
+
+    // Reload home page.
+    $this->drupalGet('<front>');
+
+    // Test that the first banner is dismmised,
+    // but the second banner still present.
+    $this->assertSession()->pageTextNotContains($alert_message);
+    $this->assertSession()->pageTextContains($alert_message_2);
+
+    // Click the second alert hide button.
+    $page = $this->getSession()->getPage();
+    $button_2 = $page->find('css', '[data-dismiss-alert-token="' . $alert_2->getToken() . '"] button');
+    $button_2->click();
+
+    // Reload home page.
+    $this->drupalGet('<front>');
+
+    // Test that both banners are now dismissed.
+    $this->assertSession()->pageTextNotContains($alert_message);
+    $this->assertSession()->pageTextNotContains($alert_message_2);
+
   }
 
 }
