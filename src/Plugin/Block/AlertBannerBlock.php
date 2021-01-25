@@ -2,6 +2,7 @@
 
 namespace Drupal\localgov_alert_banner\Plugin\Block;
 
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
@@ -68,6 +69,46 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
   /**
    * {@inheritdoc}
    */
+  public function defaultConfiguration() {
+    return [
+      'types' => [],
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function blockForm($form, FormStateInterface $form_state) : array {
+    $form = parent::blockForm($form, $form_state);
+    $type_storage = $this->entityTypeManager->getStorage('localgov_alert_banner_type');
+    $config = $this->getConfiguration();
+    $config_options = [];
+    foreach ($type_storage->loadMultiple() as $id => $type) {
+      $config_options[$id] = $type->label();
+    }
+    $form['include_types'] = [
+      '#type' => 'checkboxes',
+      '#options' => $config_options,
+      '#title' => $this->t('Display types'),
+      '#description' => $this->t('If no types are selected all will be displayed.'),
+      '#default_value' => !empty($config['include_types']) ? $config['include_types'] : '',
+    ];
+    return $form;
+
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function blockSubmit($form, FormStateInterface $form_state) {
+    parent::blockSubmit($form, $form_state);
+    $values = $form_state->getValues();
+    $this->configuration['include_types'] = $values['include_types'];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function build() {
     // Fetch the current published banner.
     $published_alert_banners = $this->getCurrentAlertBanners();
@@ -99,13 +140,29 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
    *   Array with the IDs of any published alert banners.
    */
   protected function getCurrentAlertBanners() {
-    $published_alert_banner = $this->entityTypeManager->getStorage('localgov_alert_banner')
+    $types = $this->mapTypesConfigToQuery();
+    $published_alert_banner_query = $this->entityTypeManager->getStorage('localgov_alert_banner')
       ->getQuery()
       ->condition('status', 1)
       ->sort('type_of_alert', 'DESC')
-      ->sort('changed', 'DESC')
-      ->execute();
-    return $published_alert_banner;
+      ->sort('changed', 'DESC');
+    if (!empty($types)) {
+      $published_alert_banner_query->condition('type', $types, 'IN');
+    }
+    return $published_alert_banner_query->execute();
+  }
+
+  /**
+   * Get an array of types from config we can use for querying.
+   *
+   * @return array
+   *   An array of alter banner type IDs as keys and values.
+   */
+  protected function mapTypesConfigToQuery() : array {
+    $include_types = $this->configuration['include_types'];
+    return array_filter($include_types, function ($t) {
+      return $t !== 0;
+    });
   }
 
 }
