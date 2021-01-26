@@ -71,7 +71,7 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
    */
   public function defaultConfiguration() {
     return [
-      'types' => [],
+      'include_types' => [],
     ];
   }
 
