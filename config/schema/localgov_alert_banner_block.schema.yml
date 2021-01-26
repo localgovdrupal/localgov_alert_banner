@@ -4,6 +4,6 @@ localgov_alert_banner_block.settings:
   mapping:
     include_types:
       type: sequence
-        label: 'Displayed alert types'
-        sequence:
-          type: string
+      label: 'Displayed alert types'
+      sequence:
+        type: string
