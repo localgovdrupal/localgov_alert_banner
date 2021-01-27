@@ -161,7 +161,7 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
   protected function mapTypesConfigToQuery() : array {
     $include_types = $this->configuration['include_types'];
     return array_filter($include_types, function ($t) {
-      return $t !== 0;
+      return (bool) $t;
     });
   }
 
