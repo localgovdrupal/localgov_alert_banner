@@ -229,7 +229,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
     $this->updateBlockSettings($block, [
       'include_types' => [
         'localgov_alert_banner' => '0',
-        'extra_type' => '0',
+        'extra_type' => 'extra_type',
       ],
     ]);
     $this->drupalGet('<front>');
