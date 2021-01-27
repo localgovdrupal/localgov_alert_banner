@@ -207,24 +207,30 @@ class AlertBannerBlockTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains('Alert of type extra_type');
 
     $this->updateBlockSettings($block, [
-      'localgov_alert_banner' => 'localgov_alert_banner',
-      'extra_type' => 'extra_type',
+      'include_types' => [
+        'localgov_alert_banner' => 'localgov_alert_banner',
+        'extra_type' => 'extra_type',
+      ],
     ]);
     $this->drupalGet('<front>');
     $this->assertSession()->pageTextContains('Alert of type localgov_alert_banner');
     $this->assertSession()->pageTextContains('Alert of type extra_type');
 
     $this->updateBlockSettings($block, [
-      'localgov_alert_banner' => 'localgov_alert_banner',
-      'extra_type' => '0',
+      'include_types' => [
+        'localgov_alert_banner' => 'localgov_alert_banner',
+        'extra_type' => '0',
+      ],
     ]);
     $this->drupalGet('<front>');
     $this->assertSession()->pageTextContains('Alert of type localgov_alert_banner');
     $this->assertSession()->pageTextNotContains('Alert of type extra_type');
 
     $this->updateBlockSettings($block, [
-      'localgov_alert_banner' => '0',
-      'extra_type' => 'extra_type',
+      'include_types' => [
+        'localgov_alert_banner' => '0',
+        'extra_type' => '0',
+      ],
     ]);
     $this->drupalGet('<front>');
     $this->assertSession()->pageTextNotContains('Alert of type localgov_alert_banner');
