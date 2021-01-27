@@ -1,5 +1,5 @@
 block.settings.localgov_alert_banner_block:
-  type: config_object
+  type: block_settings
   label: 'LocalGov alert banner block settings'
   mapping:
     include_types:
