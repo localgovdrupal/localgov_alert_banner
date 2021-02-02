@@ -8,7 +8,7 @@
 use Drupal\Core\Field\BaseFieldDefinition;
 
 /**
- * Update alert banner entity defination to include the token on the entity.
+ * Update alert banner entity definition to include the token on the entity.
  */
 function localgov_alert_banner_update_8801() {
   $field_storage_definition = BaseFieldDefinition::create('string')

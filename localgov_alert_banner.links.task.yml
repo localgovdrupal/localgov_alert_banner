@@ -31,4 +31,4 @@ entity.localgov_alert_banner.delete_form:
 entity.localgov_alert_banner.collection:
   route_name: view.localgov_admin_manage_alert_banners.localgov_alert_banner_admin_list
   base_route:  system.admin_content
-  title: 'Alert Banners'
+  title: 'Alert banners'
