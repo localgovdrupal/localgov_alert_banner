@@ -14,7 +14,7 @@ class PermissionsTest extends BrowserTestBase {
    * {@inheritdoc}
    */
   protected $defaultTheme = 'classy';
-  
+
   /**
    * {@inheritdoc}
    */
