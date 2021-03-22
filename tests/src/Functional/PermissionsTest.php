@@ -13,6 +13,11 @@ class PermissionsTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
+  protected $defaultTheme = 'classy';
+
+  /**
+   * {@inheritdoc}
+   */
   public static $modules = [
     'localgov_alert_banner',
   ];
