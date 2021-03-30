@@ -91,7 +91,7 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
       '#options' => $config_options,
       '#title' => $this->t('Display types'),
       '#description' => $this->t('If no types are selected all will be displayed.'),
-      '#default_value' => !empty($config['include_types']) ? $config['include_types'] : '',
+      '#default_value' => !empty($config['include_types']) ? $config['include_types'] : [],
     ];
     return $form;
 
