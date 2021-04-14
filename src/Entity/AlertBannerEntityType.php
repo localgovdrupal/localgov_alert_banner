@@ -10,6 +10,7 @@ use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
  * @ConfigEntityType(
  *   id = "localgov_alert_banner_type",
  *   label = @Translation("Alert banner type"),
+ *   label_collection = @Translation("Alert banner types"),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
  *     "list_builder" = "Drupal\localgov_alert_banner\AlertBannerEntityTypeListBuilder",
