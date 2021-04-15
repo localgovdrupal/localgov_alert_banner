@@ -94,7 +94,6 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
       '#default_value' => !empty($config['include_types']) ? $config['include_types'] : [],
     ];
     return $form;
-
   }
 
   /**

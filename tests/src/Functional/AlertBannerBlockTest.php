@@ -36,7 +36,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
    * Place the alert block.
    *
    * Utility to place the alert banner block so we can assert
-   * against it's output.
+   * against its output.
    *
    * @param array $settings
    *   The block settings.
