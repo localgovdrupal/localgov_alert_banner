@@ -43,6 +43,13 @@ class AlertBannerEntityForm extends ContentEntityForm {
   protected $request;
 
   /**
+   * Theme manager service.
+   *
+   * @var Drupal\Core\Theme\ThemeManagerInterface
+   */
+  protected $themeManager;
+
+  /**
    * {@inheritdoc}
    */
   public static function create(ContainerInterface $container) {
@@ -52,6 +59,7 @@ class AlertBannerEntityForm extends ContentEntityForm {
     $instance->moduleHandler = $container->get('module_handler');
     $instance->configFactory = $container->get('config.factory');
     $instance->request = $container->get('request_stack');
+    $instance->themeManager = $container->get('theme.manager');
     return $instance;
   }
 
@@ -74,8 +82,24 @@ class AlertBannerEntityForm extends ContentEntityForm {
 
     // Create the vertical tabs like on node edit forms.
     // @src https://drupal.stackexchange.com/a/276907
-    $form['#theme'][] = 'node_edit_form';
-    $form['#attached']['library'] = ['node/drupal.node'];
+    // Only do this if the theme is not gin! Issue #116.
+    // @todo Opt alert banner into gin admin theming.
+    if ($this->themeManager->getActiveTheme()->getName() != 'gin') {
+      $form['#theme'][] = 'node_edit_form';
+      $form['#attached']['library'] = ['node/drupal.node'];
+
+      // Support Elbow room module if it's installed.
+      if ($this->moduleHandler->moduleExists('elbow_room')) {
+        $form['#attached']['library'][] = 'elbow_room/base';
+        $elbowRoomConfig = $this->configFactory()->get('elbow_room.settings');
+        $form['#attached']['drupalSettings']['elbow_room']['default'] = $elbowRoomConfig->get('default');
+
+        // Add node form classes for elbow room to function.
+        $form['#attributes']['class'][] = 'node-form';
+      }
+    }
+
+    // Create the advanced field group.
     $form['advanced'] = [
       '#type' => 'container',
       '#weight' => 99,
@@ -83,16 +107,6 @@ class AlertBannerEntityForm extends ContentEntityForm {
         'class' => ['entity-meta'],
       ],
     ];
-
-    // Support Elbow room module if it's installed.
-    if ($this->moduleHandler->moduleExists('elbow_room')) {
-      $form['#attached']['library'][] = 'elbow_room/base';
-      $elbowRoomConfig = $this->configFactory()->get('elbow_room.settings');
-      $form['#attached']['drupalSettings']['elbow_room']['default'] = $elbowRoomConfig->get('default');
-
-      // Add node form classes for elbow room to function.
-      $form['#attributes']['class'][] = 'node-form';
-    }
 
     // Alert details group.
     $form['alert_details'] = [

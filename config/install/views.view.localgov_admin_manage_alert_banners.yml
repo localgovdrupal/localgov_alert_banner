@@ -849,7 +849,7 @@ display:
       path: admin/content/alert-banner
       menu:
         type: normal
-        title: 'Alert Banners'
+        title: 'Alert banners'
         description: ''
         expanded: false
         parent: system.admin_content
