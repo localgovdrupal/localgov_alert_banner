@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - localgov_alert_banner
+id: localgov_alert_banner_unpublish_action
+label: 'Unpublish alert banner'
+type: localgov_alert_banner
+plugin: entity:unpublish_action:node
+configuration: {  }

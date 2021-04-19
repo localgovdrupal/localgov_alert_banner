@@ -1,0 +1,10 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - localgov_alert_banner
+id: localgov_alert_banner_publish_action
+label: 'Publish alert banner'
+type: localgov_alert_banner
+plugin: entity:publish_action:localgov_alert_banner
+configuration: {  }
