@@ -62,6 +62,10 @@ function localgov_alert_banner_preprocess(&$variables) {
     // Token as attribute.
     $variables['attributes']['data-dismiss-alert-token'] = $token;
 
+    // Make sure the entity is incluced in the root,
+    // some modules (Scheduler) expect it here.
+    $variables['localgov_alert_banner'] = $variables['elements']['#localgov_alert_banner'];
+
   }
 }
 
