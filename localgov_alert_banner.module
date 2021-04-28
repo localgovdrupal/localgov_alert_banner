@@ -73,7 +73,7 @@ function localgov_alert_banner_theme() {
   $theme['localgov_alert_banner'] = [
     'render element' => 'elements',
     'file' => 'localgov_alert_banner.page.inc',
-    'template' => 'localgov_alert_banner',
+    'template' => 'localgov-alert-banner',
   ];
   $theme['localgov_alert_banner_content_add_list'] = [
     'render element' => 'content',
