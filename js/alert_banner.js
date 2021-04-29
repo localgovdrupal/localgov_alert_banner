@@ -20,7 +20,7 @@
     var cookie = $.cookie('hide-alert-banner-token');
     var cookie_tokens = typeof cookie !== 'undefined' ? cookie.split('+') : [];
 
-    $('.js-alert-banner').each(function() {
+    $('.js-localgov-alert-banner').each(function() {
       $(this).removeClass('hidden');
       var token = $(this).data('dismiss-alert-token');
       if ($.inArray(token, cookie_tokens) > -1) {
@@ -28,9 +28,9 @@
       }
     });
 
-    $('.js-alert-banner-close').click(function(e) {
+    $('.js-localgov-alert-banner__close').click(function(e) {
       e.preventDefault();
-      var banner = $(this).closest('.js-alert-banner');
+      var banner = $(this).closest('.js-localgov-alert-banner');
       banner.attr("aria-hidden", "true").slideUp('fast');
       setAlertBannerHideCookie(cookie_tokens, banner.data('dismiss-alert-token'));
     });

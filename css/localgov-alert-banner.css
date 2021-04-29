@@ -4,52 +4,76 @@
  */
 
 /* Default */
-.localgov_alert_banner {
+.localgov-alert-banner {
   background-color: #00856A;
 }
-.localgov_alert_banner,
-.localgov_alert_banner a {
+
+.localgov-alert-banner,
+.localgov-alert-banner a {
   color: #fefefe;
 }
-.localgov_alert_banner button {
-  color: #121212;
+
+.localgov-alert-banner__close {
+  padding: .5rem .9375rem;
+  line-height: 1.5;
+  border: 1px solid #fff;
+  font-weight: 700;
+  text-align: center;
+  border-radius: 0;
+  color: #fff;
+  background-color: transparent;
+}
+
+.localgov-alert-banner--minor .localgov-alert-banner__close {
+  color: #0b0c0c;
+  border-color: #0b0c0c;
+}
+
+.localgov-alert-banner__close:focus,
+.localgov-alert-banner__close:hover {
+  text-decoration: underline;
+  background-color: #fff;
+  border-color: #fff;
+  color: #0b0c0c;
 }
 
 /* Announcement */
-.localgov_alert_banner--announcement {
+.localgov-alert-banner--announcement {
   background-color: #00856A;
 }
 
 /* Minor */
-.localgov_alert_banner--minor {
+.localgov-alert-banner--minor {
   background-color: #fc3;
   color: #121212;
 }
-.localgov_alert_banner--minor a {
+.localgov-alert-banner--minor a {
   color: #121212;
 }
 
 /* Major */
-.localgov_alert_banner--major {
+.localgov-alert-banner--major {
   background-color: #C00010;
 }
 
 /* Death of a notable person */
-.localgov_alert_banner--notable-person {
+.localgov-alert-banner--notable-person {
   background-color: #000;
 }
 
-.localgov_alert_banner .wrapper {
-  margin: 0 auto;
+.localgov-alert-banner__wrapper {
   max-width: 73.125rem;
+  margin: 0 auto;
 }
-.localgov_alert_banner--inner {
+
+.localgov-alert-banner__inner {
   display: flex;
   justify-content: space-between;
   margin: 0 0.9375rem;
   padding: 0.625rem 0;
 }
-.localgov_alert_banner--actions {
+
+.localgov-alert-banner__actions {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
