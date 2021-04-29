@@ -163,14 +163,14 @@ class AlertBannerBlockTest extends BrowserTestBase {
 
     // Check hide link is shown when remove_hide_link is not set.
     $this->drupalGet('<front>');
-    $this->assertSession()->responseContains('js-alert-banner-close');
+    $this->assertSession()->responseContains('js-localgov-alert-banner__close');
     $this->assertSession()->pageTextContains('Hide');
 
     // Check title is not shown when remove_hide_link is set.
     $alert->set('remove_hide_link', ['value' => 1]);
     $alert->save();
     $this->drupalGet('<front>');
-    $this->assertSession()->responseNotContains('js-alert-banner-close');
+    $this->assertSession()->responseNotContains('js-localgov-alert-banner__close');
   }
 
   /**
