@@ -20,6 +20,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *  dependency = "localgov_alert_banner",
  *  idListFunction = "scheduler_localgov_alert_banner_id",
  *  develGenerateForm = "devel_generate_form_content",
+ *  schedulerEventClass = "\Drupal\localgov_alert_banner\Event\SchedulerAlertBannerEvents",
  * )
  */
 class AlertBannerScheduler extends SchedulerPluginBase implements ContainerFactoryPluginInterface {
@@ -82,6 +83,10 @@ class AlertBannerScheduler extends SchedulerPluginBase implements ContainerFacto
       'localgov_alert_banner_type_form',
       'localgov_alert_banner_type_edit_form',
     ];
+  }
+
+  public function schedulerEventClass() {
+    return $this->pluginDefinition['schedulerEventClass'] ?? NULL;
   }
 
 }
