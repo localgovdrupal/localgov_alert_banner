@@ -108,7 +108,7 @@ function localgov_alert_banner_theme_suggestions_localgov_alert_banner(array $va
 function localgov_alert_banner_localgov_alert_banner_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
 
   // Check if the field is present and has a value.
-  if ($entity->get('field_conditions')->isEmpty()) {
+  if (!$entity->hasField('field_conditions') || $entity->get('field_conditions')->isEmpty()) {
     return TRUE;
   }
 
