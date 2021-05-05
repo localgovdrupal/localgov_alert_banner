@@ -94,8 +94,15 @@ class AlertBannerEntityController extends ControllerBase implements ContainerInj
     $languages = $localgov_alert_banner->getTranslationLanguages();
     $type_id = $localgov_alert_banner->bundle();
     $has_translations = (count($languages) > 1);
-    $build['#title'] = $has_translations ? $this->t('@langname revisions for %title', ['@langname' => $langname, '%title' => $localgov_alert_banner->label()]) : $this->t('Revisions for %title', ['%title' => $localgov_alert_banner->label()]);
-
+    if ($has_translations) {
+      $build['#title'] = $this->t('@langname revisions for %title', [
+        '@langname' => $langname,
+        '%title' => $localgov_alert_banner->label(),
+      ]);
+    }
+    else {
+      $build['#title'] = $this->t('Revisions for %title', ['%title' => $localgov_alert_banner->label()]);
+    }
     $header = [$this->t('Revision'), $this->t('Operations')];
     $revert_permission = (($account->hasPermission("manage all localgov alert banner entities") || $account->hasPermission('manage localgov alert banner ' . $type_id . ' entities')));
     $delete_permission = (($account->hasPermission("manage all localgov alert banner entities") || $account->hasPermission('manage localgov alert banner ' . $type_id . ' entities')));

@@ -6,7 +6,7 @@ use Drupal\Core\Entity\EntityForm;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Class AlertBannerEntityTypeForm.
+ * Provides a form fir edting alert banner types.
  */
 class AlertBannerEntityTypeForm extends EntityForm {
 
