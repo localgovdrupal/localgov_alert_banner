@@ -1,7 +1,7 @@
 alert_banner:
   version: VERSION
   css:
-    layout:
+    component:
       css/localgov-alert-banner.css: {}
   js:
     js/alert_banner.js: {}
