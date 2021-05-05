@@ -22,7 +22,7 @@ class ViewsStatusLinkTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = ['localgov_alert_banner'];
+  protected static $modules = ['localgov_alert_banner'];
 
   /**
    * {@inheritdoc}
@@ -32,7 +32,7 @@ class ViewsStatusLinkTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
 
     $emergencyPublisherUser = $this->createUser();

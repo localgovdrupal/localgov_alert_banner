@@ -20,14 +20,14 @@ class AlertConfirmationTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'localgov_alert_banner',
   ];
 
   /**
    * {@inheritdoc}
    */
-  public function setUp() {
+  public function setUp(): void {
     parent::setUp();
 
     $emergencyPublisherUser = $this->createUser();
@@ -84,9 +84,8 @@ class AlertConfirmationTest extends BrowserTestBase {
 
     // Go to the alert confirmation page, tick the unpublish others.
     // Verifiy that the alert 2 banner is unpublished.
-    $this->drupalPostForm($alert->toUrl('status-form')->toString(), [
-      'edit-unpublish-others' => 1,
-    ], 'Confirm');
+    $this->drupalGet($alert->toUrl('status-form')->toString());
+    $this->submitForm(['edit-unpublish-others' => 1], 'Confirm');
 
     // Check for the presence of the Put banner live link.
     $this->drupalGet($alert_2->toUrl('canonical')->toString());
@@ -94,9 +93,8 @@ class AlertConfirmationTest extends BrowserTestBase {
 
     // Go to the second alert confirmation page, do not unpublih others.
     // Verifiy that the alert banner remains published.
-    $this->drupalPostForm($alert_2->toUrl('status-form')->toString(), [
-      'edit-unpublish-others' => 0,
-    ], 'Confirm');
+    $this->drupalGet($alert_2->toUrl('status-form')->toString());
+    $this->submitForm(['edit-unpublish-others' => 0], 'Confirm');
 
     // Check for the presence of the Remove banner link.
     $this->drupalGet($alert->toUrl('canonical')->toString());
@@ -125,7 +123,8 @@ class AlertConfirmationTest extends BrowserTestBase {
     $form_vars = [
       'status-change' => 1,
     ];
-    $this->drupalPostForm($edit_url, $form_vars, 'Save');
+    $this->drupalGet($edit_url);
+    $this->submitForm($form_vars, 'Save');
     $this->assertSession()->addressEquals($alert->toUrl('status-form')->toString());
     $this->getSession()->getPage()->pressButton('Confirm');
 
@@ -135,7 +134,8 @@ class AlertConfirmationTest extends BrowserTestBase {
     $form_vars = [
       'status-change' => 1,
     ];
-    $this->drupalPostForm($edit_url, $form_vars, 'Save');
+    $this->drupalGet($edit_url);
+    $this->submitForm($form_vars, 'Save');
     $this->assertSession()->addressEquals($alert->toUrl('status-form')->toString());
     $this->getSession()->getPage()->pressButton('Confirm');
 
@@ -145,7 +145,8 @@ class AlertConfirmationTest extends BrowserTestBase {
     $form_vars = [
       'status-change' => 0,
     ];
-    $this->drupalPostForm($edit_url, $form_vars, 'Save');
+    $this->drupalGet($edit_url);
+    $this->submitForm($form_vars, 'Save');
     $this->assertSession()->addressNotEquals($alert->toUrl('status-form')->toString());
 
     // Change the status of the banner with a destination paremeter and verify
@@ -159,7 +160,8 @@ class AlertConfirmationTest extends BrowserTestBase {
     $form_vars = [
       'status-change' => 1,
     ];
-    $this->drupalPostForm($edit_url, $form_vars, 'Save', $options);
+    $this->drupalGet($edit_url, $options);
+    $this->submitForm($form_vars, 'Save');
     $this->assertSession()->addressEquals($alert->toUrl('status-form')->toString());
     $this->getSession()->getPage()->pressButton('Confirm');
     $this->assertSession()->addressEquals('/admin');
