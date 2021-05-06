@@ -1,0 +1,7 @@
+/**
+ * Layout rules for the Full page alert banner.
+ */
+
+.localgov-alert-banner > .modal-dialog-centered {
+  max-width: 62.5rem;
+}
