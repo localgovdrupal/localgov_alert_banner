@@ -5,6 +5,7 @@
     "homepage": "https://github.com/localgovdrupal/localgov_alert_banner",
     "minimum-stability": "dev",
     "require": {
-        "drupal/field_group": "~3.1"
+        "drupal/field_group": "~3.1",
+        "localgovdrupal/localgov_media": "^1.0@alpha"
     }
 }

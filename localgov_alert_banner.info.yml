@@ -12,3 +12,4 @@ dependencies:
   - drupal:options
   - drupal:user
   - drupal:views
+  - localgov_core:localgov_media
