@@ -6,7 +6,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 
 /**
- * Class AlertBannerEntitySettingsForm.
+ * Provides a form for managing alert banner settings.
  *
  * @ingroup localgov_alert_banner
  */

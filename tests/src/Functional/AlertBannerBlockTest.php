@@ -18,7 +18,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'block',
     'path',
     'options',
