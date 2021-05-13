@@ -1,5 +1,0 @@
-services:
-  localgov_alert_banner.route_subscriber:
-    class: Drupal\localgov_alert_banner\Routing\AlertBannerRouteSubscriber
-    tags:
-      - { name: event_subscriber }
