@@ -43,13 +43,11 @@ jobs:
   
       - name: Set composer branch reference for main version branches
         if: endsWith(github.base_ref, ".x")
-        run: |
-          echo "COMPOSER_REF=${GIT_BRANCH}-dev" >> $GITHUB_ENV
+        run: echo "COMPOSER_REF=${GIT_BRANCH}-dev" >> $GITHUB_ENV
           
       - name: Set composer branch reference for main version branches
-        if: ! endsWith(github.base_ref, ".x")
-        run: |
-          echo "COMPOSER_REF=dev-${GIT_BRANCH}" >> $GITHUB_ENV
+        if: endsWith(github.base_ref, ".x") == false
+        run: echo "COMPOSER_REF=dev-${GIT_BRANCH}" >> $GITHUB_ENV
 
       - name: Cached workspace
         uses: actions/cache@v2
