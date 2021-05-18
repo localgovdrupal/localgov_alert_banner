@@ -19,7 +19,7 @@ class AdminViewTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  public static $modules = [
+  protected static $modules = [
     'localgov_alert_banner',
   ];
 
@@ -33,16 +33,16 @@ class AdminViewTest extends BrowserTestBase {
 
     // Check can access the admin view dashboard.
     $this->drupalGet('admin/content/alert-banner');
-    $this->assertResponse(Response::HTTP_OK);
+    $this->assertSession()->statusCodeEquals(Response::HTTP_OK);
 
     // Check this is the view by making sure certian view only text is present.
     // @todo Work out how to make sure this is the view path (Kernal test?).
-    $this->assertRaw('Manage Alert Banners');
+    $this->assertSession()->responseContains('Manage Alert Banners');
 
     // Check that loading the collection URL loads the admin dashboard.
     $collectionUrl = Url::fromRoute('entity.localgov_alert_banner.collection');
     $this->drupalGet($collectionUrl);
-    $this->assertUrl('admin/content/alert-banner');
+    $this->assertSession()->addressEquals('admin/content/alert-banner');
   }
 
 }
