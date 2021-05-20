@@ -108,17 +108,14 @@ function localgov_alert_banner_theme_suggestions_localgov_alert_banner(array $va
 function localgov_alert_banner_localgov_alert_banner_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
 
   // Check if the field is present and has a value.
-  if (!$entity->hasField('field_conditions') || $entity->get('field_conditions')->isEmpty()) {
+  if (!$entity->hasField('visibility') || $entity->get('visibility')->isEmpty()) {
     return TRUE;
   }
-
-  // Context handler service.
-  $context_handler = \Drupal::service('context.handler');
 
   $conditions = [];
 
   // Get the conditions field value.
-  $conditions_config = $entity->get('field_conditions')->getValue()[0]['conditions'];
+  $conditions_config = $entity->get('visibility')->getValue()[0]['conditions'];
 
   // Condition plugin manager.
   $manager = \Drupal::service('plugin.manager.condition');
