@@ -22,4 +22,3 @@ settings:
     request_path: request_path
     user_role: '0'
 field_type: condition_field
-
