@@ -27,6 +27,7 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
     'user',
     'block',
     'views',
+    'condition_field',
     'localgov_alert_banner',
   ];
 
