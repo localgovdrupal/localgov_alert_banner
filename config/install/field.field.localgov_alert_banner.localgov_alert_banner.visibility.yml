@@ -11,16 +11,15 @@ field_name: visibility
 entity_type: localgov_alert_banner
 bundle: localgov_alert_banner
 label: Visibility
-description: ''
+description: 'Set the visibility of the alert to only show it on specific conditions.'
 required: false
 translatable: false
-default_value:
-  -
-    conditions: {  }
+default_value: {  }
 default_value_callback: ''
 settings:
   enabled_plugins:
+    'entity_bundle:node': 'entity_bundle:node'
     request_path: request_path
-    'entity_bundle:node': 0
-    user_role: 0
+    user_role: '0'
 field_type: condition_field
+
