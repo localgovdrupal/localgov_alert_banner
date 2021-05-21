@@ -7,5 +7,17 @@
     "require": {
         "drupal/condition_field": "^2.0",
         "drupal/field_group": "~3.1"
+    },
+    "extra": {
+        "enable-patching": true,
+        "composer-exit-on-patch-failure": true,
+        "patchLevel": {
+            "drupal/core": "-p2"
+        },
+        "patches": {
+            "drupal/condition_field": {
+                "Fix schema #3215202": "https://www.drupal.org/files/issues/2021-05-21/3215202-configuration-schema-2.patch"
+            }
+        }
     }
 }
