@@ -10,7 +10,6 @@
 use Drupal\Core\Render\Element;
 use Drupal\Core\Link;
 use Drupal\Core\Url;
-use Drupal\Component\Utility\Html;
 
 /**
  * Prepares variables for Alert banner templates.
@@ -49,18 +48,4 @@ function template_preprocess_localgov_alert_banner(array &$variables) {
     $variables['type_of_alert'] = $entity->get('type_of_alert')->value;
   }
 
-}
-
-/**
- * Implements hook_preprocess_localgov_alert_banner() for hook_preprocess_localgov_alert_banner__full().
- *
- * - Adds a unique id for the top level wrapper div of the alert banner.
- * - Adds relevant Javascript settings and library.
- */
-function localgov_alert_banner_preprocess_localgov_alert_banner__localgov_full_page(&$variables) {
-  $alert_banner_id = $variables['attributes']['id'] ?? Html::getUniqueId('localgov-full-page-alert-banner');
-  $variables['attributes']['id'] = $alert_banner_id;
-
-  $variables['#attached']['drupalSettings']['localgov_alert_banner']['localgov_full_page_alert_banner_id'] = $alert_banner_id;
-  $variables['#attached']['library'][] = 'localgov_alert_banner/full_page_alert_banner';
 }

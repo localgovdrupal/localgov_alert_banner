@@ -8,15 +8,3 @@ alert_banner:
   dependencies:
     - core/jquery
     - core/jquery.cookie
-
-full_page_alert_banner:
-  css:
-    layout:
-      css/full-page-alert-banner.css: {}
-  js:
-    js/full-page-alert-banner.js: {}
-  dependencies:
-    - core/drupalSettings
-    - localgov_alert_banner/alert_banner
-    - core/jquery
-    - core/jquery.cookie

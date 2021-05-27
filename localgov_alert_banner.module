@@ -75,9 +75,6 @@ function localgov_alert_banner_theme() {
     'file' => 'localgov_alert_banner.page.inc',
     'template' => 'localgov-alert-banner',
   ];
-  $theme['localgov_alert_banner__localgov_full_page'] = [
-    'base hook' => 'localgov_alert_banner',
-  ];
   $theme['localgov_alert_banner_content_add_list'] = [
     'render element' => 'content',
     'variables' => ['content' => NULL],
