@@ -6,6 +6,6 @@
     "minimum-stability": "dev",
     "require": {
         "drupal/field_group": "~3.1",
-        "localgovdrupal/localgov_core": "^2"
+        "localgovdrupal/localgov_core": "^1 || ^2"
     }
 }
