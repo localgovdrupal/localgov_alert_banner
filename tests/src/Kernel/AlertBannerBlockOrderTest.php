@@ -27,11 +27,7 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
     'user',
     'block',
     'views',
-    'image',
-    'media',
-    'media_library',
     'localgov_alert_banner',
-    'localgov_media',
   ];
 
   /**
