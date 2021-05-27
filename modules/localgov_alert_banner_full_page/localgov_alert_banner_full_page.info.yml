@@ -12,5 +12,5 @@ dependencies:
   - drupal:options
   - drupal:user
   - drupal:views
-  - localgov_alert_banner
+  - localgov_alert_banner:localgov_alert_banner
   - localgov_core:localgov_media
