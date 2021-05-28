@@ -18,7 +18,7 @@ default_value: {  }
 default_value_callback: ''
 settings:
   enabled_plugins:
-    'entity_bundle:node': 'entity_bundle:node'
-    request_path: request_path
-    user_role: '0'
+    'entity_bundle:node': false
+    request_path: true
+    user_role: false
 field_type: condition_field
