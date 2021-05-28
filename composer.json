@@ -16,7 +16,7 @@
         },
         "patches": {
             "drupal/condition_field": {
-                "Fix schema #3215202": "https://www.drupal.org/files/issues/2021-05-28/configuration-schema-fix-3215202-5.patch"
+                "Fix schema #3215202": "https://www.drupal.org/files/issues/2021-05-28/configuration-schema-fix-3215202-6.patch"
             }
         }
     }
