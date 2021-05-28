@@ -26,7 +26,7 @@ class AlertBannerEntityListBuilder extends EntityListBuilder {
    * {@inheritdoc}
    */
   public function buildRow(EntityInterface $entity) {
-    /* @var \Drupal\localgov_alert_banner\Entity\AlertBannerEntity $entity */
+    /** @var \Drupal\localgov_alert_banner\Entity\AlertBannerEntity $entity */
     $row['id'] = $entity->id();
     $row['title'] = Link::createFromRoute(
       $entity->label(),
