@@ -85,8 +85,4 @@ class AlertBannerScheduler extends SchedulerPluginBase implements ContainerFacto
     ];
   }
 
-  public function schedulerEventClass() {
-    return $this->pluginDefinition['schedulerEventClass'] ?? NULL;
-  }
-
 }
