@@ -5,7 +5,10 @@
  * LocalGov Alert Banner install file.
  */
 
+use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Field\BaseFieldDefinition;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
 
 /**
  * Update alert banner entity definition to include the token on the entity.
@@ -18,4 +21,38 @@ function localgov_alert_banner_update_8801() {
 
   \Drupal::entityDefinitionUpdateManager()
     ->installFieldStorageDefinition('token', 'localgov_alert_banner', 'localgov_alert_banner', $field_storage_definition);
+}
+
+/**
+ * Add visibility field to existing alert banners.
+ */
+function localgov_alert_banner_update_8901() {
+  $config_directory = new FileStorage(__DIR__ . '/config/install');
+
+  // Add visibility field storage.
+  $field_storage = $config_directory->read('field.storage.localgov_alert_banner.visibility');
+  if ($field_storage && !FieldStorageConfig::loadByName('localgov_alert_banner', 'visibility')) {
+    FieldStorageConfig::create($field_storage)->save();
+  }
+
+  // Add visibility field to localgov_alert_banner bundle.
+  $field_record = $config_directory->read('field.field.localgov_alert_banner.localgov_alert_banner.visibility');
+  if ($field_record && !FieldConfig::loadByName('localgov_alert_banner', 'localgov_alert_banner', 'visibility')) {
+    FieldConfig::create($field_record)->save();
+  }
+
+  // Add visibility field to the entity form.
+  $form_display = \Drupal::entityTypeManager()
+    ->getStorage('entity_form_display')
+    ->load('localgov_alert_banner.localgov_alert_banner.default');
+  if ($form_display) {
+    $form_display->setComponent('visibility', [
+      'region' => 'content',
+      'settings' => [],
+      'third_party_settings' => [],
+      'type' => 'condition_field_default',
+      'weight' => 5,
+    ]);
+    $form_display->save();
+  }
 }
