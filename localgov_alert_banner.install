@@ -27,6 +27,10 @@ function localgov_alert_banner_update_8801() {
  * Add visibility field to existing alert banners.
  */
 function localgov_alert_banner_update_8901() {
+
+  // Enable dependent condition_field module.
+  \Drupal::service('module_installer')->install(['condition_field']);
+
   $config_directory = new FileStorage(__DIR__ . '/config/install');
 
   // Add visibility field storage.
