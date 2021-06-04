@@ -53,7 +53,7 @@ function localgov_alert_banner_update_8901() {
     // Add visibility field to the bundles entity form.
     $form_display = \Drupal::entityTypeManager()
       ->getStorage('entity_form_display')
-      ->load('localgov_alert_banner.' .  $bundle . '.default');
+      ->load('localgov_alert_banner.' . $bundle . '.default');
     if ($form_display) {
       $form_display->setComponent('visibility', [
         'region' => 'content',
