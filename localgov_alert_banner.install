@@ -39,24 +39,30 @@ function localgov_alert_banner_update_8901() {
     FieldStorageConfig::create($field_storage)->save();
   }
 
-  // Add visibility field to localgov_alert_banner bundle.
-  $field_record = $config_directory->read('field.field.localgov_alert_banner.localgov_alert_banner.visibility');
-  if ($field_record && !FieldConfig::loadByName('localgov_alert_banner', 'localgov_alert_banner', 'visibility')) {
-    FieldConfig::create($field_record)->save();
-  }
+  // Fetch all configured localgov_alert_banner bundles.
+  $alert_banner_bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo('localgov_alert_banner');
+  foreach ($alert_banner_bundles as $bundle => $info) {
 
-  // Add visibility field to the entity form.
-  $form_display = \Drupal::entityTypeManager()
-    ->getStorage('entity_form_display')
-    ->load('localgov_alert_banner.localgov_alert_banner.default');
-  if ($form_display) {
-    $form_display->setComponent('visibility', [
-      'region' => 'content',
-      'settings' => [],
-      'third_party_settings' => [],
-      'type' => 'condition_field_default',
-      'weight' => 5,
-    ]);
-    $form_display->save();
+    // Add visibility field to bundle.
+    $field_record = $config_directory->read('field.field.localgov_alert_banner.localgov_alert_banner.visibility');
+    if ($field_record && !FieldConfig::loadByName('localgov_alert_banner', $bundle, 'visibility')) {
+      $field_record['bundle'] = $bundle;
+      FieldConfig::create($field_record)->save();
+    }
+
+    // Add visibility field to the bundles entity form.
+    $form_display = \Drupal::entityTypeManager()
+      ->getStorage('entity_form_display')
+      ->load('localgov_alert_banner.' .  $bundle . '.default');
+    if ($form_display) {
+      $form_display->setComponent('visibility', [
+        'region' => 'content',
+        'settings' => [],
+        'third_party_settings' => [],
+        'type' => 'condition_field_default',
+        'weight' => 5,
+      ]);
+      $form_display->save();
+    }
   }
 }
