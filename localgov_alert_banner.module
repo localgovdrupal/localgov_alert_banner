@@ -7,9 +7,6 @@
 
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\Core\Entity\Display\EntityViewDisplayInterface;
-use Drupal\condition_field\ConditionAccessResolver;
-use Drupal\user\Entity\User;
 
 /**
  * Implements hook_help().
@@ -100,59 +97,4 @@ function localgov_alert_banner_theme_suggestions_localgov_alert_banner(array $va
   $suggestions[] = 'localgov_alert_banner__' . $entity->id();
   $suggestions[] = 'localgov_alert_banner__' . $entity->id() . '__' . $sanitized_view_mode;
   return $suggestions;
-}
-
-/**
- * Implements hook_localgov_alert_banner_view().
- */
-function localgov_alert_banner_localgov_alert_banner_view(array &$build, EntityInterface $entity, EntityViewDisplayInterface $display, $view_mode) {
-
-  // Check if the field is present and has a value.
-  if (!$entity->hasField('visibility') || $entity->get('visibility')->isEmpty()) {
-    return TRUE;
-  }
-
-  $conditions = [];
-
-  // Get the conditions field value.
-  $conditions_config = $entity->get('visibility')->getValue()[0]['conditions'];
-
-  // Condition plugin manager.
-  $manager = \Drupal::service('plugin.manager.condition');
-
-  // Get the current route.
-  $route = \Drupal::routeMatch();
-  $route_name = $route->getRouteName();
-  $route_parameters = $route->getParameters();
-
-  // Bypass condition check if it is the alert banner route or confirmation.
-  $bypass_conditions = ($route_name == 'entity.localgov_alert_banner.canonical' || $route_name == 'entity.localgov_alert_banner.status_form');
-
-  if (!$bypass_conditions) {
-
-    // Loop through each condition.
-    foreach ($conditions_config as $condition_id => $values) {
-
-      // Add current node as context if required and on a node route.
-      $node = $route_parameters->get('node');
-      if ($node && isset($values['context_mapping']['node'])) {
-        $values['context']['node'] = $node;
-      }
-
-      // Add user as current context if required.
-      if (isset($values['context_mapping']['user'])) {
-        $values['context']['user'] = User::load(\Drupal::currentUser()->id());
-      }
-
-      // Construct condition.
-      /** @var \Drupal\Core\Condition\ConditionInterface $condition */
-      $conditions[] = $manager->createInstance($condition_id, $values);
-    }
-
-    // Visible if any condition is met.
-    $isVisible = ConditionAccessResolver::checkAccess($conditions, 'or');
-    if (!$isVisible) {
-      $build = [];
-    }
-  }
 }

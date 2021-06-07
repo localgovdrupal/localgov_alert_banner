@@ -73,7 +73,7 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
       $alert[] = $alert_entity->id();
     }
 
-    // Create a block instance of gthe alert banner block.
+    // Create a block instance of the alert banner block.
     $block_manager = $this->container->get('plugin.manager.block');
     $config = [];
     $plugin_block = $block_manager->createInstance('localgov_alert_banner_block', $config);
@@ -103,7 +103,8 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
       $alert_new[] = $alert_entity->id();
     }
 
-    // Render the block and get the alert banner IDs as an array.
+    // Create and render the block and get the alert banner IDs as an array.
+    $plugin_block = $block_manager->createInstance('localgov_alert_banner_block', $config);
     $render = $plugin_block->build();
     foreach ($render as $render_value) {
       $result_2[] = $render_value['#localgov_alert_banner']->id();
@@ -127,7 +128,8 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
       AlertBannerEntity::load($alert[$i])->set('changed', (new DrupalDateTime('now'))->getTimestamp())->save();
     }
 
-    // Render the block and get the alert banner IDs as an array.
+    // Create and render the block and get the alert banner IDs as an array.
+    $plugin_block = $block_manager->createInstance('localgov_alert_banner_block', $config);
     $render = $plugin_block->build();
     foreach ($render as $render_value) {
       $result_3[] = $render_value['#localgov_alert_banner']->id();

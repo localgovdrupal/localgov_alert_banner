@@ -56,13 +56,21 @@ class VisibilityTest extends BrowserTestBase {
       ]);
     $alert->save();
 
+    // Check it's not on front page.
+    $this->drupalGet('<front>');
+    $this->assertSession()->pageTextNotContains($title);
+
     // Check it's on /council-tax.
     $this->drupalGet('/council-tax');
     $this->assertSession()->pageTextContains($title);
 
-    // Check it's not on front page.
+    // Check it's still not on front page.
     $this->drupalGet('<front>');
     $this->assertSession()->pageTextNotContains($title);
+
+    // Check it's still on /council-tax.
+    $this->drupalGet('/council-tax');
+    $this->assertSession()->pageTextContains($title);
   }
 
 }
