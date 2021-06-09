@@ -1,0 +1,24 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.localgov_alert_banner.visibility
+    - localgov_alert_banner.localgov_alert_banner_type.localgov_alert_banner
+  module:
+    - condition_field
+id: localgov_alert_banner.localgov_alert_banner.visibility
+field_name: visibility
+entity_type: localgov_alert_banner
+bundle: localgov_alert_banner
+label: Visibility
+description: 'Set the visibility of the alert to only show it on specific conditions.'
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings:
+  enabled_plugins:
+    'entity_bundle:node': false
+    request_path: true
+    user_role: false
+field_type: condition_field

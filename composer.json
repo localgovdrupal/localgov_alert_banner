@@ -5,6 +5,19 @@
     "homepage": "https://github.com/localgovdrupal/localgov_alert_banner",
     "minimum-stability": "dev",
     "require": {
+        "drupal/condition_field": "^2.0",
         "drupal/field_group": "~3.1"
+    },
+    "extra": {
+        "enable-patching": true,
+        "composer-exit-on-patch-failure": true,
+        "patchLevel": {
+            "drupal/core": "-p2"
+        },
+        "patches": {
+            "drupal/condition_field": {
+                "Fix schema #3215202": "https://www.drupal.org/files/issues/2021-05-28/configuration-schema-fix-3215202-6.patch"
+            }
+        }
     }
 }

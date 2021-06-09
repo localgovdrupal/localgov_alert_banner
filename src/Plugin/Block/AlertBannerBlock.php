@@ -2,6 +2,7 @@
 
 namespace Drupal\localgov_alert_banner\Plugin\Block;
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -27,6 +28,13 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
   protected $entityTypeManager;
 
   /**
+   * Current alert banners.
+   *
+   * @var \Drupal\localgov_alert_banner\Entity\AlertBannerEntity[]
+   */
+  protected $currentAlertBanners = [];
+
+  /**
    * Constructs a new AlertBannerBlock.
    *
    * @param array $configuration
@@ -41,6 +49,7 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
   public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
+    $this->currentAlertBanners = $this->getCurrentAlertBanners();
   }
 
   /**
@@ -119,13 +128,10 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
 
     // Render the alert banner.
     $build = [];
-    foreach ($published_alert_banners as $published_alert_banner_id) {
-      $alert_banner = $this->entityTypeManager->getStorage('localgov_alert_banner')
-        ->load($published_alert_banner_id);
+    foreach ($this->currentAlertBanners as $alert_banner) {
       $build[] = $this->entityTypeManager->getViewBuilder('localgov_alert_banner')
         ->view($alert_banner);
     }
-
     return $build;
   }
 
@@ -135,10 +141,13 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
    * Note: Default order will be by the field type_of_alert
    * (only on the default) and then updated date.
    *
-   * @return array
-   *   Array with the IDs of any published alert banners.
+   * @return \Drupal\localgov_alert_banner\Entity\AlertBannerEntity[]
+   *   Array of all published and visible alert banners.
    */
   protected function getCurrentAlertBanners() {
+    $alert_banners = [];
+
+    // Get list of published alert banner IDs.
     $types = $this->mapTypesConfigToQuery();
     $published_alert_banner_query = $this->entityTypeManager->getStorage('localgov_alert_banner')
       ->getQuery()
@@ -148,7 +157,17 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
     if (!empty($types)) {
       $published_alert_banner_query->condition('type', $types, 'IN');
     }
-    return $published_alert_banner_query->execute();
+    $published_alert_banners = $published_alert_banner_query->execute();
+
+    // Load alert banners and check they're visible.
+    foreach ($published_alert_banners as $alert_banner_id) {
+      $alert_banner = $this->entityTypeManager->getStorage('localgov_alert_banner')->load($alert_banner_id);
+      if ($alert_banner->isVisible()) {
+        $alert_banners[] = $alert_banner;
+      }
+    }
+
+    return $alert_banners;
   }
 
   /**
@@ -162,6 +181,25 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
     return array_filter($include_types, function ($t) {
       return (bool) $t;
     });
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheContexts() {
+    $contexts = [];
+    foreach ($this->currentAlertBanners as $alert_banner) {
+      $contexts = Cache::mergeContexts($contexts, $alert_banner->getCacheContexts());
+    }
+    return Cache::mergeContexts(parent::getCacheContexts(), $contexts);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheTags() {
+    // Invalidate cache on changes to alert banners.
+    return Cache::mergeTags(parent::getCacheTags(), ['localgov_alert_banner_list']);
   }
 
 }
