@@ -1,7 +1,9 @@
 full_page_alert_banner:
   css:
     layout:
-      css/full-page-alert-banner.css: {}
+      css/full-page-alert-banner-layout.css: {}
+    theme:
+      css/full-page-alert-banner-theme.css: {}
   js:
     js/full-page-alert-banner.js: {}
   dependencies:

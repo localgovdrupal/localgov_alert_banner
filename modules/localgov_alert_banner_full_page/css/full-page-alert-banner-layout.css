@@ -1,0 +1,13 @@
+/**
+ * Layout rules for the Full page alert banner.
+ */
+
+.localgov-alert-banner > .modal-dialog-centered {
+  max-width: 1000rem;
+}
+
+.localgov-alert-banner > .modal-dialog-centered .takeover-logo {
+  width: 25%;
+  min-width: 6.25rem;
+  max-width: 13.75rem;
+}
