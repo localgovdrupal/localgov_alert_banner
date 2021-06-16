@@ -3,7 +3,11 @@
  */
 
 .localgov-alert-banner > .modal-dialog-centered {
-  max-width: 1000rem;
+  max-width: 62.5rem;
+}
+
+.localgov-alert-banner.modal {
+	background: transparent;
 }
 
 .localgov-alert-banner > .modal-dialog-centered .takeover-logo {
