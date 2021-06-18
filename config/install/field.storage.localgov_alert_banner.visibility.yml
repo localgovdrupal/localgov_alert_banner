@@ -1,0 +1,18 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - condition_field
+    - localgov_alert_banner
+id: localgov_alert_banner.visibility
+field_name: visibility
+entity_type: localgov_alert_banner
+type: condition_field
+settings: {  }
+module: condition_field
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

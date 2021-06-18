@@ -12,3 +12,4 @@ dependencies:
   - drupal:options
   - drupal:user
   - drupal:views
+  - condition_field:condition_field
