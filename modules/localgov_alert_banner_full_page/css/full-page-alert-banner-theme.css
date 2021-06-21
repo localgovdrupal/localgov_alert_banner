@@ -42,6 +42,12 @@
   text-align: left;
 }
 
+.localgov-alert-banner.localgov-alert-banner--notable-person {
+  background-color: #121212;
+}
+.localgov-alert-banner.localgov-alert-banner--notable-person a {
+  color: #FFFFFF;
+}
 .localgov-alert-banner .modal-content .localgov-alert-banner--notable-person {
   background-color: #121212;
 }
