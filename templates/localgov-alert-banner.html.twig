@@ -45,11 +45,9 @@
           </h2>
         {% endif %}
         
-        {% if content.short_description.0['#text'] %}
-          <div class="localgov-alert-banner__body">
-            {{ content.short_description }}
-          </div>
-        {% endif %}
+        <div class="localgov-alert-banner__body">
+          {{ content|without('title', 'link') }}
+        </div>
 
         {% if has_link %}
           <div class="localgov-alert-banner--content-link">{{ content.link }}</div>

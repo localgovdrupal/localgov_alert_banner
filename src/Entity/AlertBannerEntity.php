@@ -2,6 +2,8 @@
 
 namespace Drupal\localgov_alert_banner\Entity;
 
+use Drupal\condition_field\ConditionAccessResolver;
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\EditorialContentEntityBase;
@@ -85,6 +87,13 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
   use EntityPublishedTrait;
 
   /**
+   * Drupal\Core\Condition\ConditionManager definition.
+   *
+   * @var \Drupal\Core\Condition\ConditionManager
+   */
+  protected $pluginManagerCondition;
+
+  /**
    * {@inheritdoc}
    */
   public static function preCreate(EntityStorageInterface $storage_controller, array &$values) {
@@ -92,6 +101,14 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
     $values += [
       'uid' => \Drupal::currentUser()->id(),
     ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function __construct(array $values, $entity_type, $bundle = FALSE, $translations = []) {
+    parent::__construct($values, $entity_type, $bundle, $translations);
+    $this->pluginManagerCondition = \Drupal::service('plugin.manager.condition');
   }
 
   /**
@@ -225,6 +242,39 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
   }
 
   /**
+   * Is the alert banner visible?
+   *
+   * @return bool
+   *   True if the alert banner is visible, otherwise FALSE.
+   */
+  public function isVisible() {
+
+    // Check if the field is present and has a value.
+    if (!$this->hasField('visibility') || $this->get('visibility')->isEmpty()) {
+      return TRUE;
+    }
+
+    // Visibility condition config.
+    $conditions_config = $this->get('visibility')->getValue()[0]['conditions'];
+
+    // Construct visibility conditions.
+    $conditions = [];
+    foreach ($conditions_config as $condition_id => $values) {
+      /** @var \Drupal\Core\Condition\ConditionInterface $condition */
+      $condition = $this->pluginManagerCondition->createInstance($condition_id, $values);
+      $conditions[] = $condition;
+    }
+
+    // Check if visibility conditions met.
+    if (ConditionAccessResolver::checkAccess($conditions, 'or')) {
+      return TRUE;
+    }
+    else {
+      return FALSE;
+    }
+  }
+
+  /**
    * {@inheritdoc}
    */
   public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
@@ -335,6 +385,28 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
       ->setDisplayConfigurable('view', FALSE);
 
     return $fields;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheContexts() {
+
+    // Add cache contexts depending on the enabled visibility condition plugins.
+    if ($this->hasField('visibility') && !$this->get('visibility')->isEmpty()) {
+      $contexts = [];
+      $conditions_config = $this->get('visibility')->getValue()[0]['conditions'];
+
+      foreach ($conditions_config as $condition_id => $values) {
+        /** @var \Drupal\Core\Condition\ConditionInterface $condition */
+        $condition = $this->pluginManagerCondition->createInstance($condition_id, $values);
+        $contexts = Cache::mergeContexts($contexts, $condition->getCacheContexts());
+      }
+
+      $this->addCacheContexts($contexts);
+    }
+
+    return parent::getCacheContexts();
   }
 
 }

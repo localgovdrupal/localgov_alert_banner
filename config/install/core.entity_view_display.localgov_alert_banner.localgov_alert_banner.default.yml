@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   config:
+    - field.field.localgov_alert_banner.localgov_alert_banner.visibility
     - field.field.localgov_alert_banner.localgov_alert_banner.link
     - field.field.localgov_alert_banner.localgov_alert_banner.short_description
     - field.field.localgov_alert_banner.localgov_alert_banner.type_of_alert
@@ -10,6 +11,7 @@ dependencies:
     module:
       - localgov_alert_banner
   module:
+    - condition_field
     - link
     - text
 id: localgov_alert_banner.localgov_alert_banner.default
@@ -17,6 +19,13 @@ targetEntityType: localgov_alert_banner
 bundle: localgov_alert_banner
 mode: default
 content:
+  visibility:
+    weight: 3
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    type: condition_field_string
+    region: content
   link:
     weight: 2
     label: hidden

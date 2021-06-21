@@ -3,6 +3,10 @@
 namespace Drupal\localgov_alert_banner\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
+use Drupal\Core\Config\FileStorage;
+use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\field\Entity\FieldStorageConfig;
 
 /**
  * Defines the Alert banner type entity.
@@ -58,5 +62,39 @@ class AlertBannerEntityType extends ConfigEntityBundleBase implements AlertBanne
    * @var string
    */
   protected $label;
+
+  /**
+   * {@inheritdoc}
+   */
+  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
+
+    // Add fields from install config when creating a new alert banner type.
+    if (!$update) {
+
+      $bundle = $this->id();
+      $config_directory = new FileStorage(__DIR__ . '/../../config/install');
+
+      // Fields to add to the new alert banner type.
+      $fields_to_add = [
+        'visibility',
+      ];
+
+      foreach ($fields_to_add as $field_name) {
+
+        // Add field storage if necessary (it may have been deleted).
+        $field_storage = $config_directory->read('field.storage.localgov_alert_banner.' . $field_name);
+        if ($field_storage && !FieldStorageConfig::loadByName('localgov_alert_banner', $field_name)) {
+          FieldStorageConfig::create($field_storage)->save();
+        }
+
+        // Add field config for new bundle.
+        $field_record = $config_directory->read('field.field.localgov_alert_banner.localgov_alert_banner.' . $field_name);
+        if ($field_record && !FieldConfig::loadByName('localgov_alert_banner', $bundle, $field_name)) {
+          $field_record['bundle'] = $bundle;
+          FieldConfig::create($field_record)->save();
+        }
+      }
+    }
+  }
 
 }
