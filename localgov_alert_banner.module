@@ -38,7 +38,7 @@ function localgov_alert_banner_entity_build_defaults_alter(array &$build, Entity
     $build['#cache']['contexts'][] = 'session';
 
     // Set a cache context based on if on the front page.
-    $build['#cache']['contexts'][] = 'url.path:is_front';
+    $build['#cache']['contexts'][] = 'url.path.is_front';
 
     // Get token and use as a cache tag.
     $token = $entity->getToken();
