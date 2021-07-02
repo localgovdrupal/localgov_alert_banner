@@ -129,8 +129,13 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
     // Render the alert banner.
     $build = [];
     foreach ($this->currentAlertBanners as $alert_banner) {
-      $build[] = $this->entityTypeManager->getViewBuilder('localgov_alert_banner')
-        ->view($alert_banner);
+
+      // Only add to the build if it is visible.
+      // @see #154.
+      if ($alert_banner->isVisible()) {
+        $build[] = $this->entityTypeManager->getViewBuilder('localgov_alert_banner')
+          ->view($alert_banner);
+      }
     }
     return $build;
   }
@@ -159,12 +164,11 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
     }
     $published_alert_banners = $published_alert_banner_query->execute();
 
-    // Load alert banners and check they're visible.
+    // Load alert banners and add all.
+    // Visibility check happens in build, so we get cache contexts on all.
     foreach ($published_alert_banners as $alert_banner_id) {
       $alert_banner = $this->entityTypeManager->getStorage('localgov_alert_banner')->load($alert_banner_id);
-      if ($alert_banner->isVisible()) {
-        $alert_banners[] = $alert_banner;
-      }
+      $alert_banners[] = $alert_banner;
     }
 
     return $alert_banners;
