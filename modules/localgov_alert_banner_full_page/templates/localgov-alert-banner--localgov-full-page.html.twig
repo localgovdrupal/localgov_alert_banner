@@ -22,52 +22,38 @@
 {% set classes = [
     'js-localgov-alert-banner',
     'localgov-alert-banner',
-    'modal',
     type_of_alert_class,
     is_front ? 'localgov_alert_banner--homepage' : '',
     has_link ? 'localgov_alert_banner--has-link' : 'localgov_alert_banner--no-link'
   ]
 %}
 
+
 <!-- Alert Banner-->
-<main {{ attributes.addClass(classes, 'modal') }} tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-modal="true">
+<dialog id="favDialog" aria-labelledby="favDialog__label" aria-describedby="favDialog__description" class="  localgov-alert-banner-full {{ type_of_alert_class }}">
+<div role="document" class="localgov-alert-banner-full--centered">
+    {% if not remove_hide_link %}
+    <button class="localgov-alert-banner-full--close" id="canceloverlay">
+      {{ 'Close this dialog' | t }}
+    </button>
+    {% endif %}
 
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content border-0 {{ type_of_alert_class }}">
-      <div class="modal-header px-2 px-sm-3 {{ type_of_alert_class }}">
-        {% if not remove_hide_link %}
-          <a class="localgov-alert-banner__close js-localgov-alert-banner__close close opacity-100 text-white ml-auto" data-dismiss="modal" aria-label="Close">{{ 'Hide' | t }} <span class="sr-only">{{ 'Click here to hide this notification' | t }}</span><span class="fa fa-eye-slash ml-1 text-white" aria-hidden="true"></span></a>
-        {% endif %}
+    <article class="localgov-alert-banner-full--content">
+      <h1 id="favDialog__label">{% if display_title %} {{ content.title }} {% endif %}</h1>    
 
+      <div class="localgov_alert_banner-full--image">
+        {{ content.localgov_alert_banner_image }}
       </div>
 
-      <!-- Modal body -->
-      <div class="modal-body px-2 px-sm-3 {{ type_of_alert_class }}">
-        <div class="row">
-          <div class="col-sm-4">
-            <div class="mb-4">
-              <article>
-                <h1 class="d-sm-none">{% if display_title %} {{ content.title }} {% endif %}</h1>
-                <div class="localgov_alert_banner_image ">
-                  {{ content.localgov_alert_banner_image }}
-                </div>
-              </article>
-            </div>
-          </div><!-- End col-sm-4 -->
-
-          <div class="col-sm-8">
-            <h1 class="d-none d-sm-block">{% if display_title %} {{ content.title }} {% endif %}</h1>
-            <div class="takeover-content">{{ content|without('link', 'title', 'localgov_alert_banner_image') }}
-              {% if content.link %} {{ content.link }} {% endif %}
-            </div>
-
-            <!-- Modal button -->
-            <p><a href="#" class="localgov-alert-banner__close js-localgov-alert-banner__close btn btn-primary" data-dismiss="modal" aria-label="Continue to the homepage"><span class="fa fa-chevron-right" aria-hidden="true"></span>{{ 'Continue to website' | t }}</a></p>
-
-          </div><!-- End col-sm-9 -->
-        </div><!-- End row -->
+      <div class="localgov_alert_banner-full--text" id="favDialog__description">
+        {{ content|without('link', 'title', 'localgov_alert_banner_image') }}
+        {% if content.link %} {{ content.link }} {% endif %}
       </div>
-    </div>
+
+      <!-- <button class="localgov-alert-banner--close">
+      {{ 'Continue to website' | t }}
+      </button> -->
+    </article>
   </div>
-</main>
+</dialog>
 <!-- End Alert Banner -->

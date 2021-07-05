@@ -2,16 +2,27 @@
  * Layout rules for the Full page alert banner.
  */
 
-.localgov-alert-banner > .modal-dialog-centered {
+.localgov-alert-banner-full::backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.localgov-alert-banner-full.localgov-alert-banner--notable-person::backdrop {
+  background: rgba(0, 0, 0, 1);
+}
+
+.localgov-alert-banner-full h1,
+.localgov-alert-banner-full p,
+.localgov-alert-banner-full a {
+	color: #FFFFFF;
+}
+
+.localgov-alert-banner-full > .localgov-alert-banner-full--centered {
   max-width: 62.5rem;
-}
-
-.localgov-alert-banner.modal {
-	background: transparent;
-}
-
-.localgov-alert-banner > .modal-dialog-centered .takeover-logo {
-  width: 25%;
-  min-width: 6.25rem;
-  max-width: 13.75rem;
+  margin: auto;
+  overflow-x: none;
+  overflow-y: auto;
 }
