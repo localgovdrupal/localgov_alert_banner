@@ -392,9 +392,12 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
    */
   public function getCacheContexts() {
 
+    // Add front page context for front page classes.
+    $contexts = ['url.path.is_front'];
+
     // Add cache contexts depending on the enabled visibility condition plugins.
     if ($this->hasField('visibility') && !$this->get('visibility')->isEmpty()) {
-      $contexts = [];
+
       $conditions_config = $this->get('visibility')->getValue()[0]['conditions'];
 
       foreach ($conditions_config as $condition_id => $values) {
@@ -402,11 +405,22 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
         $condition = $this->pluginManagerCondition->createInstance($condition_id, $values);
         $contexts = Cache::mergeContexts($contexts, $condition->getCacheContexts());
       }
-
-      $this->addCacheContexts($contexts);
     }
 
-    return parent::getCacheContexts();
+    // Return cache contexts.
+    return Cache::mergeContexts(parent::getCacheContexts(), $contexts);
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheTags() {
+
+    // Get token and use as a cache tag.
+    $token = $this->getToken();
+    $cache_tags = ['localgov.alert.banner.token:' . $token];
+
+    return Cache::mergeTags(parent::getCacheTags(), $cache_tags);
   }
 
 }

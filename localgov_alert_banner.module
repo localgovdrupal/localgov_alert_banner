@@ -5,7 +5,6 @@
  * Contains localgov_alert_banner.module.
  */
 
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
@@ -21,28 +20,6 @@ function localgov_alert_banner_help($route_name, RouteMatchInterface $route_matc
       return $output;
 
     default:
-  }
-}
-
-/**
- * Implements hook_entity_build_defaults_alter().
- */
-function localgov_alert_banner_entity_build_defaults_alter(array &$build, EntityInterface $entity, $view_mode) {
-
-  // Add cache contexts for the alert banner.
-  if ($entity->bundle() == 'localgov_alert_banner') {
-
-    // Set a cache context based on the hide alert banner cookie token.
-    $build['#cache']['contexts'][] = 'cookies:hide-alert-banner-token';
-    $build['#cache']['contexts'][] = 'user.roles:anonymous';
-    $build['#cache']['contexts'][] = 'session';
-
-    // Set a cache context based on if on the front page.
-    $build['#cache']['contexts'][] = 'url.path:is_front';
-
-    // Get token and use as a cache tag.
-    $token = $entity->getToken();
-    $build['#cache']['tags'][] = 'localgov.alert.banner.token:' . $token;
   }
 }
 
