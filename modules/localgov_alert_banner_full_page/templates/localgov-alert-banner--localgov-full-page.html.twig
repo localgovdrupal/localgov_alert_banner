@@ -28,31 +28,23 @@
   ]
 %}
 
-
 <!-- Alert Banner-->
-<dialog id="favDialog" aria-labelledby="favDialog__label" aria-describedby="favDialog__description" class="  localgov-alert-banner-full {{ type_of_alert_class }}">
+<dialog id="lgAlert" aria-labelledby="lgAlert__label" aria-describedby="lgAlert__description" class="  localgov-alert-banner-full {{ type_of_alert_class }}">
 <div role="document" class="localgov-alert-banner-full--centered">
     {% if not remove_hide_link %}
     <button class="localgov-alert-banner-full--close" id="canceloverlay">
       {{ 'Close this dialog' | t }}
     </button>
     {% endif %}
-
     <article class="localgov-alert-banner-full--content">
-      <h1 id="favDialog__label">{% if display_title %} {{ content.title }} {% endif %}</h1>    
-
-      <div class="localgov_alert_banner-full--image">
+      <h1 id="lgAlert__label">{% if display_title %} {{ content.title }} {% endif %}</h1>
+      <div class="localgov-alert-banner-full--image">
         {{ content.localgov_alert_banner_image }}
       </div>
-
-      <div class="localgov_alert_banner-full--text" id="favDialog__description">
+      <div class="localgov-alert-banner-full--text" id="lgAlert__description">
         {{ content|without('link', 'title', 'localgov_alert_banner_image') }}
         {% if content.link %} {{ content.link }} {% endif %}
       </div>
-
-      <!-- <button class="localgov-alert-banner--close">
-      {{ 'Continue to website' | t }}
-      </button> -->
     </article>
   </div>
 </dialog>

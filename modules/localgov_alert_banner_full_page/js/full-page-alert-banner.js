@@ -9,22 +9,25 @@
  * @see localgov_alert_banner_preprocess_localgov_alert_banner__full()
  * @see localgov-alert-banner--full.html.twig
  */
+
 (function launchModalAlertBanner(Drupal, drupalSettings) {
   Drupal.behaviors.launchModalAlertBanner = {
     attach: function attach() {
+      var lgAlert = document.getElementById('lgAlert');
 
-      const cancelButton = document.getElementById('canceloverlay');
+      if (window.dialogPolyfill) {
+        dialogPolyfill.registerDialog(lgAlert);
+      }
 
-      cancelButton.addEventListener('click', function() {
-        favDialog.close();
+      var cancelButton = document.getElementById('canceloverlay');
+      cancelButton.addEventListener('click', function () {
+        lgAlert.close();
         localStorage.setItem("overlayonce", "true");
-        document.activeElement.blur();
       });
 
-      if(!localStorage.getItem("overlayonce")) {
-        favDialog.showModal();
-        //document.body.append('<a href="" id="updateDetails">hello</a>');
+      if (!localStorage.getItem("overlayonce")) {
+        lgAlert.showModal();
       }
     }
   };
-})(Drupal, drupalSettings); // eslint-disable-line
+})(Drupal, drupalSettings);

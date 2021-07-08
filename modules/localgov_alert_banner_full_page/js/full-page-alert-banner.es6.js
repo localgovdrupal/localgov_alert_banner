@@ -8,48 +8,26 @@
  * @see localgov-alert-banner--full.html.twig
  */
 
-(function launchModalAlertBanner(jQuery, Drupal, drupalSettings, bootstrap) {
+(function launchModalAlertBanner(Drupal, drupalSettings) {
   Drupal.behaviors.launchModalAlertBanner = {
-    attach() {
-      const modalId =
-        drupalSettings.localgov_alert_banner_full_page.localgov_full_page_alert_banner_id;
+    attach: function attach() {
 
-      const modal = jQuery(`#${modalId}`).get(0);
-      if (typeof modal === "undefined") {
-        return;
+      const lgAlert = document.getElementById('lgAlert');
+
+      if (window.dialogPolyfill) {
+        dialogPolyfill.registerDialog(lgAlert);
       }
 
-      // Display this modal only when the Alert banner module has not hidden it.
-      if (this.isHiddenAlert(modal)) {
-        return;
+      const cancelButton = document.getElementById('canceloverlay');
+
+      cancelButton.addEventListener('click', function() {
+        lgAlert.close();
+        localStorage.setItem("overlayonce", "true");
+      });
+
+      if(!localStorage.getItem("overlayonce")) {
+        lgAlert.showModal();
       }
-
-      const bsModal = new bootstrap.Modal(modal);
-      bsModal.show();
-
-      // Attach modal closer as a click event handler of the "Hide" link.
-      jQuery(".js-localgov-alert-banner__close", modal).click(() => bsModal.hide());
-    },
-
-    /**
-     * Is this a hidden alert?
-     *
-     * @param {object} modal
-     *   jQuery object.
-     *
-     * @return {bool}
-     *   Is the given alert hidden?
-     *
-     * @see localgov_alert_banner/js/alert_banner.js
-     */
-    isHiddenAlert(modal) {
-      const cookie = jQuery.cookie("hide-alert-banner-token");
-      const cookieTokens =
-        typeof cookie !== "undefined" ? cookie.split("+") : [];
-
-      const dismissToken = jQuery(modal).data("dismiss-alert-token");
-      const isHidden = cookieTokens.includes(dismissToken);
-      return isHidden;
     }
   };
-})(jQuery, Drupal, drupalSettings, bootstrap); // eslint-disable-line
+})(Drupal, drupalSettings);

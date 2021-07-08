@@ -14,6 +14,14 @@
   background: rgba(0, 0, 0, 1);
 }
 
+dialog.localgov-alert-banner-full.localgov-alert-banner--notable-person + .backdrop { /* Firefox handles backdrop differently */
+	background: rgba(0, 0, 0, 1) !important;
+}
+
+dialog + .backdrop {
+	background: rgba(0, 0, 0, 1) !important;
+}
+
 .localgov-alert-banner-full h1,
 .localgov-alert-banner-full p,
 .localgov-alert-banner-full a {
