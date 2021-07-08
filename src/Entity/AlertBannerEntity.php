@@ -159,16 +159,6 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
   /**
    * {@inheritdoc}
    */
-  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
-    parent::postSave($storage, $update);
-
-    // Better to use cache tags instead of doing a full flush?
-    drupal_flush_all_caches();
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function getTitle() {
     return $this->get('title')->value;
   }
