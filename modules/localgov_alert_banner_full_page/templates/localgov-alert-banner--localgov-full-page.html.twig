@@ -22,6 +22,7 @@
 {% set classes = [
     'js-localgov-alert-banner',
     'localgov-alert-banner',
+    'localgov-alert-banner-full',
     type_of_alert_class,
     is_front ? 'localgov_alert_banner--homepage' : '',
     has_link ? 'localgov_alert_banner--has-link' : 'localgov_alert_banner--no-link'
@@ -29,19 +30,19 @@
 %}
 
 <!-- Alert Banner-->
-<dialog id="lgAlert" aria-labelledby="lgAlert__label" aria-describedby="lgAlert__description" class="  localgov-alert-banner-full {{ type_of_alert_class }}">
-<div role="document" class="localgov-alert-banner-full--centered">
+<dialog {{ attributes.addClass(classes) }} aria-labelledby="{{ attributes.id }}-label" aria-describedby="{{ attributes.id }}-description">
+  <div role="document" class="localgov-alert-banner-full--centered">
     {% if not remove_hide_link %}
-    <button class="localgov-alert-banner-full--close" id="canceloverlay">
+    <button id="{{ attributes.id }}-canceloverlay" class="localgov-alert-banner__close  js-localgov-alert-banner__close" aria-label="Close">
       {{ 'Close this dialog' | t }}
     </button>
     {% endif %}
     <article class="localgov-alert-banner-full--content">
-      <h1 id="lgAlert__label">{% if display_title %} {{ content.title }} {% endif %}</h1>
+      <h1 id="{{ attributes.id }}-label">{% if display_title %} {{ content.title }} {% endif %}</h1>
       <div class="localgov-alert-banner-full--image">
         {{ content.localgov_alert_banner_image }}
       </div>
-      <div class="localgov-alert-banner-full--text" id="lgAlert__description">
+      <div class="localgov-alert-banner-full--text" id="{{ attributes.id }}-description">
         {{ content|without('link', 'title', 'localgov_alert_banner_image') }}
         {% if content.link %} {{ content.link }} {% endif %}
       </div>
