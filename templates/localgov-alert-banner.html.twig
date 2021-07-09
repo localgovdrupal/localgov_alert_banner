@@ -21,7 +21,7 @@
 
 {{ attach_library('localgov_alert_banner/alert_banner') }}
 
-{% set has_link = content.link.0 is not empty %}
+{% set has_link = content.link|render is not empty %}
 {% set type_of_alert =  type_of_alert|split('--')[1]|clean_class %}
 {% set classes = [
     'js-localgov-alert-banner',
@@ -50,7 +50,7 @@
         </div>
 
         {% if has_link %}
-          <div class="localgov-alert-banner--content-link">{{ content.link }}</div>
+          <div class="localgov-alert-banner__content-link">{{ content.link }}</div>
         {% endif %}
       </div> {# End Content #}
 
