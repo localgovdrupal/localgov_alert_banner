@@ -5,6 +5,7 @@ core_version_requirement: ^8.8 || ^9
 package: LocalGov Drupal
 dependencies:
   - drupal:block
+  - drupal:content_moderation
   - drupal:field
   - drupal:field_group
   - drupal:link
@@ -12,4 +13,5 @@ dependencies:
   - drupal:options
   - drupal:user
   - drupal:views
+  - drupal:workflows
   - condition_field:condition_field

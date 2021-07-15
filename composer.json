@@ -6,7 +6,8 @@
     "minimum-stability": "dev",
     "require": {
         "drupal/condition_field": "^2.0",
-        "drupal/field_group": "~3.1"
+        "drupal/field_group": "~3.1",
+        "drupal/scheduled_transitions": "^2.1"
     },
     "extra": {
         "enable-patching": true,
