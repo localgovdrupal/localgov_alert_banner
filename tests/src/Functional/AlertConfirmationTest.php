@@ -48,7 +48,7 @@ class AlertConfirmationTest extends BrowserTestBase {
       'title' => $title,
       'short_description' => $alert_message,
       'type_of_alert' => 'minor',
-      'status' => FALSE,
+      'moderation_state' => 'unpublished',
     ]);
     $alert->save();
 
@@ -78,7 +78,7 @@ class AlertConfirmationTest extends BrowserTestBase {
       'title' => $title_2,
       'short_description' => $alert_message_2,
       'type_of_alert' => 'minor',
-      'status' => TRUE,
+      'moderation_state' => 'published',
     ]);
     $alert_2->save();
 
@@ -114,7 +114,7 @@ class AlertConfirmationTest extends BrowserTestBase {
       'title' => $title,
       'short_description' => $alert_message,
       'type_of_alert' => 'minor',
-      'status' => FALSE,
+      'moderation_state' => 'unpublished',
     ]);
     $alert->save();
 

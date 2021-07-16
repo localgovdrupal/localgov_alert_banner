@@ -81,7 +81,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
         'short_description' => $alert_message,
         'type_of_alert' => 'minor',
         // 'link' => 'https://localgovdrupal.org/'.
-        'status' => TRUE,
+        'moderation_state' => 'published',
       ]);
     $alert->save();
 
@@ -105,7 +105,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
         'short_description' => $alert_message,
         'type_of_alert' => 'minor',
         // 'link' => 'https://localgovdrupal.org/'.
-        'status' => FALSE,
+        'moderation_state' => 'unpublished',
       ]);
     $alert->save();
 
@@ -128,7 +128,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
         'short_description' => $alert_message,
         'type_of_alert' => 'minor',
         'display_title' => 1,
-        'status' => TRUE,
+        'moderation_state' => 'published',
       ]);
     $alert->save();
 
@@ -157,7 +157,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
         'short_description' => $alert_message,
         'type_of_alert' => 'minor',
         'remove_hide_link' => 0,
-        'status' => TRUE,
+        'moderation_state' => 'published',
       ]);
     $alert->save();
 
@@ -187,7 +187,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
         'type' => 'localgov_alert_banner',
         'title' => 'Alert of type localgov_alert_banner',
         'display_title' => 1,
-        'status' => TRUE,
+        'moderation_state' => 'published',
       ]);
     $alert->save();
 
@@ -196,7 +196,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
         'type' => 'extra_type',
         'title' => 'Alert of type extra_type',
         'display_title' => 1,
-        'status' => TRUE,
+        'moderation_state' => 'published',
       ]);
     $alert->save();
 
