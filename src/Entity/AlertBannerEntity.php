@@ -162,8 +162,10 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
   public function postSave(EntityStorageInterface $storage, $update = TRUE) {
     parent::postSave($storage, $update);
 
-    // Better to use cache tags instead of doing a full flush?
-    drupal_flush_all_caches();
+    // Needed by the entity.localgov_alert_banner.status_form route to function
+    // correctly during *test runs*.  Not the ideal solution, but less
+    // destructive than drupal_flush_all_caches().
+    \Drupal::service('router.builder')->setRebuildNeeded();
   }
 
   /**
