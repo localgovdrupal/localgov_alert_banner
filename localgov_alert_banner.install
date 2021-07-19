@@ -11,6 +11,17 @@ use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 
 /**
+ * Implements hook_install().
+ */
+function localgov_alert_banner_install($is_syncing) {
+
+  // Configure scheduled transitions if enabled.
+  if (\Drupal::moduleHandler()->moduleExists('scheduled_transitions')) {
+    localgov_alert_banner_configure_scheduled_transitions();
+  }
+}
+
+/**
  * Update alert banner entity definition to include the token on the entity.
  */
 function localgov_alert_banner_update_8801() {
