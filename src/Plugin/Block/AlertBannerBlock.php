@@ -163,12 +163,14 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
       $published_alert_banner_query->condition('type', $types, 'IN');
     }
     $published_alert_banners = $published_alert_banner_query->execute();
-
     // Load alert banners and add all.
     // Visibility check happens in build, so we get cache contexts on all.
     foreach ($published_alert_banners as $alert_banner_id) {
       $alert_banner = $this->entityTypeManager->getStorage('localgov_alert_banner')->load($alert_banner_id);
-      $alert_banners[] = $alert_banner;
+      $is_accessible = $alert_banner->access('view', \Drupal::currentUser());
+      if ($is_accessible) {
+        $alert_banners[] = $alert_banner;
+      }
     }
 
     return $alert_banners;
