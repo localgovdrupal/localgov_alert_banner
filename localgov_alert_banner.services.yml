@@ -1,0 +1,6 @@
+services:
+  localgov_alert_banner.alert_banner_entity_page_access:
+    class: Drupal\localgov_alert_banner\Access\AlertBannerEntityPageAccess
+    arguments: ['@current_user']
+    tags:
+      - { name: access_check }

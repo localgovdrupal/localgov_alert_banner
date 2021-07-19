@@ -158,7 +158,8 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
       ->getQuery()
       ->condition('status', 1)
       ->sort('type_of_alert', 'DESC')
-      ->sort('changed', 'DESC');
+      ->sort('changed', 'DESC')
+      ->accessCheck(TRUE);
     if (!empty($types)) {
       $published_alert_banner_query->condition('type', $types, 'IN');
     }
