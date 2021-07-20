@@ -104,7 +104,7 @@ class AlertBannerEntityType extends ConfigEntityBundleBase implements AlertBanne
       }
 
       // Default grant permissions to view.
-      user_role_grant_permissions(RoleInterface::ANONYMOUS_ID , ['view localgov alert banner ' . $bundle . ' entities']);
+      user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, ['view localgov alert banner ' . $bundle . ' entities']);
       user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, ['view localgov alert banner ' . $bundle . ' entities']);
     }
   }

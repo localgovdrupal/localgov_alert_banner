@@ -25,7 +25,7 @@ function localgov_alert_banner_install($is_syncing) {
   }
   
   // Default grant permissions to view all alert banners.
-  user_role_grant_permissions(RoleInterface::ANONYMOUS_ID , ['view all localgov alert banner entities']);
+  user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, ['view all localgov alert banner entities']);
   user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, ['view all localgov alert banner entities']);
 }
 
