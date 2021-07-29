@@ -48,10 +48,11 @@ jobs:
       - name: Set composer branch reference for main version branches
         if: endsWith(github.ref, '.x') == false
         run: echo "COMPOSER_REF=dev-${GIT_BRANCH}" >> $GITHUB_ENV
+      
+      - uses: hmarr/debug-action@v2
         
       - run: |
-          echo "${{ github }}"
-          git tag
+          echo "${{ toJSON(github) }}"
           
 
 #       - name: Cached workspace
