@@ -48,11 +48,15 @@ jobs:
       - name: Set composer branch reference for main version branches
         if: endsWith(github.ref, '.x') == false
         run: echo "COMPOSER_REF=dev-${GIT_BRANCH}" >> $GITHUB_ENV
-      
-      - uses: hmarr/debug-action@v2
         
-      - run: |
-          curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/localgovdrupal/localgov_alert_banner/git/matching-refs/tags/${GIT_BASE%'.x'} | grep -Po '(?<=refs/tags/)\d.\d.\d' | tail -1
+      - name: Get the latest tagged release for branch version
+        run: |
+          LATEST_RELEASE=$(curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/localgovdrupal/localgov_alert_banner/git/matching-refs/tags/${GIT_BASE%'.x'} | grep -Po '(?<=refs/tags/)\d.\d.\d' | tail -1)
+          if [ -z $LATEST_RELEASE ]; then LATEST_RELEASE=1; fi
+          echo "LATEST_RELEASE=${LATEST_RELEASE}"
+
+      - uses: hmarr/debug-action@v2
+          
           
 
 #       - name: Cached workspace
