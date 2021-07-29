@@ -52,7 +52,7 @@ jobs:
       - uses: hmarr/debug-action@v2
         
       - run: |
-          curl https://api.github.com/repos/localgovdrupal/localgov_alert_banner/git/matching-refs/tags/1.1
+          curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/localgovdrupal/localgov_alert_banner/git/matching-refs/tags/${GIT_BASE%'.x'} | grep -Po '(?<=refs/tags/)\d.\d.\d' | tail -1
           
 
 #       - name: Cached workspace
