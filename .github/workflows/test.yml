@@ -77,6 +77,7 @@ jobs:
           composer create-project --stability dev drupal/recommended-project:${{ matrix.drupal-version }} ./html
           composer --working-dir=html config repositories.1 vcs git@github.com:${GIT_REPO}.git
           composer global config github-oauth.github.com ${{ github.token }}
+          composer --working-dir=html require mglaman/phpstan-drupal phpstan/phpstan-deprecation-rules
           composer --working-dir=html require --with-all-dependencies localgovdrupal/${{ github.event.repository.name }}:"${COMPOSER_REF} as ${LATEST_RELEASE}"
 
   phpcs:
@@ -148,7 +149,6 @@ jobs:
       - name: Run deprecated code checks
         run: |
           cd html
-          composer require mglaman/phpstan-drupal phpstan/phpstan-deprecation-rules
           curl -o phpstan.neon https://raw.githubusercontent.com/localgovdrupal/.github/master/testing-config/phpstan.neon
           ./vendor/bin/phpstan analyse -c ./phpstan.neon "web/modules/contrib/${GITHUB_REPO##*/}"
 
@@ -190,5 +190,5 @@ jobs:
           mkdir -p ./html/web/sites/simpletest && chmod 777 ./html/web/sites/simpletest
           curl -o ./html/phpunit.xml.dist https://raw.githubusercontent.com/localgovdrupal/.github/master/testing-config/phpunit.xml.dist
           docker exec -t drupal bash -c 'chown docker:docker -R /var/www/html'
-          # docker exec -u docker -t drupal bash -c "cd /var/www/html && ..vendor/bin/phpunit --testdox"
-          docker exec -u docker -t drupal bash -c "cd /var/www/html && ./vendor/bin/paratest --processes=4
+          docker exec -u docker -t drupal bash -c "cd /var/www/html && ..vendor/bin/phpunit --testdox web/modules/contrib/${GITHUB_REPO##*/}"
+          #docker exec -u docker -t drupal bash -c "cd /var/www/html && ./vendor/bin/paratest --processes=4
