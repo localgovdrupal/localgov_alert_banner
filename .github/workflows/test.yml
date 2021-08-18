@@ -111,7 +111,8 @@ jobs:
       - name: Run coding standards checks
         run: |
           cd html
-          ./bin/phpcs -p
+          curl -o phpcs.xml.dist https://raw.githubusercontent.com/localgovdrupal/localgov_project/2.x/phpcs.xml.dist
+          ./vendor/bin/phpcs -p
 
   phpstan:
     name: Deprecated code checks
@@ -144,7 +145,8 @@ jobs:
       - name: Run deprecated code checks
         run: |
           cd html
-          ./bin/phpstan analyse -c ./phpstan.neon ./web/profiles/contrib/localgov/ ./web/modules/contrib/localgov_*
+          curl -o phpstan.neon https://raw.githubusercontent.com/localgovdrupal/localgov_project/2.x/phpstan.neon
+          ./vendor/bin/phpstan analyse -c ./phpstan.neon ./web/profiles/contrib/localgov/ ./web/modules/contrib/localgov_*
 
   phpunit:
     name: PHPUnit tests
@@ -182,7 +184,8 @@ jobs:
       - name: Run PHPUnit tests
         run: |
           mkdir -p ./html/web/sites/simpletest && chmod 777 ./html/web/sites/simpletest
+          curl -o ./html/phpunit.xml.dist https://raw.githubusercontent.com/localgovdrupal/localgov_project/2.x/phpunit.xml.dist
           sed -i "s#http://localgov.lndo.site#http://drupal#; s#mysql://database:database@database/database#sqlite://localhost//dev/shm/test.sqlite#" ./html/phpunit.xml.dist
           docker exec -t drupal bash -c 'chown docker:docker -R /var/www/html'
-          # docker exec -u docker -t drupal bash -c "cd /var/www/html && ./bin/phpunit --testdox"
-          docker exec -u docker -t drupal bash -c "cd /var/www/html && ./bin/paratest --processes=4
+          # docker exec -u docker -t drupal bash -c "cd /var/www/html && ..vendor/bin/phpunit --testdox"
+          docker exec -u docker -t drupal bash -c "cd /var/www/html && ./vendor/bin/paratest --processes=4
