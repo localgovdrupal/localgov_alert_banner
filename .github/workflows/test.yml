@@ -11,18 +11,16 @@ on:
 jobs:
 
   build:
-    name: Install LocalGov Drupal
+    name: Install Drupal
     runs-on: ubuntu-latest
 
     strategy:
       fail-fast: false
       matrix:
         include:
-          - localgov-version: "1.x"
-            drupal-version: "~8.9"
+          - drupal-version: "~8"
             php-version: "7.4"
-          - localgov-version: "2.x"
-            drupal-version: "~9.1"
+          - drupal-version: "~9"
             php-version: "7.4"
 
     steps:
@@ -57,35 +55,30 @@ jobs:
 
       - uses: hmarr/debug-action@v2
           
-          
+      - name: Cached workspace
+        uses: actions/cache@v2
+        with:
+          path: ./html
+          key: localgov-build-${{ matrix.drupal-version }}-${{ matrix.php-version }}-${{ github.run_id }}
 
-#       - name: Cached workspace
-#         uses: actions/cache@v2
-#         with:
-#           path: ./html
-#           key: localgov-build-${{ matrix.localgov-version }}-${{ matrix.drupal-version }}-${{ matrix.php-version }}-${{ github.run_id }}
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
 
-#       - name: Setup PHP
-#         uses: shivammathur/setup-php@v2
-#         with:
-#           php-version: ${{ matrix.php-version }}
+      - name: Setup package source and authentication for the test target
+        run: |
+          composer --working-dir=html config repositories.1 vcs git@github.com:${GIT_REPO}.git
+          composer global config github-oauth.github.com ${{ github.token }}
 
-#       - name: Clone drupal_container
-#         uses: actions/checkout@v2
-#         with:
-#           repository: localgovdrupal/drupal-container
-#           ref: php${{ matrix.php-version }}
+      - name: Clone drupal_container
+        uses: actions/checkout@v2
+        with:
+          repository: localgovdrupal/drupal-container
+          ref: php${{ matrix.php-version }}
 
-#       - name: Create LocalGov Drupal project
-#         run: |
-#           composer create-project --stability dev --no-install localgovdrupal/localgov-project ./html "${{ matrix.localgov-version }}"
-#           composer require --no-install drupal/core-recommended:${{ matrix.drupal-version }} drupal/core-composer-scaffold:${{ matrix.drupal-version }} drupal/core-project-message:${{ matrix.drupal-version }} drupal/core-dev:${{ matrix.drupal-version }}
-#           composer install
-
-#       - name: Setup package source and authentication for the test target
-#         run: |
-#           composer --working-dir=html config repositories.1 vcs git@github.com:${GIT_REPO}.git
-#           composer global config github-oauth.github.com ${{ github.token }}
-
-#       - name: Obtain the test target from the repo that triggered this workflow
-#         run: composer --working-dir=html require --with-all-dependencies localgovdrupal/${{ github.event.repository.name }}:"${COMPOSER_REF} as ${GIT_BASE%'.x'}"
+      - name: Install Drupal
+        run: |
+          composer create-project --stability dev --no-install drupal/recommended-project:${{ matrix.drupal-version }} ./html
+          composer --working-dir=html require --with-all-dependencies localgovdrupal/${{ github.event.repository.name }}:"${COMPOSER_REF} as ${LATEST_RELEASE}"
+          composer install
