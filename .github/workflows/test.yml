@@ -111,7 +111,9 @@ jobs:
       - name: Run coding standards checks
         run: |
           cd html
-          curl -o phpcs.xml.dist https://raw.githubusercontent.com/localgovdrupal/localgov_project/2.x/phpcs.xml.dist
+          curl -o phpcs.xml.dist https://raw.githubusercontent.com/localgovdrupal/.github/master/testing-config/phpcs.xml.dist
+          vendor/bin/phpcs --config-set installed_paths vendor/drupal/coder/coder_sniffer/
+          vendor/bin/phpcs -p --standard=Drupal --standard=DrupalPractice "web/modules/contrib/${GITHUB_REPO##*/}"
           ./vendor/bin/phpcs -p
 
   phpstan:
@@ -137,6 +139,7 @@ jobs:
           key: localgov-build-${{ matrix.drupal-version }}-${{ matrix.php-version }}-${{ github.run_id }}
           restore-keys: |
             localgov-build-${{ matrix.drupal-version }}-${{ matrix.php-version }}-
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -145,8 +148,9 @@ jobs:
       - name: Run deprecated code checks
         run: |
           cd html
-          curl -o phpstan.neon https://raw.githubusercontent.com/localgovdrupal/localgov_project/2.x/phpstan.neon
-          ./vendor/bin/phpstan analyse -c ./phpstan.neon ./web/profiles/contrib/localgov/ ./web/modules/contrib/localgov_*
+          composer require mglaman/phpstan-drupal phpstan/phpstan-deprecation-rules
+          curl -o phpstan.neon https://raw.githubusercontent.com/localgovdrupal/.github/master/testing-config/phpstan.neon
+          ./vendor/bin/phpstan analyse -c ./phpstan.neon "web/modules/contrib/${GITHUB_REPO##*/}"
 
   phpunit:
     name: PHPUnit tests
@@ -184,8 +188,7 @@ jobs:
       - name: Run PHPUnit tests
         run: |
           mkdir -p ./html/web/sites/simpletest && chmod 777 ./html/web/sites/simpletest
-          curl -o ./html/phpunit.xml.dist https://raw.githubusercontent.com/localgovdrupal/localgov_project/2.x/phpunit.xml.dist
-          sed -i "s#http://localgov.lndo.site#http://drupal#; s#mysql://database:database@database/database#sqlite://localhost//dev/shm/test.sqlite#" ./html/phpunit.xml.dist
+          curl -o ./html/phpunit.xml.dist https://raw.githubusercontent.com/localgovdrupal/.github/master/testing-config/phpunit.xml.dist
           docker exec -t drupal bash -c 'chown docker:docker -R /var/www/html'
           # docker exec -u docker -t drupal bash -c "cd /var/www/html && ..vendor/bin/phpunit --testdox"
           docker exec -u docker -t drupal bash -c "cd /var/www/html && ./vendor/bin/paratest --processes=4
