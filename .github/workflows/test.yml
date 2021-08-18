@@ -79,6 +79,5 @@ jobs:
 
       - name: Install Drupal
         run: |
-          composer create-project --stability dev --no-install drupal/recommended-project:${{ matrix.drupal-version }} ./html
+          composer create-project --stability dev drupal/recommended-project:${{ matrix.drupal-version }} ./html
           composer --working-dir=html require --with-all-dependencies localgovdrupal/${{ github.event.repository.name }}:"${COMPOSER_REF} as ${LATEST_RELEASE}"
-          composer install
