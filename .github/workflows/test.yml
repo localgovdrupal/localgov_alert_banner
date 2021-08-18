@@ -66,11 +66,6 @@ jobs:
         with:
           php-version: ${{ matrix.php-version }}
 
-      - name: Setup package source and authentication for the test target
-        run: |
-          composer --working-dir=html config repositories.1 vcs git@github.com:${GIT_REPO}.git
-          composer global config github-oauth.github.com ${{ github.token }}
-
       - name: Clone drupal_container
         uses: actions/checkout@v2
         with:
@@ -80,4 +75,6 @@ jobs:
       - name: Install Drupal
         run: |
           composer create-project --stability dev drupal/recommended-project:${{ matrix.drupal-version }} ./html
+          composer --working-dir=html config repositories.1 vcs git@github.com:${GIT_REPO}.git
+          composer global config github-oauth.github.com ${{ github.token }}
           composer --working-dir=html require --with-all-dependencies localgovdrupal/${{ github.event.repository.name }}:"${COMPOSER_REF} as ${LATEST_RELEASE}"
