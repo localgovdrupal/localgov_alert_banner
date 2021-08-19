@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\localgov_alert_banner\Kernel;
 
+use Drupal\Core\Extension\MissingDependencyException;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
@@ -11,6 +12,9 @@ use Drupal\scheduled_transitions\Entity\ScheduledTransition;
  * Kernel test for scheduling transitions.
  *
  * @group localgov_workflows
+ *
+ * @requires module dynamic entity reference
+ * @requires module scheduled_transitions
  */
 class SchedulingTest extends KernelTestBase {
 
@@ -25,11 +29,9 @@ class SchedulingTest extends KernelTestBase {
   protected static $modules = [
     'condition_field',
     'content_moderation',
-    'dynamic_entity_reference',
     'field',
     'link',
     'options',
-    'scheduled_transitions',
     'system',
     'text',
     'user',
@@ -46,12 +48,10 @@ class SchedulingTest extends KernelTestBase {
 
     $this->installEntitySchema('content_moderation_state');
     $this->installEntitySchema('user');
-    $this->installEntitySchema('scheduled_transition');
     $this->installEntitySchema('workflow');
     $this->installEntitySchema('localgov_alert_banner');
     $this->installConfig([
       'content_moderation',
-      'scheduled_transitions',
       'system',
       'views',
       'localgov_alert_banner',
@@ -62,6 +62,18 @@ class SchedulingTest extends KernelTestBase {
    * Test scheduling alert banners.
    */
   public function testAlertBannerScheduling() {
+    // It should be possible to enable scheduled_transitions by listing it in
+    // the class $modules array and then add a '@requires module
+    // scheduled_transitions' annotation to skip the test if scheduled
+    // transitions is not present, but this isn't working so catching the
+    // exception instead.
+    try {
+      \Drupal::service('module_installer')->install(['scheduled_transitions']);
+    }
+    catch (MissingDependencyException $e) {
+      return;
+    }
+
     $alert_banner_storage = $this->container->get('entity_type.manager')->getStorage('localgov_alert_banner');
     $runner = $this->container->get('scheduled_transitions.runner');
 
