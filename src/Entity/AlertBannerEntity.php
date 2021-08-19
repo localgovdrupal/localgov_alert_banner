@@ -162,8 +162,10 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
   public function postSave(EntityStorageInterface $storage, $update = TRUE) {
     parent::postSave($storage, $update);
 
-    // Better to use cache tags instead of doing a full flush?
-    drupal_flush_all_caches();
+    // Needed by the entity.localgov_alert_banner.status_form route to function
+    // correctly during *test runs*.  Not the ideal solution, but less
+    // destructive than drupal_flush_all_caches().
+    \Drupal::service('router.builder')->setRebuildNeeded();
   }
 
   /**
@@ -401,6 +403,18 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
       $conditions_config = $this->get('visibility')->getValue()[0]['conditions'];
 
       foreach ($conditions_config as $condition_id => $values) {
+
+        // Skip adding contexts for banners that arn't visible.
+        // @see #154
+        // Show banner on restricted pages, skip when hidden.
+        if (!$this->isVisible() && $values['negate'] == 0) {
+          continue;
+        }
+        // Hide banner on restricted pages, skip when visible.
+        if ($this->isVisible() && $values['negate'] == 1) {
+          continue;
+        }
+
         /** @var \Drupal\Core\Condition\ConditionInterface $condition */
         $condition = $this->pluginManagerCondition->createInstance($condition_id, $values);
         $contexts = Cache::mergeContexts($contexts, $condition->getCacheContexts());
