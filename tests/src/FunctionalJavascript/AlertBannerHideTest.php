@@ -12,7 +12,7 @@ class AlertBannerHideTest extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'localgov_base';
+  protected $defaultTheme = 'stable';
 
   /**
    * {@inheritdoc}
