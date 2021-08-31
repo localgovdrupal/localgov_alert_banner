@@ -91,24 +91,24 @@ function localgov_alert_banner_cron() {
   // Get alert banners that need to be put live.
   $alert_banner_storage = \Drupal::entityTypeManager()->getStorage('localgov_alert_banner');
   $alert_banner_ids = $alert_banner_storage->getQuery()->condition('status', '0')
-                                                       ->condition('date_put_live', $now_formatted, '<=')
-                                                       ->condition('date_remove', $now_formatted, '>')
-                                                       ->execute();
+    ->condition('date_put_live', $now_formatted, '<=')
+    ->condition('date_remove', $now_formatted, '>')
+    ->execute();
 
   foreach ($alert_banner_ids as $id) {
     $alert_banner_storage->load($id)
-                         ->set('status', '1')
-                         ->save();
+      ->set('status', '1')
+      ->save();
   }
 
   // Get alert banners that need to be removed.
   $alert_banner_storage = \Drupal::entityTypeManager()->getStorage('localgov_alert_banner');
   $alert_banner_ids = $alert_banner_storage->getQuery()->condition('status', '1')
-                                                       ->condition('date_remove', $now_formatted, '<=')
-                                                       ->execute();
+    ->condition('date_remove', $now_formatted, '<=')
+    ->execute();
   foreach ($alert_banner_ids as $id) {
     $alert_banner_storage->load($id)
-                         ->set('status', '0')
-                         ->save();
+      ->set('status', '0')
+      ->save();
   }
 }

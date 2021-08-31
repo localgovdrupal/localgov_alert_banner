@@ -81,7 +81,6 @@ function localgov_alert_banner_update_8902() {
     ->setDisplayConfigurable('form', TRUE)
     ->setDisplayConfigurable('view', FALSE);
 
-
   \Drupal::entityDefinitionUpdateManager()
     ->installFieldStorageDefinition('date_put_live', 'localgov_alert_banner', 'localgov_alert_banner', $field_storage_definition_put_live);
 
@@ -94,7 +93,6 @@ function localgov_alert_banner_update_8902() {
     ])
     ->setDisplayConfigurable('form', TRUE)
     ->setDisplayConfigurable('view', FALSE);
-
 
   \Drupal::entityDefinitionUpdateManager()
     ->installFieldStorageDefinition('date_remove', 'localgov_alert_banner', 'localgov_alert_banner', $field_storage_definition_remove);
