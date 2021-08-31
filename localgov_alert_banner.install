@@ -66,3 +66,36 @@ function localgov_alert_banner_update_8901() {
     }
   }
 }
+
+/**
+ * Update alert banner entity definition to include scheduled date.
+ */
+function localgov_alert_banner_update_8902() {
+  $field_storage_definition_put_live = BaseFieldDefinition::create('datetime')
+    ->setLabel(t('Put live on date'))
+    ->setDescription(t('If set, the banner will be put live on this date and time.'))
+    ->setRevisionable(TRUE)
+    ->setDisplayOptions('form', [
+      'weight' => -4,
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', FALSE);
+
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('date_put_live', 'localgov_alert_banner', 'localgov_alert_banner', $field_storage_definition_put_live);
+
+  $field_storage_definition_remove = BaseFieldDefinition::create('datetime')
+    ->setLabel(t('Remove on date'))
+    ->setDescription(t('If set, the banner will be removed on this date and time.'))
+    ->setRevisionable(TRUE)
+    ->setDisplayOptions('form', [
+      'weight' => -4,
+    ])
+    ->setDisplayConfigurable('form', TRUE)
+    ->setDisplayConfigurable('view', FALSE);
+
+
+  \Drupal::entityDefinitionUpdateManager()
+    ->installFieldStorageDefinition('date_remove', 'localgov_alert_banner', 'localgov_alert_banner', $field_storage_definition_remove);
+}

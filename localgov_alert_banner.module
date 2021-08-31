@@ -6,6 +6,8 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\datetime\Plugin\Field\FieldType\DateTimeItemInterface;
+use Drupal\Core\Datetime\DrupalDateTime;
 
 /**
  * Implements hook_help().
@@ -74,4 +76,39 @@ function localgov_alert_banner_theme_suggestions_localgov_alert_banner(array $va
   $suggestions[] = 'localgov_alert_banner__' . $entity->id();
   $suggestions[] = 'localgov_alert_banner__' . $entity->id() . '__' . $sanitized_view_mode;
   return $suggestions;
+}
+
+/**
+ * Implements hook_cron().
+ */
+function localgov_alert_banner_cron() {
+
+  // Get current time.
+  $now = new DrupalDateTime('now');
+  $now->setTimezone(new \DateTimeZone(DateTimeItemInterface::STORAGE_TIMEZONE));
+  $now_formatted = $now->format(DateTimeItemInterface::DATETIME_STORAGE_FORMAT);
+
+  // Get alert banners that need to be put live.
+  $alert_banner_storage = \Drupal::entityTypeManager()->getStorage('localgov_alert_banner');
+  $alert_banner_ids = $alert_banner_storage->getQuery()->condition('status', '0')
+                                                       ->condition('date_put_live', $now_formatted, '<=')
+                                                       ->condition('date_remove', $now_formatted, '>')
+                                                       ->execute();
+
+  foreach ($alert_banner_ids as $id) {
+    $alert_banner_storage->load($id)
+                         ->set('status', '1')
+                         ->save();
+  }
+
+  // Get alert banners that need to be removed.
+  $alert_banner_storage = \Drupal::entityTypeManager()->getStorage('localgov_alert_banner');
+  $alert_banner_ids = $alert_banner_storage->getQuery()->condition('status', '1')
+                                                       ->condition('date_remove', $now_formatted, '<=')
+                                                       ->execute();
+  foreach ($alert_banner_ids as $id) {
+    $alert_banner_storage->load($id)
+                         ->set('status', '0')
+                         ->save();
+  }
 }

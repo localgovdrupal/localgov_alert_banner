@@ -365,6 +365,28 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
         'weight' => -3,
       ]);
 
+    // Scheduled options.
+    $fields['date_put_live'] = BaseFieldDefinition::create('datetime')
+      ->setLabel(t('Put live on date'))
+      ->setDescription(t('If set, the banner will be put live on this date and time.'))
+      ->setRevisionable(TRUE)
+      ->setDisplayOptions('form', [
+        'weight' => -4,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', FALSE);
+
+    // Scheduled options.
+    $fields['date_remove'] = BaseFieldDefinition::create('datetime')
+      ->setLabel(t('Remove on date'))
+      ->setDescription(t('If set, the banner will be removed on this date and time.'))
+      ->setRevisionable(TRUE)
+      ->setDisplayOptions('form', [
+        'weight' => -4,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', FALSE);
+
     $fields['created'] = BaseFieldDefinition::create('created')
       ->setLabel(t('Created'))
       ->setDescription(t('The time that the entity was created.'));
