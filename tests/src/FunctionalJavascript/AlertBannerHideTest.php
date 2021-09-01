@@ -12,7 +12,7 @@ class AlertBannerHideTest extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $defaultTheme = 'localgov_base';
+  protected $defaultTheme = 'stark';
 
   /**
    * {@inheritdoc}
@@ -30,7 +30,7 @@ class AlertBannerHideTest extends WebDriverTestBase {
    * Test alert banner hide link.
    */
   public function testAlertBannerHide() {
-    $this->drupalPlaceBlock('localgov_alert_banner');
+    $this->drupalPlaceBlock('localgov_alert_banner_block');
 
     // Set up an alert banner.
     $title = $this->randomMachineName(8);
