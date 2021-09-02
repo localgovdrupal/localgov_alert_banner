@@ -130,7 +130,7 @@ class AlertBannerEntityController extends ControllerBase implements ContainerInj
           $link = Link::fromTextAndUrl($date, new Url('entity.localgov_alert_banner.revision', [
             'localgov_alert_banner' => $localgov_alert_banner->id(),
             'localgov_alert_banner_revision' => $vid,
-          ]));
+          ]))->toString();
         }
         else {
           $link = $localgov_alert_banner->toLink($date)->toString();
