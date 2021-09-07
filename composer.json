@@ -4,9 +4,12 @@
     "description": "LocalGovDrupal distribution: Alert banner.",
     "homepage": "https://github.com/localgovdrupal/localgov_alert_banner",
     "minimum-stability": "dev",
+    "license": "GPL-2.0-or-later",
     "require": {
         "drupal/condition_field": "^2.0",
-        "drupal/field_group": "~3.1",
+        "drupal/field_group": "~3.1"
+    },
+    "suggest": {
         "localgovdrupal/localgov_core": "^1 || ^2"
     },
     "extra": {
