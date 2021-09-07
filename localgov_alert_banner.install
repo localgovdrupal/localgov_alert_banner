@@ -77,3 +77,43 @@ function localgov_alert_banner_update_8901() {
     }
   }
 }
+
+/**
+ * Configure scheduled transitions for alert banners if enabled.
+ */
+function localgov_alert_banner_update_9001() {
+
+  // Don't run if Scheduled Transitions module isn't enabled.
+  $moduleHandler = \Drupal::service('module_handler');
+  if (!$moduleHandler->moduleExists('scheduled_transitions')) {
+    return;
+  }
+
+  // Configure scheduled transitions for alert banners.
+  $scheduled_transitions_config = \Drupal::service('config.factory')->getEditable('scheduled_transitions.settings');
+  $alert_banner_bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo('localgov_alert_banner');
+  $bundles = [];
+  foreach ($alert_banner_bundles as $bundle => $info) {
+    $bundles[] = [
+      'entity_type' => 'localgov_alert_banner',
+      'bundle' => $bundle,
+    ];
+  }
+  $scheduled_transitions_config->set('bundles', $bundles);
+  $scheduled_transitions_config->save();
+  Cache::invalidateTags([
+    'scheduled_transition_settings',
+    'config:scheduled_transitions.settings',
+  ]);
+
+  // Add scheduling permissions to the emergency publisher user.
+  $permissions = [];
+  foreach ($alert_banner_bundles as $bundle => $info) {
+    $permissions = array_merge($permissions, [
+      'add scheduled transitions localgov_alert_banner ' . $bundle,
+      'reschedule scheduled transitions localgov_alert_banner ' . $bundle,
+      'view scheduled transitions localgov_alert_banner ' . $bundle,
+    ]);
+  }
+  user_role_grant_permissions('emergency_publisher', $permissions);
+}
