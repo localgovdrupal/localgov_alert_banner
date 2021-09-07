@@ -51,3 +51,7 @@
 .localgov-alert-banner .modal-content .localgov-alert-banner--notable-person {
   background-color: #121212;
 }
+
+.localgov-alert-banner-full[style] { /* firefox fix for incorrect vertical centering */
+  top: 1rem;
+}
