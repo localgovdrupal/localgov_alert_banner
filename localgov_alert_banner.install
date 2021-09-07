@@ -5,10 +5,13 @@
  * LocalGov Alert Banner install file.
  */
 
+use Drupal\Core\Cache\Cache;
+use Drupal\Core\Config\Config;
 use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Implements hook_install().
@@ -79,41 +82,120 @@ function localgov_alert_banner_update_8901() {
 }
 
 /**
- * Configure scheduled transitions for alert banners if enabled.
+ * Add workflow and configure scheduled transitions if enabled.
  */
 function localgov_alert_banner_update_9001() {
 
-  // Don't run if Scheduled Transitions module isn't enabled.
-  $moduleHandler = \Drupal::service('module_handler');
-  if (!$moduleHandler->moduleExists('scheduled_transitions')) {
-    return;
+  // Add localgov_alert_banner workflow config.
+  $workflows_workflow_localgov_alert_banner = <<<EOY
+langcode: en
+status: true
+dependencies:
+  config:
+    - localgov_alert_banner.localgov_alert_banner_type.localgov_alert_banner
+  module:
+    - content_moderation
+id: localgov_alert_banners
+label: 'Alert banners'
+type: content_moderation
+type_settings:
+  states:
+    draft:
+      published: false
+      default_revision: false
+      label: Draft
+      weight: 0
+    published:
+      label: Published
+      published: true
+      default_revision: true
+      weight: 1
+    unpublished:
+      label: Unpublished
+      published: false
+      default_revision: true
+      weight: 2
+  transitions:
+    create_new_draft:
+      label: 'Create New Draft'
+      to: draft
+      weight: 0
+      from:
+        - draft
+        - published
+        - unpublished
+    publish:
+      label: Publish
+      to: published
+      weight: 1
+      from:
+        - draft
+        - published
+        - unpublished
+    unpublish:
+      label: Unpublish
+      to: unpublished
+      weight: 2
+      from:
+        - draft
+        - published
+        - unpublished
+  entity_types:
+    localgov_alert_banner:
+      - localgov_alert_banner
+  default_moderation_state: unpublished
+EOY;
+  $workflow = \Drupal::service('config.factory')->getEditable('workflows.workflow.localgov_alert_banners');
+  assert($workflow instanceof Config);
+  if ($workflow->isNew()) {
+    $workflow->setData(Yaml::parse($workflows_workflow_localgov_alert_banner));
+    $workflow->save();
   }
 
-  // Configure scheduled transitions for alert banners.
-  $scheduled_transitions_config = \Drupal::service('config.factory')->getEditable('scheduled_transitions.settings');
+  // Hide content moderation field on alert banner display.
   $alert_banner_bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo('localgov_alert_banner');
-  $bundles = [];
   foreach ($alert_banner_bundles as $bundle => $info) {
-    $bundles[] = [
-      'entity_type' => 'localgov_alert_banner',
-      'bundle' => $bundle,
-    ];
+    $form_display = \Drupal::entityTypeManager()
+      ->getStorage('entity_view_display')
+      ->load('localgov_alert_banner.' . $bundle . '.default');
+    if ($form_display) {
+      $form_display->setComponent('content_moderation_control', [
+        'region' => 'hidden',
+      ]);
+      $form_display->save();
+    }
   }
-  $scheduled_transitions_config->set('bundles', $bundles);
-  $scheduled_transitions_config->save();
-  Cache::invalidateTags([
-    'scheduled_transition_settings',
-    'config:scheduled_transitions.settings',
-  ]);
 
-  // Add scheduling permissions to the emergency publisher user.
-  $permissions = [];
-  foreach ($alert_banner_bundles as $bundle => $info) {
-    $permissions = array_merge($permissions, [
-      'add scheduled transitions localgov_alert_banner ' . $bundle,
-      'reschedule scheduled transitions localgov_alert_banner ' . $bundle,
-      'view scheduled transitions localgov_alert_banner ' . $bundle,
+  // Check Scheduled Transitions module is enabled.
+  $moduleHandler = \Drupal::service('module_handler');
+  if ($moduleHandler->moduleExists('scheduled_transitions')) {
+
+    // Configure scheduled transitions for alert banners.
+    $scheduled_transitions_config = \Drupal::service('config.factory')->getEditable('scheduled_transitions.settings');
+    $bundles = [];
+    foreach ($alert_banner_bundles as $bundle => $info) {
+      $bundles[] = [
+        'entity_type' => 'localgov_alert_banner',
+        'bundle' => $bundle,
+      ];
+    }
+    $scheduled_transitions_config->set('bundles', $bundles);
+    $scheduled_transitions_config->save();
+
+    Cache::invalidateTags([
+      'scheduled_transition_settings',
+      'config:scheduled_transitions.settings',
     ]);
+
+    // Add scheduling permissions to the emergency publisher user.
+    $permissions = [];
+    foreach ($alert_banner_bundles as $bundle => $info) {
+      $permissions = array_merge($permissions, [
+        'add scheduled transitions localgov_alert_banner ' . $bundle,
+        'reschedule scheduled transitions localgov_alert_banner ' . $bundle,
+        'view scheduled transitions localgov_alert_banner ' . $bundle,
+      ]);
+    }
+    user_role_grant_permissions('emergency_publisher', $permissions);
   }
-  user_role_grant_permissions('emergency_publisher', $permissions);
 }
