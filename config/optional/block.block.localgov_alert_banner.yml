@@ -4,9 +4,9 @@ dependencies:
   module:
     - localgov_alert_banner
   theme:
-    - localgov_theme
+    - localgov_base
 id: localgov_alert_banner
-theme: localgov_theme
+theme: localgov_base
 region: banner
 weight: 0
 provider: null
