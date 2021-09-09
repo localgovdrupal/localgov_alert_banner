@@ -13,7 +13,7 @@ entity.localgov_alert_banner.revision:
       localgov_alert_banner_revision:
         type: entity_revision:localgov_alert_banner
 
-localgov_alert_banner.revision_revert_confirm:
+entity.localgov_alert_banner.revision_revert:
   path: '/admin/content/alert-banner/{localgov_alert_banner}/revisions/{localgov_alert_banner_revision}/revert'
   defaults:
     _form: '\Drupal\localgov_alert_banner\Form\AlertBannerEntityRevisionRevertForm'
@@ -28,7 +28,7 @@ localgov_alert_banner.revision_revert_confirm:
       localgov_alert_banner_revision:
         type: entity_revision:localgov_alert_banner
 
-localgov_alert_banner.delete_revert_confirm:
+entity.localgov_alert_banner.revision_delete:
   path: '/admin/content/alert-banner/{localgov_alert_banner}/revisions/{localgov_alert_banner_revision}/delete'
   defaults:
     _form: '\Drupal\localgov_alert_banner\Form\AlertBannerEntityRevisionDeleteForm'
