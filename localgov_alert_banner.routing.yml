@@ -20,7 +20,7 @@ entity.localgov_alert_banner.revision_revert:
     _title: 'Revert to earlier revision'
   requirements:
     _entity_access: 'localgov_alert_banner.update'
-    localgov_alert_banner: \d+
+    localgov_alert_banner_revision: \d+
   options:
     parameters:
       localgov_alert_banner:
@@ -35,7 +35,7 @@ entity.localgov_alert_banner.revision_delete:
     _title: 'Delete earlier revision'
   requirements:
     _entity_access: 'localgov_alert_banner.delete'
-    localgov_alert_banner: \d+
+    localgov_alert_banner_revision: \d+
   options:
     parameters:
       localgov_alert_banner:
