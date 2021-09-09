@@ -94,8 +94,8 @@ class AlertBannerEntityRevisionRevertForm extends ConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, $localgov_alert_banner_revision = NULL) {
-    $this->revision = $this->AlertBannerEntityStorage->loadRevision($localgov_alert_banner_revision);
+  public function buildForm(array $form, FormStateInterface $form_state, AlertBannerEntityInterface $localgov_alert_banner_revision = NULL) {
+    $this->revision = $localgov_alert_banner_revision;
     $form = parent::buildForm($form, $form_state);
 
     return $form;
