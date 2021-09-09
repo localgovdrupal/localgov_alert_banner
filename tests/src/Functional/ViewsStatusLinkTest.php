@@ -48,7 +48,7 @@ class ViewsStatusLinkTest extends BrowserTestBase {
       'title' => $title,
       'short_description' => $alert_message,
       'type_of_alert' => 'minor',
-      'status' => FALSE,
+      'moderation_state' => 'unpublished',
     ]);
     $this->alert->save();
   }
@@ -63,7 +63,7 @@ class ViewsStatusLinkTest extends BrowserTestBase {
     // Tests 'Link to Content'.
     $session->linkByHrefExists($this->alert->toUrl('status-form')->toString());
     $session->linkExists('Set banner live');
-    $this->alert->status = TRUE;
+    $this->alert->set('moderation_state', 'published');
     $this->alert->save();
 
     $this->drupalGet('/admin/content/alert-banner');

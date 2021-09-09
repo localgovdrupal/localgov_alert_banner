@@ -160,6 +160,8 @@ class PermissionsTest extends BrowserTestBase {
       'access administration pages',
       'access localgov alert banner listing page',
       'manage localgov alert banner localgov_alert_banner entities',
+      'use localgov_alert_banners transition publish',
+      'use localgov_alert_banners transition unpublish',
       'view localgov alert banner localgov_alert_banner entities',
     ]);
     $this->drupalLogin($bannerUser);

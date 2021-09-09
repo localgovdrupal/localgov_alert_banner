@@ -5,6 +5,7 @@
  * Contains localgov_alert_banner.module.
  */
 
+use Drupal\Core\Cache\Cache;
 use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
@@ -74,4 +75,49 @@ function localgov_alert_banner_theme_suggestions_localgov_alert_banner(array $va
   $suggestions[] = 'localgov_alert_banner__' . $entity->id();
   $suggestions[] = 'localgov_alert_banner__' . $entity->id() . '__' . $sanitized_view_mode;
   return $suggestions;
+}
+
+/**
+ * Implements hook_modules_installed().
+ */
+function localgov_alert_banner_modules_installed($modules, $is_syncing) {
+
+  // Configure scheduled transitions if it's being installed.
+  if (in_array('scheduled_transitions', $modules)) {
+    localgov_alert_banner_configure_scheduled_transitions();
+  }
+}
+
+/**
+ * Configure scheduled transitions.
+ */
+function localgov_alert_banner_configure_scheduled_transitions() {
+
+  // Configure scheduled transitions for alert banners.
+  $scheduled_transitions_config = \Drupal::service('config.factory')->getEditable('scheduled_transitions.settings');
+  $alert_banner_bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo('localgov_alert_banner');
+  $bundles = [];
+  foreach ($alert_banner_bundles as $bundle => $info) {
+    $bundles[] = [
+      'entity_type' => 'localgov_alert_banner',
+      'bundle' => $bundle,
+    ];
+  }
+  $scheduled_transitions_config->set('bundles', $bundles);
+  $scheduled_transitions_config->save();
+  Cache::invalidateTags([
+    'scheduled_transition_settings',
+    'config:scheduled_transitions.settings',
+  ]);
+
+  // Add scheduling permissions to the emergency publisher user.
+  $permissions = [];
+  foreach ($alert_banner_bundles as $bundle => $info) {
+    $permissions = array_merge($permissions, [
+      'add scheduled transitions localgov_alert_banner ' . $bundle,
+      'reschedule scheduled transitions localgov_alert_banner ' . $bundle,
+      'view scheduled transitions localgov_alert_banner ' . $bundle,
+    ]);
+  }
+  user_role_grant_permissions('emergency_publisher', $permissions);
 }

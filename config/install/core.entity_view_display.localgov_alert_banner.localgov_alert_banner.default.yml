@@ -12,6 +12,7 @@ dependencies:
       - localgov_alert_banner
   module:
     - condition_field
+    - content_moderation
     - link
     - text
 id: localgov_alert_banner.localgov_alert_banner.default
@@ -54,5 +55,6 @@ content:
       link_to_entity: false
     third_party_settings: {  }
 hidden:
+  content_moderation_control: true
   type_of_alert: true
   uid: true

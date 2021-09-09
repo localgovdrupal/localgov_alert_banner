@@ -28,6 +28,8 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
     'block',
     'views',
     'condition_field',
+    'content_moderation',
+    'workflows',
     'localgov_alert_banner',
   ];
 
@@ -37,9 +39,12 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
   public function setUp(): void {
     parent::setup();
 
+    $this->installEntitySchema('content_moderation_state');
     $this->installEntitySchema('user');
+    $this->installEntitySchema('workflow');
     $this->installEntitySchema('localgov_alert_banner');
     $this->installConfig([
+      'content_moderation',
       'system',
       'localgov_alert_banner',
     ]);
@@ -65,7 +70,7 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
           'type' => 'localgov_alert_banner',
           'title' => $this->randomMachineName(8),
           'type_of_alert' => $key,
-          'status' => TRUE,
+          'moderation_state' => 'published',
           // Make sure post in past for further test.
           'changed' => (new DrupalDateTime('-2 hours'))->getTimestamp(),
         ]);
@@ -96,7 +101,7 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
           'type' => 'localgov_alert_banner',
           'title' => $this->randomMachineName(8),
           'type_of_alert' => $key,
-          'status' => TRUE,
+          'moderation_state' => 'published',
           'changed' => (new DrupalDateTime('-1 hour'))->getTimestamp(),
         ]);
       $alert_entity->save();

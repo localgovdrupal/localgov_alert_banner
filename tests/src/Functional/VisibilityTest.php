@@ -44,7 +44,7 @@ class VisibilityTest extends BrowserTestBase {
         'title' => $title,
         'short_description' => $alert_message,
         'type_of_alert' => 'minor',
-        'status' => TRUE,
+        'moderation_state' => 'published',
         'visibility' => [
           'conditions' => [
             'request_path' => [
