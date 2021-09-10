@@ -52,6 +52,7 @@ content:
       link_to_entity: false
     third_party_settings: {  }
 hidden:
+  content_moderation_control: true
   search_api_excerpt: true
   type_of_alert: true
   uid: true
