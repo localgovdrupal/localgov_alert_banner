@@ -41,7 +41,7 @@ class AlertBannerHideTest extends WebDriverTestBase {
         'title' => $title,
         'short_description' => $alert_message,
         'type_of_alert' => 'minor',
-        'status' => TRUE,
+        'moderation_state' => 'published',
       ]);
     $alert->save();
 
@@ -81,7 +81,7 @@ class AlertBannerHideTest extends WebDriverTestBase {
         'title' => $title_2,
         'short_description' => $alert_message_2,
         'type_of_alert' => 'minor',
-        'status' => TRUE,
+        'moderation_state' => 'published',
       ]);
     $alert_2->save();
 

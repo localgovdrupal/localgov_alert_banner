@@ -44,35 +44,30 @@ class AlertBannerEntityController extends ControllerBase implements ContainerInj
   /**
    * Displays a Alert banner revision.
    *
-   * @param int $localgov_alert_banner_revision
-   *   The Alert banner revision ID.
+   * @param \Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface $localgov_alert_banner_revision
+   *   The Alert banner revision.
    *
    * @return array
    *   An array suitable for drupal_render().
    */
-  public function revisionShow($localgov_alert_banner_revision) {
-    $localgov_alert_banner = $this->entityTypeManager()->getStorage('localgov_alert_banner')
-      ->loadRevision($localgov_alert_banner_revision);
+  public function revisionShow(AlertBannerEntityInterface $localgov_alert_banner_revision) {
     $view_builder = $this->entityTypeManager()->getViewBuilder('localgov_alert_banner');
-
-    return $view_builder->view($localgov_alert_banner);
+    return $view_builder->view($localgov_alert_banner_revision);
   }
 
   /**
    * Page title callback for a Alert banner revision.
    *
-   * @param int $localgov_alert_banner_revision
-   *   The Alert banner revision ID.
+   * @param \Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface $localgov_alert_banner_revision
+   *   The Alert banner revision.
    *
    * @return string
    *   The page title.
    */
-  public function revisionPageTitle($localgov_alert_banner_revision) {
-    $localgov_alert_banner = $this->entityTypeManager()->getStorage('localgov_alert_banner')
-      ->loadRevision($localgov_alert_banner_revision);
+  public function revisionPageTitle(AlertBannerEntityInterface $localgov_alert_banner_revision) {
     return $this->t('Revision of %title from %date', [
-      '%title' => $localgov_alert_banner->label(),
-      '%date' => $this->dateFormatter->format($localgov_alert_banner->getRevisionCreationTime()),
+      '%title' => $localgov_alert_banner_revision->label(),
+      '%date' => $this->dateFormatter->format($localgov_alert_banner_revision->getRevisionCreationTime()),
     ]);
   }
 

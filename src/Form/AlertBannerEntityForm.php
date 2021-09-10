@@ -163,6 +163,7 @@ class AlertBannerEntityForm extends ContentEntityForm {
     $form['remove_hide_link']['#group'] = 'publishing_options';
     // Status.
     unset($form['status']);
+    unset($form['moderation_state']);
     if ($entity->isNew()) {
       $status_message = $this->t('New %type', ['%type' => $entity->getEntityType()->getLabel()]);
     }

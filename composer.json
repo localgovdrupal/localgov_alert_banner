@@ -9,7 +9,11 @@
         "drupal/condition_field": "^2.0",
         "drupal/field_group": "~3.1"
     },
+    "require-dev": {
+        "drupal/scheduled_transitions": "^2.1"
+    },
     "suggest": {
+        "drupal/scheduled_transitions": "Gives the ability to schedule the publishing and unpublishing of alert banners",
         "localgovdrupal/localgov_core": "^1 || ^2"
     },
     "extra": {

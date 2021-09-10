@@ -12,4 +12,6 @@ permissions:
   - 'access administration pages'
   - 'access localgov alert banner listing page'
   - 'manage all localgov alert banner entities'
+  - 'use localgov_alert_banners transition publish'
+  - 'use localgov_alert_banners transition unpublish'
   - 'view all localgov alert banner entities'

@@ -1,0 +1,44 @@
+entity.localgov_alert_banner.revision:
+  path: '/admin/content/alert-banner/{localgov_alert_banner}/revisions/{localgov_alert_banner_revision}/view'
+  defaults:
+    _controller: '\Drupal\localgov_alert_banner\Controller\AlertBannerEntityController::revisionShow'
+    _title_callback: '\Drupal\localgov_alert_banner\Controller\AlertBannerEntityController::revisionPageTitle'
+  requirements:
+    _entity_access: 'localgov_alert_banner.view'
+    localgov_alert_banner: \d+
+  options:
+    parameters:
+      localgov_alert_banner:
+        type: entity:localgov_alert_banner
+      localgov_alert_banner_revision:
+        type: entity_revision:localgov_alert_banner
+
+entity.localgov_alert_banner.revision_revert:
+  path: '/admin/content/alert-banner/{localgov_alert_banner}/revisions/{localgov_alert_banner_revision}/revert'
+  defaults:
+    _form: '\Drupal\localgov_alert_banner\Form\AlertBannerEntityRevisionRevertForm'
+    _title: 'Revert to earlier revision'
+  requirements:
+    _entity_access: 'localgov_alert_banner.update'
+    localgov_alert_banner_revision: \d+
+  options:
+    parameters:
+      localgov_alert_banner:
+        type: entity:localgov_alert_banner
+      localgov_alert_banner_revision:
+        type: entity_revision:localgov_alert_banner
+
+entity.localgov_alert_banner.revision_delete:
+  path: '/admin/content/alert-banner/{localgov_alert_banner}/revisions/{localgov_alert_banner_revision}/delete'
+  defaults:
+    _form: '\Drupal\localgov_alert_banner\Form\AlertBannerEntityRevisionDeleteForm'
+    _title: 'Delete earlier revision'
+  requirements:
+    _entity_access: 'localgov_alert_banner.delete'
+    localgov_alert_banner_revision: \d+
+  options:
+    parameters:
+      localgov_alert_banner:
+        type: entity:localgov_alert_banner
+      localgov_alert_banner_revision:
+        type: entity_revision:localgov_alert_banner

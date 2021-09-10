@@ -7,6 +7,7 @@ use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\workflows\Entity\Workflow;
 
 /**
  * Defines the Alert banner type entity.
@@ -68,7 +69,7 @@ class AlertBannerEntityType extends ConfigEntityBundleBase implements AlertBanne
    */
   public function postSave(EntityStorageInterface $storage, $update = TRUE) {
 
-    // Add fields from install config when creating a new alert banner type.
+    // Add fields and workflow when creating a new alert banner type.
     if (!$update) {
 
       $bundle = $this->id();
@@ -92,6 +93,12 @@ class AlertBannerEntityType extends ConfigEntityBundleBase implements AlertBanne
         if ($field_record && !FieldConfig::loadByName('localgov_alert_banner', $bundle, $field_name)) {
           $field_record['bundle'] = $bundle;
           FieldConfig::create($field_record)->save();
+        }
+
+        // Add alert banner workflow to new alert banner type.
+        if ($workflow = Workflow::load('localgov_alert_banners')) {
+          $workflow->getTypePlugin()->addEntityTypeAndBundle('localgov_alert_banner', $bundle);
+          $workflow->save();
         }
       }
     }
