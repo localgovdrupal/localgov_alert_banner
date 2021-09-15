@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.localgov_alert_banner.type_of_alert
+    - localgov_alert_banner.localgov_alert_banner_type.localgov_full_page
+  module:
+    - options
+id: localgov_alert_banner.localgov_full_page.type_of_alert
+field_name: type_of_alert
+entity_type: localgov_alert_banner
+bundle: localgov_full_page
+label: 'Type of alert'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: list_string
