@@ -1,0 +1,57 @@
+/**
+ * Theme rules for the Full page alert banner.
+ */
+
+.localgov-alert-banner > .modal-dialog-centered .close {
+  font-size: 1.1875rem;
+  text-decoration: underline;
+  text-shadow: none;
+  font-weight: 700 !important;
+  border: 0;
+}
+
+.localgov-alert-banner > .modal-dialog-centered .close:hover,
+.localgov-alert-banner > .modal-dialog-centered .close:focus,
+.localgov-alert-banner > .modal-dialog-centered .close:hover span,
+.localgov-alert-banner > .modal-dialog-centered .close:focus span {
+  color: #FFBB00 !important;
+  opacity: 1 !important;
+  cursor: pointer;
+  box-shadow: none;
+  background: transparent;
+}
+
+.localgov-alert-banner > .modal-dialog-centered .close span {
+  font-size: 1.1875rem;
+  text-decoration: none;
+  text-shadow: none;
+  font-weight: 700 !important;
+}
+
+.localgov-alert-banner > .modal-dialog-centered .link-text {
+  color: #FFBB00;
+}
+
+.localgov-alert-banner > .modal-dialog-centered .link-text:hover,
+.localgov-alert-banner > .modal-dialog-centered .link-text:focus {
+  color: #121212;
+}
+
+.localgov-alert-banner > .modal-dialog-centered a.btn {
+  text-decoration: none;
+  text-align: left;
+}
+
+.localgov-alert-banner.localgov-alert-banner--notable-person {
+  background-color: #121212;
+}
+.localgov-alert-banner.localgov-alert-banner--notable-person a {
+  color: #FFFFFF;
+}
+.localgov-alert-banner .modal-content .localgov-alert-banner--notable-person {
+  background-color: #121212;
+}
+
+.localgov-alert-banner-full[style] { /* firefox fix for incorrect vertical centering */
+  top: 1rem;
+}

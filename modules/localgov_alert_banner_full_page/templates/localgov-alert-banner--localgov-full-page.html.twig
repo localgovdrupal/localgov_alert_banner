@@ -1,0 +1,52 @@
+{#
+/**
+ * @file
+ * This template is used when viewing full page Alert banners.
+ *
+ * Available variables:
+ * - content: A list of content items. Use 'content' to print all content, or
+ * - attributes: HTML attributes for the container element.
+ * - display_title: Boolean indicating if alert banner title should be displayed
+ * - remove_hide_link: Boolean indicating if the link to close the banner should be hidden
+ * - type_of_alert: Type of alert banner
+ *
+ * @see localgov_alert_banner_preprocess_localgov_alert_banner__full()
+ *
+ * @ingroup themeable
+ */
+#}
+
+{% set has_link = content.link is not empty %}
+{% set type_of_alert =  type_of_alert|split('--')[1] %}
+{% set type_of_alert_class = type_of_alert ? 'localgov-alert-banner--' ~ type_of_alert : '' %}
+{% set classes = [
+    'js-localgov-alert-banner',
+    'localgov-alert-banner',
+    'localgov-alert-banner-full',
+    type_of_alert_class,
+    is_front ? 'localgov_alert_banner--homepage' : '',
+    has_link ? 'localgov_alert_banner--has-link' : 'localgov_alert_banner--no-link'
+  ]
+%}
+
+<!-- Alert Banner-->
+<dialog {{ attributes.addClass(classes) }} aria-labelledby="{{ attributes.id }}-label" aria-describedby="{{ attributes.id }}-description">
+  <div role="document" class="localgov-alert-banner-full--centered">
+    {% if not remove_hide_link %}
+    <button id="{{ attributes.id }}-canceloverlay" class="localgov-alert-banner__close  js-localgov-alert-banner__close" aria-label="Close">
+      {{ 'Close this dialog' | t }}
+    </button>
+    {% endif %}
+    <article class="localgov-alert-banner-full--content">
+      <h1 id="{{ attributes.id }}-label">{% if display_title %} {{ content.title }} {% endif %}</h1>
+      <div class="localgov-alert-banner-full--image">
+        {{ content.localgov_alert_banner_image }}
+      </div>
+      <div class="localgov-alert-banner-full--text" id="{{ attributes.id }}-description">
+        {{ content|without('link', 'title', 'localgov_alert_banner_image') }}
+        {% if content.link %} {{ content.link }} {% endif %}
+      </div>
+    </article>
+  </div>
+</dialog>
+<!-- End Alert Banner -->

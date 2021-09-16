@@ -1,0 +1,16 @@
+full_page_alert_banner:
+  css:
+    layout:
+      css/full-page-alert-banner-layout.css: {}
+    theme:
+      css/full-page-alert-banner-theme.css: {}
+  js:
+    js/accessible-html5-dialog.js: {}
+    js/dialog-polyfill.js: {}
+    js/dialog-polyfill-a11y-fixes.js: {}
+    js/full-page-alert-banner.js: {}
+  dependencies:
+    - core/drupalSettings
+    - localgov_alert_banner/alert_banner
+    - core/jquery
+    - core/jquery.cookie

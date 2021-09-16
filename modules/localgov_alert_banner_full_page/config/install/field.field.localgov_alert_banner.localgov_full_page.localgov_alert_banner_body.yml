@@ -1,0 +1,20 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.localgov_alert_banner.localgov_alert_banner_body
+    - localgov_alert_banner.localgov_alert_banner_type.localgov_full_page
+  module:
+    - text
+id: localgov_alert_banner.localgov_full_page.localgov_alert_banner_body
+field_name: localgov_alert_banner_body
+entity_type: localgov_alert_banner
+bundle: localgov_full_page
+label: Body
+description: ''
+required: false
+translatable: false
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: text_long

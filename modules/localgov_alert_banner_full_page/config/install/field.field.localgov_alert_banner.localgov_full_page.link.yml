@@ -1,0 +1,22 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.localgov_alert_banner.link
+    - localgov_alert_banner.localgov_alert_banner_type.localgov_full_page
+  module:
+    - link
+id: localgov_alert_banner.localgov_full_page.link
+field_name: link
+entity_type: localgov_alert_banner
+bundle: localgov_full_page
+label: Link
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  link_type: 17
+  title: 1
+field_type: link

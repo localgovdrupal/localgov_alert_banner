@@ -28,6 +28,10 @@ class AlertBannerEntityStatusForm extends ContentEntityConfirmFormBase {
           '%label' => $this->getEntity()->label(),
         ]),
       ];
+      $form['transition'] = [
+        '#type' => 'hidden',
+        '#value' => 'unpublish',
+      ];
     }
     else {
       $form['description'] = [
@@ -39,6 +43,10 @@ class AlertBannerEntityStatusForm extends ContentEntityConfirmFormBase {
         'entity' => $this->entityTypeManager
           ->getViewBuilder($entity->getEntityTypeId())
           ->view($entity),
+      ];
+      $form['transition'] = [
+        '#type' => 'hidden',
+        '#value' => 'publish',
       ];
 
       // List of currently published alerts. Should only ever be one.
@@ -80,7 +88,15 @@ class AlertBannerEntityStatusForm extends ContentEntityConfirmFormBase {
     $entity = $this->getEntity();
     assert($entity instanceof AlertBannerEntityInterface);
 
-    $entity->status->value = !$entity->status->value;
+    if ($form_state->getValue('transition') == 'unpublish') {
+      $entity->set('moderation_state', 'unpublished');
+    }
+    elseif ($form_state->getValue('transition') == 'publish') {
+      $entity->set('moderation_state', 'published');
+    }
+    else {
+      return;
+    }
     $entity->save();
     $this->setEntity($entity);
 
@@ -88,7 +104,7 @@ class AlertBannerEntityStatusForm extends ContentEntityConfirmFormBase {
     $this->messenger()->addStatus($message);
     $this->logStatusChanged();
 
-    // If the unpublish checkbox set, unplublish other banners.
+    // If the unpublish checkbox set, unpublish other banners.
     if ($form_state->hasValue('unpublish_others') && $form_state->getValue('unpublish_others') === 1) {
       $entity_query = $this->entityTypeManager
         ->getStorage($entity->getEntityTypeId())
@@ -100,7 +116,7 @@ class AlertBannerEntityStatusForm extends ContentEntityConfirmFormBase {
       if (!empty($published_entities)) {
         foreach ($published_entities as $published) {
           $current = AlertBannerEntity::load($published);
-          $current->set('status', FALSE);
+          $current->set('moderation_state', 'unpublished');
           $current->save();
         }
       }
