@@ -5,7 +5,7 @@ dependencies:
     - localgov_alert_banner
   theme:
     - localgov_base
-id: localgov_alert_banner
+id: localgov_alert_banner_base
 theme: localgov_base
 region: banner
 weight: 0
