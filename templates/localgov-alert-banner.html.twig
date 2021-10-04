@@ -44,7 +44,7 @@
             {{ content.title }}
           </h2>
         {% endif %}
-        
+
         <div class="localgov-alert-banner__body">
           {{ content|without('title', 'link') }}
         </div>
@@ -57,7 +57,7 @@
       {% if not remove_hide_link %}
         <div class="localgov-alert-banner__actions">
           <div class="localgov-alert-banner__dismiss">
-            <button class="localgov-alert-banner__close js-localgov-alert-banner__close" aria-label="{{ 'Hide alert'|t }}">{{ 'Hide'|t }}</button>
+            <button class="localgov-alert-banner__close js-localgov-alert-banner__close" aria-label="{{ 'Hide alert'|t ~ ': ' ~ content.title|render|striptags|trim }}">{{ 'Hide'|t }}</button>
           </div>
         </div>
       {% endif %}
