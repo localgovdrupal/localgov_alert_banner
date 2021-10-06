@@ -41,17 +41,17 @@ jobs:
           echo "GIT_BRANCH=${GITHUB_HEAD_REF}" >> $GITHUB_ENV
           echo "GIT_REPO=${{ github.event.pull_request.head.repo.full_name }}" >> $GITHUB_ENV
 
-      - name: Set composer branch reference for main version branches
+      - name: Set composer branch reference for version branches
         if: endsWith(github.ref, '.x')
         run: echo "COMPOSER_REF=${GIT_BRANCH}-dev" >> $GITHUB_ENV
 
-      - name: Set composer branch reference for main version branches
+      - name: Set composer branch reference for non-version branches
         if: endsWith(github.ref, '.x') == false
         run: echo "COMPOSER_REF=dev-${GIT_BRANCH}" >> $GITHUB_ENV
 
       - name: Get the latest tagged release for branch version
         run: |
-          LATEST_RELEASE=$(curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/localgovdrupal/localgov_alert_banner/git/matching-refs/tags/${GIT_BASE%'.x'} | grep -Po '(?<=refs/tags/)[^"]+' | tail -1)
+          LATEST_RELEASE=$(curl -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/${GITHUB_REPOSITORY}/git/matching-refs/tags/${GIT_BASE%'.x'} | grep -Po '(?<=refs/tags/)[^"]+' | tail -1)
           if [ -z $LATEST_RELEASE ]; then LATEST_RELEASE=1; fi
           echo "LATEST_RELEASE=${LATEST_RELEASE}" >> $GITHUB_ENV
 
@@ -79,13 +79,11 @@ jobs:
           composer --working-dir=./html require --no-install drupal/core-recommended:${{ matrix.drupal-version }} drupal/core-composer-scaffold:${{ matrix.drupal-version }} drupal/core-project-message:${{ matrix.drupal-version }} drupal/core-dev:${{ matrix.drupal-version }}
           composer --working-dir=./html install
 
-      - name: Setup package source and authentication for the test target
-        run: |
-          composer --working-dir=./html config repositories.1 vcs git@github.com:${GIT_REPO}.git
-          composer global config github-oauth.github.com ${{ github.token }}
-
       - name: Obtain the test target from the repo that triggered this workflow
-        run: composer --working-dir=./html require --with-all-dependencies localgovdrupal/${{ github.event.repository.name }}:"${COMPOSER_REF} as ${LATEST_RELEASE}"
+        run: |
+          composer --working-dir=html config repositories.1 vcs git@github.com:${GIT_REPO}.git
+          composer global config github-oauth.github.com ${{ github.token }}
+          composer --working-dir=./html require --with-all-dependencies localgovdrupal/${{ github.event.repository.name }}:"${COMPOSER_REF} as ${LATEST_RELEASE}"
 
   phpcs:
     name: Coding standards checks
@@ -177,11 +175,11 @@ jobs:
 
     steps:
 
-      - name: Clone drupal_container
+      - name: Clone Drupal container
         uses: actions/checkout@v2
         with:
           repository: localgovdrupal/drupal-container
-          ref: master
+          ref: php${{ matrix.php-version }}
 
       - name: Cached workspace
         uses: actions/cache@v2
@@ -195,11 +193,10 @@ jobs:
         run: docker-compose -f docker-compose.yml up -d
 
       - name: Run PHPUnit tests
-        env:
-          LOCALGOV_VERSION: ${{ matrix.localgov-version }}
         run: |
           mkdir -p ./html/web/sites/simpletest && chmod 777 ./html/web/sites/simpletest
-          sed -i "s#http://localgov.lndo.site#http://drupal#; s#mysql://database:database@database/database#sqlite://localhost//dev/shm/test.sqlite#" ./html/phpunit.xml.dist
+          # Older versions of Paratest (the one required by LocalGov 1.x) don't pickup
+          # environmental variables, so it's necessary to change the config file directly.
+          sed -i "s#http://localgov.lndo.site#http://drupal#" ./html/phpunit.xml.dist
           docker exec -t drupal bash -c 'chown docker:docker -R /var/www/html'
-          # docker exec -u docker -t drupal bash -c "cd /var/www/html && ./bin/phpunit --testdox"
           docker exec -u docker -t drupal bash -c "cd /var/www/html && ./bin/paratest --processes=4"
