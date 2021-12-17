@@ -7,12 +7,14 @@ use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Access\AccessResult;
 
 /**
+ * Checks access to alert banner entity pages.
  *
+ * @ingroup localgov_alert_banner
  */
 class AlertBannerEntityPageAccess implements AccessInterface {
 
   /**
-   *
+   * {@inheritDoc}
    */
   public function access(AccountInterface $account) {
 
