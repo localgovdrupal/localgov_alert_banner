@@ -32,6 +32,15 @@ class AlertBannerEntityAccessControlHandler extends EntityAccessControlHandler {
 
         return AccessResult::allowedIfHasPermission($account, 'view localgov alert banner ' . $entity_bundle . ' entities');
 
+      case 'view_page':
+
+        if ($account->hasPermission('view all localgov alert banner entity pages')) {
+          return AccessResult::allowed();
+        }
+
+        return AccessResult::allowedIfHasPermission($account, 'view localgov alert banner ' . $entity_bundle . ' pages');
+
+
       case 'update':
 
         if ($account->hasPermission('manage all localgov alert banner entities')) {
