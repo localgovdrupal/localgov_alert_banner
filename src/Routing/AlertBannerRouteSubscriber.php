@@ -19,7 +19,10 @@ class AlertBannerRouteSubscriber extends RouteSubscriberBase {
       // Change the access permission for the alert banner access page.
       $route->setRequirement('_custom_access', 'localgov_alert_banner.alert_banner_entity_page_access::access');
     }
-
+    if ($route = $collection->get('entity.localgov_alert_banner.revision')) {
+      // Change the access permission for the alert banner access page.
+      $route->setRequirement('_custom_access', 'localgov_alert_banner.alert_banner_entity_page_access::access');
+    }
   }
 
 }

@@ -5,6 +5,6 @@ services:
       - { name: event_subscriber }
   localgov_alert_banner.alert_banner_entity_page_access:
     class: Drupal\localgov_alert_banner\Access\AlertBannerEntityPageAccess
-    arguments: ['@current_user']
+    arguments: ['@current_user', '@current_route_match']
     tags:
       - { name: access_check }
