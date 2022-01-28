@@ -204,3 +204,11 @@ EOY;
     user_role_grant_permissions('emergency_publisher', $permissions);
   }
 }
+
+/**
+ * Add view alert banner permission to anonymous and authenticated users.
+ */
+function localgov_alert_banner_update_9002() {
+  user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, ['view all localgov alert banner entities']);
+  user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, ['view all localgov alert banner entities']);
+}
