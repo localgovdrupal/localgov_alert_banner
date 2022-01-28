@@ -5,6 +5,7 @@ namespace Drupal\Tests\localgov_alert_banner\Kernel;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\localgov_alert_banner\Entity\AlertBannerEntity;
+use Drupal\user\RoleInterface;
 
 /**
  * Kernel test for alert banner order.
@@ -47,7 +48,11 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
       'content_moderation',
       'system',
       'localgov_alert_banner',
+      'user',
     ]);
+
+    // Default grant permissions to view all alert banners.
+    user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, ['view all localgov alert banner entities']);
   }
 
   /**
