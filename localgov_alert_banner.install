@@ -211,7 +211,7 @@ EOY;
 function localgov_alert_banner_update_9002() {
   user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, ['view all localgov alert banner entities']);
   user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, ['view all localgov alert banner entities']);
-  
+
   // Also grant permissions on individual types.
   $alert_banner_bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo('localgov_alert_banner');
   foreach ($alert_banner_bundles as $bundle => $info) {
