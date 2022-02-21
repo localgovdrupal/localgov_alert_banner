@@ -12,6 +12,7 @@ use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Symfony\Component\Yaml\Yaml;
+use Drupal\user\RoleInterface;
 
 /**
  * Implements hook_install().
@@ -22,6 +23,10 @@ function localgov_alert_banner_install($is_syncing) {
   if (\Drupal::moduleHandler()->moduleExists('scheduled_transitions')) {
     localgov_alert_banner_configure_scheduled_transitions();
   }
+
+  // Default grant permissions to view all alert banners.
+  user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, ['view all localgov alert banner entities']);
+  user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, ['view all localgov alert banner entities']);
 }
 
 /**
@@ -197,5 +202,20 @@ EOY;
       ]);
     }
     user_role_grant_permissions('emergency_publisher', $permissions);
+  }
+}
+
+/**
+ * Add view alert banner permission to anonymous and authenticated users.
+ */
+function localgov_alert_banner_update_9002() {
+  user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, ['view all localgov alert banner entities']);
+  user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, ['view all localgov alert banner entities']);
+
+  // Also grant permissions on individual types.
+  $alert_banner_bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo('localgov_alert_banner');
+  foreach ($alert_banner_bundles as $bundle => $info) {
+    user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, ['view localgov alert banner ' . $bundle . ' entities']);
+    user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, ['view localgov alert banner ' . $bundle . ' entities']);
   }
 }

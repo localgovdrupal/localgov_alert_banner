@@ -15,3 +15,4 @@ permissions:
   - 'use localgov_alert_banners transition publish'
   - 'use localgov_alert_banners transition unpublish'
   - 'view all localgov alert banner entities'
+  - 'view all localgov alert banner entity pages'
