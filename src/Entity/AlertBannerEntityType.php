@@ -8,6 +8,7 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\workflows\Entity\Workflow;
+use Drupal\user\RoleInterface;
 
 /**
  * Defines the Alert banner type entity.
@@ -101,6 +102,10 @@ class AlertBannerEntityType extends ConfigEntityBundleBase implements AlertBanne
           $workflow->save();
         }
       }
+
+      // Default grant permissions to view.
+      user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, ['view localgov alert banner ' . $bundle . ' entities']);
+      user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, ['view localgov alert banner ' . $bundle . ' entities']);
     }
   }
 

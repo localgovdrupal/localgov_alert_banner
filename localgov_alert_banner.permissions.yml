@@ -12,6 +12,10 @@ administer localgov alert banner types:
 view all localgov alert banner entities:
   title: 'View All alert banner entities'
 
+# View all alert banner entity pages
+view all localgov alert banner entity pages:
+  title: 'View All alert banner entity pages'
+
 # Manage all alert banners.
 manage all localgov alert banner entities:
   title: 'Manage All alert banner entities'
