@@ -91,9 +91,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - localgov-version: "1.x"
-            drupal-version: "~8.9"
-            php-version: "7.4"
           - localgov-version: "2.x"
             drupal-version: "~9.1"
             php-version: "7.4"
@@ -127,9 +124,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - localgov-version: "1.x"
-            drupal-version: "~8.9"
-            php-version: "7.4"
           - localgov-version: "2.x"
             drupal-version: "~9.1"
             php-version: "7.4"
@@ -163,9 +157,6 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - localgov-version: "1.x"
-            drupal-version: "~8.9"
-            php-version: "7.4"
           - localgov-version: "2.x"
             drupal-version: "~9.1"
             php-version: "7.4"
