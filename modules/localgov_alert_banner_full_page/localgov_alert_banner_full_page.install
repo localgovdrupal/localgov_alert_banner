@@ -1,0 +1,31 @@
+<?php
+
+/**
+ * @file
+ * Module updates.
+ */
+
+declare(strict_types = 1);
+
+/**
+ * Implements hook_update_N().
+ *
+ * Hides the "Remove hide link" checkbox from Full page alert edit pages.
+ */
+function localgov_alert_banner_full_page_update_9001() {
+
+  $form_display = Drupal::service('entity_type.manager')
+    ->getStorage('entity_form_display')
+    ->load('localgov_alert_banner.localgov_full_page.default');
+  if (!$form_display) {
+    return t('Cannot find form display for Full page alert.');
+  }
+
+  $remove_hide_link = $form_display->getComponent('remove_hide_link');
+  if ($remove_hide_link) {
+    $form_display->removeComponent('remove_hide_link')->save();
+  }
+  else {
+    return t('Cannot find settings for the "Remove hide link" checkbox.');
+  }
+}
