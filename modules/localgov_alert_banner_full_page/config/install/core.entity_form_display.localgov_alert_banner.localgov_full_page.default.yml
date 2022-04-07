@@ -46,13 +46,6 @@ content:
       media_types: {  }
     third_party_settings: {  }
     region: content
-  remove_hide_link:
-    type: boolean_checkbox
-    weight: 3
-    region: content
-    settings:
-      display_label: true
-    third_party_settings: {  }
   title:
     type: string_textfield
     weight: 1
@@ -77,4 +70,5 @@ content:
       match_limit: 10
     region: content
     third_party_settings: {  }
-hidden: {  }
+hidden:
+  remove_hide_link: true
