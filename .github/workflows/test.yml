@@ -17,10 +17,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - localgov-version: "2.x"
-            drupal-version: "~9.1"
-            php-version: "7.4"
+        localgov-version: ["2.x"]
+        drupal-version: ["~9.1"]
+        php-version: ["7.4","8.1"]
 
     steps:
 
@@ -90,10 +89,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - localgov-version: "2.x"
-            drupal-version: "~9.1"
-            php-version: "7.4"
+        localgov-version: ["2.x"]
+        drupal-version: ["~9.1"]
+        php-version: ["7.4","8.1"]
 
     steps:
 
@@ -108,12 +106,12 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: ${{ matrix.php-version }}
 
       - name: Run coding standards checks
         run: |
           cd html
-          ./bin/phpcs -p
+          ./bin/phpcs -p web/modules/contrib/${{ github.event.repository.name }}
 
   phpstan:
     name: Deprecated code checks
@@ -123,10 +121,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - localgov-version: "2.x"
-            drupal-version: "~9.1"
-            php-version: "7.4"
+        localgov-version: ["2.x"]
+        drupal-version: ["~9.1"]
+        php-version: ["7.4","8.1"]
 
     steps:
 
@@ -141,12 +138,12 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '7.4'
+          php-version: ${{ matrix.php-version }}
 
       - name: Run deprecated code checks
         run: |
           cd html
-          ./bin/phpstan analyse -c ./phpstan.neon ./web/profiles/contrib/localgov/ ./web/modules/contrib/localgov_*
+          ./bin/phpstan analyse -c ./phpstan.neon ./web/modules/contrib/${{ github.event.repository.name }}
 
   phpunit:
     name: PHPUnit tests
@@ -156,10 +153,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - localgov-version: "2.x"
-            drupal-version: "~9.1"
-            php-version: "7.4"
+        localgov-version: ["2.x"]
+        drupal-version: ["~9.1"]
+        php-version: ["7.4","8.1"]
 
     steps:
 
