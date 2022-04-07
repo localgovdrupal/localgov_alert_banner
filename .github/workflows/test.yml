@@ -183,4 +183,4 @@ jobs:
           # environmental variables, so it's necessary to change the config file directly.
           sed -i "s#http://localgov.lndo.site#http://drupal#" ./html/phpunit.xml.dist
           docker exec -t drupal bash -c 'chown docker:docker -R /var/www/html'
-          docker exec -u docker -t drupal bash -c "cd /var/www/html && ./bin/paratest --processes=4"
+          docker exec -u docker -t drupal bash -c "cd /var/www/html && ./bin/paratest --processes=4 modules/contrib/${{ github.event.repository.name }}"
