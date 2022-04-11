@@ -8,7 +8,7 @@ dependencies:
 id: localgov_alert_banner_scarfolk
 theme: localgov_scarfolk
 region: banner
-weight: 0
+weight: -100
 provider: null
 plugin: localgov_alert_banner_block
 settings:
