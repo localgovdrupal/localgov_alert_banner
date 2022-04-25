@@ -68,7 +68,7 @@ class AlertBannerEntityStatusForm extends ContentEntityConfirmFormBase {
       $form['unpublish_others'] = [
         '#type' => 'checkbox',
         '#title' => $this->t('Unpublish all other alerts.'),
-        '#default_value' => 1,
+        '#default_value' => 0,
       ];
 
       if (!empty($published_titles)) {
