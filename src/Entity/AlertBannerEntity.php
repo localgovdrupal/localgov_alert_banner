@@ -33,7 +33,7 @@ use Drupal\user\UserInterface;
  *       "default" = "Drupal\localgov_alert_banner\Form\AlertBannerEntityForm",
  *       "add" = "Drupal\localgov_alert_banner\Form\AlertBannerEntityForm",
  *       "edit" = "Drupal\localgov_alert_banner\Form\AlertBannerEntityForm",
- *       "delete" = "Drupal\localgov_alert_banner\Form\AlertBannerEntityDeleteForm",
+ *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm",
  *       "status" = "Drupal\localgov_alert_banner\Form\AlertBannerEntityStatusForm",
  *     },
  *     "route_provider" = {
