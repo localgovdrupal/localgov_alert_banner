@@ -5,19 +5,19 @@
  * This is so if the alert changes, the banner is reshown.
  */
 
-(function($, Drupal, drupalSettings) {
+(function($, Drupal, drupalSettings, cookies) {
 
   'use strict';
 
   function setAlertBannerHideCookie(cookie_tokens, token) {
     cookie_tokens.push(token);
     var new_cookie = cookie_tokens.join('+')
-    $.cookie('hide-alert-banner-token', new_cookie, { path: '/', expires: 30 });
+    cookies.set('hide-alert-banner-token', new_cookie, { path: '/', expires: 30 });
   }
 
   $(document).ready(function() {
 
-    var cookie = $.cookie('hide-alert-banner-token');
+    var cookie = cookies.get('hide-alert-banner-token');
     var cookie_tokens = typeof cookie !== 'undefined' ? cookie.split('+') : [];
 
     $('.js-localgov-alert-banner').each(function() {
@@ -37,4 +37,4 @@
 
   });
 
-}) (jQuery, Drupal, drupalSettings);
+}) (jQuery, Drupal, drupalSettings, window.Cookies);
