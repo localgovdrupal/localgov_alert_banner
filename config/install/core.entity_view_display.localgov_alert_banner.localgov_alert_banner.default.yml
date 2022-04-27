@@ -20,13 +20,6 @@ targetEntityType: localgov_alert_banner
 bundle: localgov_alert_banner
 mode: default
 content:
-  visibility:
-    weight: 3
-    label: above
-    settings: {  }
-    third_party_settings: {  }
-    type: condition_field_string
-    region: content
   link:
     weight: 2
     label: hidden
@@ -58,3 +51,4 @@ hidden:
   content_moderation_control: true
   type_of_alert: true
   uid: true
+  visibility: true
