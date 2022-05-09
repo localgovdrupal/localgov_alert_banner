@@ -4,6 +4,8 @@ dependencies:
   enforced:
     module:
       - localgov_alert_banner
+  config:
+   - workflows.workflow.localgov_alert_banners
 id: emergency_publisher
 label: 'Emergency publisher'
 weight: -2
