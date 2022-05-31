@@ -96,7 +96,7 @@ function localgov_alert_banner_configure_scheduled_transitions() {
   // Configure scheduled transitions for alert banners.
   $scheduled_transitions_config = \Drupal::service('config.factory')->getEditable('scheduled_transitions.settings');
   $alert_banner_bundles = \Drupal::service('entity_type.bundle.info')->getBundleInfo('localgov_alert_banner');
-  $bundles = [];
+  $bundles = $scheduled_transitions_config->get('bundles');
   foreach ($alert_banner_bundles as $bundle => $info) {
     $bundles[] = [
       'entity_type' => 'localgov_alert_banner',
