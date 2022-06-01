@@ -15,17 +15,5 @@
     "suggest": {
         "drupal/scheduled_transitions": "Gives the ability to schedule the publishing and unpublishing of alert banners",
         "localgovdrupal/localgov_core": "^1 || ^2"
-    },
-    "extra": {
-        "enable-patching": true,
-        "composer-exit-on-patch-failure": true,
-        "patchLevel": {
-            "drupal/core": "-p2"
-        },
-        "patches": {
-            "drupal/condition_field": {
-                "Fix schema #3215202": "https://www.drupal.org/files/issues/2021-05-28/configuration-schema-fix-3215202-6.patch"
-            }
-        }
     }
 }
