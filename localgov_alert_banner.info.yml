@@ -7,7 +7,6 @@ dependencies:
   - drupal:block
   - drupal:content_moderation
   - drupal:field
-  - drupal:field_group
   - drupal:link
   - drupal:node
   - drupal:options
