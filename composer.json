@@ -6,8 +6,7 @@
     "minimum-stability": "dev",
     "license": "GPL-2.0-or-later",
     "require": {
-        "drupal/condition_field": "^2.0",
-        "drupal/field_group": "~3.1"
+        "drupal/condition_field": "^2.0"
     },
     "require-dev": {
         "drupal/scheduled_transitions": "^2.1"
