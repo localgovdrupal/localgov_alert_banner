@@ -60,6 +60,9 @@
 .localgov-alert-banner--notable-person {
   background-color: #000;
 }
+.localgov-alert-banner--notable-person .localgov-alert-banner__title {                                                                                        │
+  color: #fff;
+}
 
 .localgov-alert-banner__wrapper {
   max-width: 73.125rem;
