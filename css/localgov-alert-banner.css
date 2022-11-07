@@ -13,8 +13,11 @@
   color: #fefefe;
 }
 
-/* Reset the title colour as some themes assign a colour to h2 */
-.localgov-alert-banner .localgov-alert-banner__title {
+/* Reset the title colour as some themes assign a colour to h2.
+   Also reset the body text colour as Olivero assigns a colour 
+   to .text-content. */
+.localgov-alert-banner .localgov-alert-banner__title,
+.localgov-alert-banner .text-content {
   color: inherit;
 }
 
