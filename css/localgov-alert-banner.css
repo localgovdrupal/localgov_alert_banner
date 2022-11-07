@@ -13,6 +13,11 @@
   color: #fefefe;
 }
 
+/* Reset the title colour as some themes assign a colour to h2 */
+.localgov-alert-banner .localgov-alert-banner__title {
+  color: inherit;
+}
+
 .localgov-alert-banner__close {
   padding: .5rem .9375rem;
   line-height: 1.5;
@@ -59,9 +64,6 @@
 /* Death of a notable person */
 .localgov-alert-banner--notable-person {
   background-color: #000;
-}
-.localgov-alert-banner--notable-person .localgov-alert-banner__title {                                                                                        │
-  color: #fff;
 }
 
 .localgov-alert-banner__wrapper {
