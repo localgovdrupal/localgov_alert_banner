@@ -13,6 +13,11 @@
   color: #fefefe;
 }
 
+/* Reset the title colour as some themes assign a colour to h2 */
+.localgov-alert-banner .localgov-alert-banner__title {
+  color: inherit;
+}
+
 .localgov-alert-banner__close {
   padding: .5rem .9375rem;
   line-height: 1.5;
