@@ -12,7 +12,7 @@
   function setAlertBannerHideCookie(cookie_tokens, token) {
     cookie_tokens.push(token);
     var new_cookie = cookie_tokens.join('+')
-    cookies.set('hide-alert-banner-token', new_cookie, { path: '/', expires: 30 });
+    cookies.set('hide-alert-banner-token', new_cookie, { path: '/', expires: 30, SameSite: 'Lax' });
   }
 
   $(document).ready(function() {
