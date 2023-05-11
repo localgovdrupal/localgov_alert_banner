@@ -148,7 +148,7 @@ class AlertBannerEntityForm extends ContentEntityForm {
 
     $form['publishing_options'] = [
       '#type' => 'details',
-      '#title' => $this->t('Publishing options.'),
+      '#title' => $this->t('Publishing options'),
       '#group' => 'advanced',
       '#weight' => 10,
       '#optional' => 1,
