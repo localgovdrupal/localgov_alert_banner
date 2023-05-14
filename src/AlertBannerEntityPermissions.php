@@ -27,7 +27,7 @@ class AlertBannerEntityPermissions implements ContainerInjectionInterface {
   protected $entityTypeManager;
 
   /**
-   * MediaPermissions constructor.
+   * Alert banner permissions constructor.
    *
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager service.
