@@ -43,6 +43,14 @@
   background-color: #fff;
   border-color: #fff;
   color: #0b0c0c;
+  cursor: pointer;
+}
+
+.localgov-alert-banner--minor .localgov-alert-banner__close:focus,
+.localgov-alert-banner--minor .localgov-alert-banner__close:hover {
+  background-color: #0b0c0c;
+  border-color: #0b0c0c;
+  color: #fff;
 }
 
 /* Announcement */
