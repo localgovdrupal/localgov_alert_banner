@@ -35,8 +35,11 @@ function template_preprocess_localgov_alert_banner(array &$variables) {
 
   // Set default link text if field exists.
   if ($entity->hasField('link')) {
-    if ($entity->get('link')->title === '') {
-      $variables['content']['link'] = Link::fromTextAndUrl(t('More information'), Url::fromUri($entity->get('link')->uri))->toString();
+    $link = $entity->get('link');
+    if ($link->title === '') {
+      $link_value = $link->getValue();
+      $link_value[0]['title'] = t('More information');
+      $entity->set('link', $link_value);
     }
   }
 
