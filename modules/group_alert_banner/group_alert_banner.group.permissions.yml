@@ -1,0 +1,3 @@
+access localgov_alert_banner overview:
+  title: 'Access Alert banner listing page'
+  description: 'Access the Alert banner listing and management page, regardless of banner type.'
