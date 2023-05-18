@@ -5,6 +5,19 @@
  * Various hook implementations.
  */
 
+use Drupal\localgov_alert_banner\Entity\AlertBannerEntityTypeInterface;
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ *
+ * This is necessary during configuration imports.  This makes the plugin
+ * definitions from this module immediately available to other config files.
+ */
+function group_alert_banner_localgov_alert_banner_type_insert(AlertBannerEntityTypeInterface $banner_type) {
+
+  \Drupal::service('group_relation_type.manager')->clearCachedDefinitions();
+}
+
 /**
  * Implements hook_localgov_microsites_roles_default().
  *

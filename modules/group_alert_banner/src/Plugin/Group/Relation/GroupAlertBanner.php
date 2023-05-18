@@ -51,7 +51,7 @@ class GroupAlertBanner extends GroupRelationBase {
    */
   public function calculateDependencies() {
     $dependencies = parent::calculateDependencies();
-    $dependencies['config'][] = 'localgov_alert_banner.type.' . $this->getRelationType()->getEntityBundle();
+    $dependencies['config'][] = 'localgov_alert_banner.localgov_alert_banner_type.' . $this->getRelationType()->getEntityBundle();
     return $dependencies;
   }
 
