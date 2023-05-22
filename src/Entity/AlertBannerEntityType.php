@@ -71,7 +71,7 @@ class AlertBannerEntityType extends ConfigEntityBundleBase implements AlertBanne
   public function postSave(EntityStorageInterface $storage, $update = TRUE) {
 
     // Add fields and workflow when creating a new alert banner type.
-    if (!$update) {
+    if (!$update && !$this->isSyncing) {
 
       $bundle = $this->id();
       $config_directory = new FileStorage(__DIR__ . '/../../config/install');
