@@ -160,4 +160,59 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
 
   }
 
+  /**
+   * Test alert banner block order without type of alert.
+   */
+  public function testAlertBannerBlockOrderWithoutTypeOfAlert() {
+
+    // Delete type of alert field.
+    // This is so we are testing the case where :-
+    // - Alerts don't have a type, so are in date order.
+    // - Querying for current banners without the type field is possible.
+    $this->container
+      ->get('entity_type.manager')
+      ->getStorage('field_storage_config')
+      ->load('localgov_alert_banner.type_of_alert')
+      ->delete();
+
+    // Alert times.
+    $alert_times = [
+      (new DrupalDateTime('-4 hours'))->getTimestamp(),
+      (new DrupalDateTime('-2 hours'))->getTimestamp(),
+      (new DrupalDateTime('-3 hours'))->getTimestamp(),
+      (new DrupalDateTime('now'))->getTimestamp(),
+    ];
+
+    // Set up alert banners.
+    foreach ($alert_times as $changed) {
+      $alert_entity = $this->container->get('entity_type.manager')->getStorage('localgov_alert_banner')
+        ->create([
+          'type' => 'localgov_alert_banner',
+          'title' => $this->randomMachineName(8),
+          'moderation_state' => 'published',
+          'changed' => $changed,
+        ]);
+      $alert_entity->save();
+      $alert[] = $alert_entity->id();
+    }
+
+    // Create and render the block and get the alert banner IDs as an array.
+    $block_manager = $this->container->get('plugin.manager.block');
+    $config = [];
+    $plugin_block = $block_manager->createInstance('localgov_alert_banner_block', $config);
+    $render = $plugin_block->build();
+    foreach ($render as $render_value) {
+      $result[] = $render_value['#localgov_alert_banner']->id();
+    }
+
+    // Set expected order, which will be date changed order.
+    $expected = [
+      $alert[3],
+      $alert[1],
+      $alert[2],
+      $alert[0],
+    ];
+    $this->assertEquals($expected, $result);
+  }
+
 }
