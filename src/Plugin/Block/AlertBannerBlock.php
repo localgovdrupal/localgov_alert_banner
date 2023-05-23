@@ -178,8 +178,7 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
     }
 
     // Continue alert banner query.
-    $published_alert_banner_query->sort('changed', 'DESC')
-      ->accessCheck(TRUE);
+    $published_alert_banner_query->sort('changed', 'DESC');
 
     // If types (bunldes) are selected, add filter condition.
     if (!empty($types)) {
