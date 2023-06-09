@@ -1,0 +1,7 @@
+name: 'Group alert banner test'
+type: module
+description: 'Provides a test Group type for Alert banner test.'
+package: Testing
+version: VERSION
+dependencies:
+  localgov_alert_banner:group_alert_banner

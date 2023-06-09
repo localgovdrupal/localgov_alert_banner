@@ -10,6 +10,3 @@ Otherwise enable at least the following permissions for **Groups**:
 
 ## Banner listing
 Once this module is installed, an *Alert banner* tab should appear in each Group page.  This page will list all the banners belonging to a Group.
-
-## Todo
-- Automated tests.
