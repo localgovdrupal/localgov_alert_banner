@@ -13,6 +13,7 @@
     },
     "suggest": {
         "drupal/scheduled_transitions": "Gives the ability to schedule the publishing and unpublishing of alert banners",
-        "localgovdrupal/localgov_core": "^1 || ^2"
+        "localgovdrupal/localgov_core": "^1 || ^2",
+        "drupal/group": "For Group integration."
     }
 }
