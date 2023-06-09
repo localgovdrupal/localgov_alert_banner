@@ -101,7 +101,7 @@ jobs:
           path: ${{ env.LOCALGOV_DRUPAL_PROJECT_PATH }}
 
       - name: Obtain suggested dependencies
-        run: composer --working-dir=./html/${LOCALGOV_DRUPAL_PROJECT_PATH} suggests --list | xargs composer require
+        run: composer --working-dir=./html/${LOCALGOV_DRUPAL_PROJECT_PATH} suggests --list | xargs composer --working-dir=./html require
 
   phpcs:
     name: Coding standards checks
