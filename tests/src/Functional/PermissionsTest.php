@@ -3,8 +3,8 @@
 namespace Drupal\Tests\localgov_alert_banner\Functional;
 
 use Drupal\Tests\BrowserTestBase;
-use Symfony\Component\HttpFoundation\Response;
 use Drupal\user\RoleInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Functional tests for LocalGovDrupal Alert banner permissions.

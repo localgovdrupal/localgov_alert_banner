@@ -7,8 +7,8 @@
  * Page callback for Alert banner entities.
  */
 
-use Drupal\Core\Render\Element;
 use Drupal\Core\Link;
+use Drupal\Core\Render\Element;
 use Drupal\Core\Url;
 
 /**

@@ -2,14 +2,14 @@
 
 namespace Drupal\localgov_alert_banner\Plugin\Block;
 
+use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\field\Entity\FieldStorageConfig;
 use Drupal\Core\Session\AccountProxyInterface;
-use Drupal\Core\Block\BlockBase;
+use Drupal\field\Entity\FieldStorageConfig;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides the Alert banner block.

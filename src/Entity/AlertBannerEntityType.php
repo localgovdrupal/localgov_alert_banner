@@ -7,8 +7,8 @@ use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\workflows\Entity\Workflow;
 use Drupal\user\RoleInterface;
+use Drupal\workflows\Entity\Workflow;
 
 /**
  * Defines the Alert banner type entity.

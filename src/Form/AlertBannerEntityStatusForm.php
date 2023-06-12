@@ -2,8 +2,8 @@
 
 namespace Drupal\localgov_alert_banner\Form;
 
-use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Entity\ContentEntityConfirmFormBase;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\localgov_alert_banner\Entity\AlertBannerEntity;
 use Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface;
 
