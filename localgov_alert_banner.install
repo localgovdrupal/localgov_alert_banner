@@ -11,8 +11,8 @@ use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Symfony\Component\Yaml\Yaml;
 use Drupal\user\RoleInterface;
+use Symfony\Component\Yaml\Yaml;
 
 /**
  * Implements hook_install().

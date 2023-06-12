@@ -2,9 +2,9 @@
 
 namespace Drupal\Tests\localgov_alert_banner\Functional;
 
+use Drupal\Core\Url;
 use Drupal\Tests\BrowserTestBase;
 use Symfony\Component\HttpFoundation\Response;
-use Drupal\Core\Url;
 
 /**
  * Functional tests for LocalGovDrupal Alert banner admin view.

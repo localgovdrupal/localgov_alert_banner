@@ -4,9 +4,9 @@ namespace Drupal\Tests\localgov_alert_banner\Kernel;
 
 use Drupal\Core\Extension\MissingDependencyException;
 use Drupal\KernelTests\KernelTestBase;
+use Drupal\scheduled_transitions\Entity\ScheduledTransition;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
-use Drupal\scheduled_transitions\Entity\ScheduledTransition;
 
 /**
  * Kernel test for scheduling transitions.
