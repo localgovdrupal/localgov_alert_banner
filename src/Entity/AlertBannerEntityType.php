@@ -7,8 +7,8 @@ use Drupal\Core\Config\FileStorage;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\field\Entity\FieldStorageConfig;
-use Drupal\workflows\Entity\Workflow;
 use Drupal\user\RoleInterface;
+use Drupal\workflows\Entity\Workflow;
 
 /**
  * Defines the Alert banner type entity.
@@ -26,6 +26,7 @@ use Drupal\user\RoleInterface;
  *     },
  *     "route_provider" = {
  *       "html" = "Drupal\localgov_alert_banner\AlertBannerEntityTypeHtmlRouteProvider",
+ *       "permissions" = "Drupal\user\Entity\EntityPermissionsRouteProvider",
  *     },
  *   },
  *   config_prefix = "localgov_alert_banner_type",
@@ -41,11 +42,12 @@ use Drupal\user\RoleInterface;
  *     "label"
  *   },
  *   links = {
- *     "canonical" = "/admin/structure/alert-banner-types/localgov_alert_banner_type/{localgov_alert_banner_type}",
- *     "add-form" = "/admin/structure/alert-banner-types/localgov_alert_banner_type/add",
- *     "edit-form" = "/admin/structure/alert-banner-types/localgov_alert_banner_type/{localgov_alert_banner_type}/edit",
- *     "delete-form" = "/admin/structure/alert-banner-types/localgov_alert_banner_type/{localgov_alert_banner_type}/delete",
- *     "collection" = "/admin/structure/alert-banner-types/localgov_alert_banner_type"
+ *     "canonical" = "/admin/structure/alert-banner-types/{localgov_alert_banner_type}",
+ *     "add-form" = "/admin/structure/alert-banner-types/add",
+ *     "edit-form" = "/admin/structure/alert-banner-types/{localgov_alert_banner_type}/edit",
+ *     "delete-form" = "/admin/structure/alert-banner-types/{localgov_alert_banner_type}/delete",
+ *     "entity-permissions-form" = "/admin/structure/alert-banner-types/{localgov_alert_banner_type}/permissions",
+ *     "collection" = "/admin/structure/alert-banner-types"
  *   }
  * )
  */
