@@ -2,11 +2,11 @@
 
 namespace Drupal\localgov_alert_banner;
 
-use Drupal\Core\Entity\BundlePermissionHandlerTrait;
-use Drupal\Core\StringTranslation\StringTranslationTrait;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
-use Drupal\localgov_alert_banner\Entity\AlertBannerEntityType;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\Entity\BundlePermissionHandlerTrait;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\localgov_alert_banner\Entity\AlertBannerEntityType;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
