@@ -109,7 +109,8 @@ class AlertBannerEntityController extends ControllerBase implements ContainerInj
     $latest_revision = TRUE;
 
     foreach (array_reverse($vids) as $vid) {
-      /** @var \Drupal\localgov_alert_banner\AlertBannerEntityInterface $revision */
+      /** @var \Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface $revision */
+      // @phpstan-ignore-next-line.
       $revision = $localgov_alert_banner_storage->loadRevision($vid);
       // Only show revisions that are affected by the language that is being
       // displayed.
