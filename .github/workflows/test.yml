@@ -24,13 +24,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        localgov-version:
-          - '2.x'
-        drupal-version:
-          - '~9.3'
-        php-version:
-          - '7.4'
-          - '8.1'
+        include:
+          - localgov-version: '2.x'
+            drupal-version: '~9.4'
+            php-version: '8.1'
+          - localgov-version: '3.x'
+            drupal-version: '~10.0'
+            php-version: '8.1'
 
     steps:
 
@@ -108,13 +108,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        localgov-version:
-          - '2.x'
-        drupal-version:
-          - '~9.3'
-        php-version:
-          - '7.4'
-          - '8.1'
+        include:
+          - localgov-version: '2.x'
+            drupal-version: '~9.4'
+            php-version: '8.1'
+          - localgov-version: '3.x'
+            drupal-version: '~10.0'
+            php-version: '8.1'
 
     steps:
 
@@ -144,13 +144,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        localgov-version:
-          - '2.x'
-        drupal-version:
-          - '~9.3'
-        php-version:
-          - '7.4'
-          - '8.1'
+        include:
+          - localgov-version: '2.x'
+            drupal-version: '~9.4'
+            php-version: '8.1'
+          - localgov-version: '3.x'
+            drupal-version: '~10.0'
+            php-version: '8.1'
 
     steps:
 
@@ -179,13 +179,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        localgov-version:
-          - '2.x'
-        drupal-version:
-          - '~9.3'
-        php-version:
-          - '7.4'
-          - '8.1'
+        include:
+          - localgov-version: '2.x'
+            drupal-version: '~9.4'
+            php-version: '8.1'
+          - localgov-version: '3.x'
+            drupal-version: '~10.0'
+            php-version: '8.1'
 
     steps:
 

@@ -98,6 +98,7 @@ class AlertBannerEntityRevisionDeleteForm extends ConfirmFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
+    // @phpstan-ignore-next-line.
     $this->alertBannerEntityStorage->deleteRevision($this->revision->getRevisionId());
 
     $this->logger('content')->notice('Alert banner: deleted %title revision %revision.', [
