@@ -5,6 +5,9 @@ dependencies:
     - localgov_alert_banner.localgov_alert_banner_type.localgov_alert_banner
   module:
     - content_moderation
+  enforced:
+    module:
+      - localgov_alert_banner    
 id: localgov_alert_banners
 label: 'Alert banners'
 type: content_moderation
