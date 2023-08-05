@@ -33,16 +33,6 @@ function template_preprocess_localgov_alert_banner(array &$variables) {
   /** @var \Drupal\localgov_alert_banner\Entity\AlertBannerEntity $entity */
   $entity = $variables['elements']['#localgov_alert_banner'];
 
-  // Set default link text if field exists.
-  if ($entity->hasField('link')) {
-    $link = $entity->get('link');
-    if ($link->title === '') {
-      $link_value = $link->getValue();
-      $link_value[0]['title'] = t('More information');
-      $entity->set('link', $link_value);
-    }
-  }
-
   // Non-content variables.
   $variables['display_title'] = $entity->get('display_title')->value;
   $variables['remove_hide_link'] = $entity->get('remove_hide_link')->value;
@@ -50,5 +40,5 @@ function template_preprocess_localgov_alert_banner(array &$variables) {
   if ($entity->hasField('type_of_alert')) {
     $variables['type_of_alert'] = $entity->get('type_of_alert')->value;
   }
-
 }
+
