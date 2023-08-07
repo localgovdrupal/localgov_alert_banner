@@ -127,7 +127,7 @@ function localgov_alert_banner_configure_scheduled_transitions() {
  */
 function localgov_alert_banner_preprocess_field(&$variables) {
   if ($variables['element']['#field_name'] == 'link' && $variables['element']['#bundle'] == 'localgov_alert_banner') {
-    foreach ($variables['element']['#items'] as $delta => $item) {
+    foreach ($variables['element']['#items'] as $item) {
       $link_item = $item->getValue();
       if (empty($item->getValue()['title'])) {
         $default_text = t('More information');
