@@ -40,6 +40,13 @@ function localgov_alert_banner_preprocess(&$variables) {
     // Token as attribute.
     $variables['attributes']['data-dismiss-alert-token'] = $token;
 
+    // Remove the content moderation form if it is present.
+    // Do this only on the confirmation form page.
+    $route_match = \Drupal::routeMatch();
+    $route_name = $route_match->getRouteName();
+    if ($route_name == 'entity.localgov_alert_banner.status_form') {
+      unset($variables['content']['content_moderation_control']);
+    }
   }
 }
 
