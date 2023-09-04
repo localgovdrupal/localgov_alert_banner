@@ -2,8 +2,8 @@
 
 namespace Drupal\group_alert_banner\Plugin\Group\Relation;
 
-use Drupal\group\Plugin\Group\Relation\GroupRelationBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\group\Plugin\Group\Relation\GroupRelationBase;
 
 /**
  * Provides a group relation type for Alert banners.

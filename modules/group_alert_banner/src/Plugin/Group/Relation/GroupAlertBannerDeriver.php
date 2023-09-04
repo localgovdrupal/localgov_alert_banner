@@ -2,10 +2,10 @@
 
 namespace Drupal\group_alert_banner\Plugin\Group\Relation;
 
-use Drupal\group\Plugin\Group\Relation\GroupRelationTypeInterface;
-use Drupal\localgov_alert_banner\Entity\AlertBannerEntityType;
 use Drupal\Component\Plugin\Derivative\DeriverBase;
 use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Drupal\group\Plugin\Group\Relation\GroupRelationTypeInterface;
+use Drupal\localgov_alert_banner\Entity\AlertBannerEntityType;
 
 /**
  * Alert banner plugin deriver for Group.
