@@ -159,12 +159,9 @@ function group_alert_banner_form_localgov_alert_banner_form_alter(&$form, FormSt
 function group_alert_banner_restore_publish_page_redirect($form, FormStateInterface $form_state) {
 
   if ($form_state->getValue('status-change') == TRUE) {
-    $entity = $form_state->getFormObject()->getEntity();
+    $banner = $form_state->getFormObject()->getEntity();
+    $group  = \Drupal::service('group.group_route_context')->getGroupFromRoute();
 
-    // Remove destination query and pass it through to the confirmation form.
-    $request = Drupal::service('request_stack');
-    $destination = $request->getCurrentRequest()->query->get('destination');
-    $request->getCurrentRequest()->query->remove('destination');
-    $form_state->setRedirect('entity.localgov_alert_banner.status_form', ['localgov_alert_banner' => $entity->id()], ['query' => ['destination' => $destination]]);
+    $form_state->setRedirect('entity.localgov_alert_banner.status_form', ['localgov_alert_banner' => $banner->id()], ['query' => ['destination' => "group/{$group->id()}/alert-banners"]]);
   }
 }
