@@ -3,7 +3,6 @@ status: true
 dependencies:
   config:
     - field.storage.localgov_alert_banner.type_of_alert
-    - group.type.microsite
   module:
     - group
     - localgov_alert_banner
@@ -640,8 +639,7 @@ display:
             type: 'entity:group'
             fail: 'not found'
           validate_options:
-            bundles:
-              microsite: microsite
+            bundles: {  }
             access: false
             operation: view
             multiple: 0
