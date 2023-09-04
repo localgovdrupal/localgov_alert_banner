@@ -104,6 +104,10 @@ function group_alert_banner_query_entity_query_alter(AlterableInterface $query) 
 
   $group = \Drupal::service('group.group_route_context')->getGroupFromRoute();
   $gid   = empty($group) ? -1 : $group->id();
+  if (empty($group) && Drupal::getContainer()->has('domain_group_resolver')) {
+    $gid_from_domain = Drupal::service('domain_group_resolver')->getActiveDomainGroupId();
+    $gid = $gid_from_domain ?? $gid;
+  }
 
   // The 'gcfd' table alias is set in
   // Drupal\group\QueryAccess\EntityQueryAlter::doAlter() for the
@@ -131,6 +135,8 @@ function group_alert_banner_block_build_alter(array &$build, BlockPluginInterfac
 
 /**
  * Implements hook_form_BASE_FORM_ID_alter() for hook_form_localgov_alert_banner_form_alter().
+ *
+ * Appends a custom form submit handler for the group banner add form.
  */
 function group_alert_banner_form_localgov_alert_banner_form_alter(&$form, FormStateInterface $form_state, $form_id) {
 
