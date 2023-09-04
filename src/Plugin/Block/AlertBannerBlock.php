@@ -2,13 +2,14 @@
 
 namespace Drupal\localgov_alert_banner\Plugin\Block;
 
+use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Session\AccountProxyInterface;
-use Drupal\Core\Block\BlockBase;
+use Drupal\field\Entity\FieldStorageConfig;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Provides the Alert banner block.
@@ -168,14 +169,27 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
     $types = $this->mapTypesConfigToQuery();
     $published_alert_banner_query = $this->entityTypeManager->getStorage('localgov_alert_banner')
       ->getQuery()
-      ->condition('status', 1)
-      ->sort('type_of_alert', 'DESC')
-      ->sort('changed', 'DESC')
-      ->accessCheck(TRUE);
+      ->condition('status', 1);
+
+    // Only order by type of alert if the field is present.
+    $alert_banner_has_type_of_alert = FieldStorageConfig::loadByName('localgov_alert_banner', 'type_of_alert');
+    if (!empty($alert_banner_has_type_of_alert)) {
+      $published_alert_banner_query->sort('type_of_alert', 'DESC');
+    }
+
+    // Continue alert banner query.
+    $published_alert_banner_query->sort('changed', 'DESC');
+
+    // If types (bunldes) are selected, add filter condition.
     if (!empty($types)) {
       $published_alert_banner_query->condition('type', $types, 'IN');
     }
-    $published_alert_banners = $published_alert_banner_query->execute();
+
+    // Execute alert banner query.
+    $published_alert_banners = $published_alert_banner_query
+      ->accessCheck(TRUE)
+      ->execute();
+
     // Load alert banners and add all.
     // Visibility check happens in build, so we get cache contexts on all.
     foreach ($published_alert_banners as $alert_banner_id) {

@@ -23,4 +23,4 @@ manage all localgov alert banner entities:
 
 # Per bundle permissions.
 permission_callbacks:
-  - \Drupal\localgov_alert_banner\AlertBannerEntityPermissions::generatePermissions
+  - \Drupal\localgov_alert_banner\AlertBannerEntityPermissions::alertBannerTypePermissions
