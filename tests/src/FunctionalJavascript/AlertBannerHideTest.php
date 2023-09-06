@@ -17,11 +17,6 @@ class AlertBannerHideTest extends WebDriverTestBase {
   /**
    * {@inheritdoc}
    */
-  protected $profile = 'localgov';
-
-  /**
-   * {@inheritdoc}
-   */
   protected static $modules = [
     'localgov_alert_banner',
   ];
