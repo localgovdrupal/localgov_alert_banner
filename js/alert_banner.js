@@ -5,7 +5,7 @@
  * This is so if the alert changes, the banner is reshown.
  */
 
-(function($, Drupal, drupalSettings, cookies) {
+(function($, cookies) {
 
   'use strict';
 
@@ -37,4 +37,4 @@
 
   });
 
-}) (jQuery, Drupal, drupalSettings, window.Cookies);
+}) (jQuery, window.Cookies);
