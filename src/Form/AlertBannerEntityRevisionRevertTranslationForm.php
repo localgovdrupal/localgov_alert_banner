@@ -12,7 +12,6 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @ingroup localgov_alert_banner
  */
 class AlertBannerEntityRevisionRevertTranslationForm extends AlertBannerEntityRevisionRevertForm {
-  
   /**
    * The language to be reverted.
    *
