@@ -69,6 +69,7 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
     ];
 
     // Set up alert banners.
+    $alert = [];
     foreach ($alert_details as $key => $value) {
       $alert_entity = $this->container->get('entity_type.manager')->getStorage('localgov_alert_banner')
         ->create([
@@ -90,6 +91,7 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
 
     // Render the block and get the alert banner IDs as an array.
     $render = $plugin_block->build();
+    $result = [];
     foreach ($render as $render_value) {
       $result[] = $render_value['#localgov_alert_banner']->id();
     }
@@ -100,6 +102,7 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
     $this->assertEquals($expected, $result);
 
     // More banners - Order should be type then most recent first.
+    $alert_new = [];
     foreach ($alert_details as $key => $value) {
       $alert_entity = $this->container->get('entity_type.manager')->getStorage('localgov_alert_banner')
         ->create([
@@ -116,6 +119,7 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
     // Create and render the block and get the alert banner IDs as an array.
     $plugin_block = $block_manager->createInstance('localgov_alert_banner_block', $config);
     $render = $plugin_block->build();
+    $result_2 = [];
     foreach ($render as $render_value) {
       $result_2[] = $render_value['#localgov_alert_banner']->id();
     }
@@ -141,6 +145,7 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
     // Create and render the block and get the alert banner IDs as an array.
     $plugin_block = $block_manager->createInstance('localgov_alert_banner_block', $config);
     $render = $plugin_block->build();
+    $result_3 = [];
     foreach ($render as $render_value) {
       $result_3[] = $render_value['#localgov_alert_banner']->id();
     }
@@ -184,6 +189,7 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
     ];
 
     // Set up alert banners.
+    $alert = [];
     foreach ($alert_times as $changed) {
       $alert_entity = $this->container->get('entity_type.manager')->getStorage('localgov_alert_banner')
         ->create([
@@ -201,6 +207,7 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
     $config = [];
     $plugin_block = $block_manager->createInstance('localgov_alert_banner_block', $config);
     $render = $plugin_block->build();
+    $result = [];
     foreach ($render as $render_value) {
       $result[] = $render_value['#localgov_alert_banner']->id();
     }

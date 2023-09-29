@@ -48,7 +48,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
     $this->adminUser = $this->drupalCreateUser(['administer blocks']);
     $this->drupalLogin($this->adminUser);
     $block = $this->drupalPlaceBlock('localgov_alert_banner_block', $settings);
-    $this->drupalLogout($this->adminUser);
+    $this->drupalLogout();
     return $block;
   }
 
