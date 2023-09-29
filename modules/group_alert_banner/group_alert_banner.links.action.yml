@@ -1,0 +1,11 @@
+group_relationship.group_alert_banner_add_banner:
+  route_name: 'entity.group_relationship.group_alert_banner_add_banner'
+  title: 'Add existing Alert banner'
+  appears_on:
+    - 'view.group_alert_banners.admin_list_page'
+
+group_relationship.group_alert_banner_create_banner:
+  route_name: 'entity.group_relationship.group_alert_banner_create_banner'
+  title: 'Add new Alert banner'
+  appears_on:
+    - 'view.group_alert_banners.admin_list_page'

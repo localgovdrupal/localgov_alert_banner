@@ -1,0 +1,21 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - localgov_alert_banner
+  theme:
+    - localgov_microsites_base
+id: localgov_alert_banner_microsites_base
+theme: localgov_microsites_base
+region: header
+weight: -10
+provider: null
+plugin: localgov_alert_banner_block
+settings:
+  id: localgov_alert_banner_block
+  label: 'Alert banner'
+  label_display: '0'
+  provider: localgov_alert_banner
+  include_types:
+    localgov_alert_banner: '0'
+visibility: {  }
