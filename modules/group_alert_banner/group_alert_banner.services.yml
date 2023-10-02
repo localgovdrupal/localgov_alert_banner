@@ -1,0 +1,5 @@
+services:
+  group_alert_banner.route_subscriber:
+    class: 'Drupal\group_alert_banner\Routing\RouteSubscriber'
+    tags:
+      - { name: 'event_subscriber' }

@@ -229,6 +229,8 @@ class AlertBannerEntityForm extends ContentEntityForm {
     else {
       $form_state->setRedirect('entity.localgov_alert_banner.collection', ['localgov_alert_banner' => $entity->id()]);
     }
+
+    return $status;
   }
 
 }

@@ -60,6 +60,8 @@ class AlertBannerEntityTypeForm extends EntityForm {
         ]));
     }
     $form_state->setRedirectUrl($localgov_alert_banner_type->toUrl('collection'));
+
+    return $status;
   }
 
 }

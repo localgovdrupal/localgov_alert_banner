@@ -84,7 +84,7 @@ class AlertBannerEntityRevisionRevertTranslationForm extends AlertBannerEntityRe
     $revert_untranslated_fields = $form_state->getValue('revert_untranslated_fields');
 
     /** @var \Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface $default_revision */
-    $latest_revision = $this->AlertBannerEntityStorage->load($revision->id());
+    $latest_revision = $this->alertBannerEntityStorage->load($revision->id());
     $latest_revision_translation = $latest_revision->getTranslation($this->langcode);
 
     $revision_translation = $revision->getTranslation($this->langcode);

@@ -1,0 +1,167 @@
+<?php
+
+/**
+ * @file
+ * Various hook implementations.
+ */
+
+use Drupal\Core\Block\BlockPluginInterface;
+use Drupal\Core\Database\Query\AlterableInterface;
+use Drupal\Core\Database\Query\SelectInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\localgov_alert_banner\Entity\AlertBannerEntityTypeInterface;
+
+/**
+ * Implements hook_ENTITY_TYPE_insert().
+ *
+ * This is necessary during configuration imports.  This makes the plugin
+ * definitions from this module immediately available to other config files.
+ */
+function group_alert_banner_localgov_alert_banner_type_insert(AlertBannerEntityTypeInterface $banner_type) {
+
+  \Drupal::service('group_relation_type.manager')->clearCachedDefinitions();
+}
+
+/**
+ * Implements hook_localgov_microsites_roles_default().
+ *
+ * Defines default site-wide and group-specific Alert banner permissions.
+ *
+ * @see Drupal\localgov_microsites_group\RolesHelper::getModuleRoles()
+ */
+function group_alert_banner_localgov_microsites_roles_default() {
+
+  $alert_banner_related_role_permissions = [
+    // phpcs:disable Drupal.Classes.FullyQualifiedNamespace
+    'global' => [
+      Drupal\localgov_microsites_group\RolesHelper::MICROSITES_CONTROLLER_ROLE => [
+        'access localgov alert banner listing page',
+        'use localgov_alert_banners transition create_new_draft',
+        'use localgov_alert_banners transition publish',
+        'use localgov_alert_banners transition unpublish',
+        'view all localgov alert banner entities',
+        'view all localgov alert banner entity pages',
+      ],
+      Drupal\localgov_microsites_group\RolesHelper::MICROSITES_EDITOR_ROLE => [
+        'access localgov alert banner listing page',
+        'use localgov_alert_banners transition create_new_draft',
+        'use localgov_alert_banners transition publish',
+        'use localgov_alert_banners transition unpublish',
+        'view all localgov alert banner entities',
+        'view all localgov alert banner entity pages',
+      ],
+    ],
+    'group' => [
+      Drupal\localgov_microsites_group\RolesHelper::GROUP_ADMIN_ROLE => [
+        'access localgov_alert_banner overview',
+        'create group_localgov_alert_banner:localgov_alert_banner entity',
+        'create group_localgov_alert_banner:localgov_alert_banner relationship',
+        'delete any group_localgov_alert_banner:localgov_alert_banner entity',
+        'delete own group_localgov_alert_banner:localgov_alert_banner entity',
+        'delete any group_localgov_alert_banner:localgov_alert_banner relationship',
+        'delete own group_localgov_alert_banner:localgov_alert_banner relationship',
+        'update any group_localgov_alert_banner:localgov_alert_banner entity',
+        'update own group_localgov_alert_banner:localgov_alert_banner entity',
+        'update any group_localgov_alert_banner:localgov_alert_banner relationship',
+        'update own group_localgov_alert_banner:localgov_alert_banner relationship',
+        'view group_localgov_alert_banner:localgov_alert_banner entity',
+        'view group_localgov_alert_banner:localgov_alert_banner relationship',
+        'view any unpublished group_localgov_alert_banner:localgov_alert_banner entity',
+      ],
+      Drupal\localgov_microsites_group\RolesHelper::GROUP_MEMBER_ROLE => [
+        'access localgov_alert_banner overview',
+        'view group_localgov_alert_banner:localgov_alert_banner entity',
+      ],
+      Drupal\localgov_microsites_group\RolesHelper::GROUP_OUTSIDER_ROLE => [
+        'view group_localgov_alert_banner:localgov_alert_banner entity',
+      ],
+      Drupal\localgov_microsites_group\RolesHelper::GROUP_ANONYMOUS_ROLE => [
+        'view group_localgov_alert_banner:localgov_alert_banner entity',
+      ],
+    ],
+    // phpcs:enable
+  ];
+
+  return $alert_banner_related_role_permissions;
+}
+
+/**
+ * Implements hook_query_TAG_alter().
+ *
+ * On group pages, only list group banners belonging to the current group OR
+ * site-wide banners.
+ */
+function group_alert_banner_query_entity_query_alter(AlterableInterface $query) {
+
+  if (!$query instanceof SelectInterface) {
+    return;
+  }
+
+  $entity_type_id = $query->getMetaData('entity_type');
+  if ($entity_type_id !== 'localgov_alert_banner' || !$query->hasTag($entity_type_id . '_access')) {
+    return;
+  }
+
+  $group = \Drupal::service('group.group_route_context')->getGroupFromRoute();
+  $gid   = empty($group) ? -1 : $group->id();
+  if (empty($group) && Drupal::getContainer()->has('domain_group_resolver')) {
+    $gid_from_domain = Drupal::service('domain_group_resolver')->getActiveDomainGroupId();
+    $gid = $gid_from_domain ?? $gid;
+  }
+
+  // The 'gcfd' table alias is set in
+  // Drupal\group\QueryAccess\EntityQueryAlter::doAlter() for the
+  // group_relationship_field_data table.
+  $query->where(
+    "(gcfd.entity_id IS NOT NULL AND gcfd.gid = :gid) OR gcfd.entity_id IS NULL",
+    [':gid' => $gid]
+  );
+}
+
+/**
+ * Implements hook_block_build_alter().
+ *
+ * Alterations:
+ * - Adds the "route.group" context to alert blocks.  This lets us list
+ *   different alert banners in different groups.
+ */
+function group_alert_banner_block_build_alter(array &$build, BlockPluginInterface $block_plugin) {
+
+  $block_type = $block_plugin->getBaseId();
+  if ($block_type === 'localgov_alert_banner_block') {
+    $build['#cache']['contexts'][] = 'route.group';
+  }
+}
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter() for hook_form_localgov_alert_banner_form_alter().
+ *
+ * Appends a custom form submit handler for the group banner add form.
+ */
+function group_alert_banner_form_localgov_alert_banner_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+
+  $is_banner_add_form = strpos($form_id, '_add_form', -9);
+  $is_group_context = \Drupal::service('group.group_route_context')->getGroupFromRoute();
+  if ($is_banner_add_form && $is_group_context) {
+    $form['actions']['submit']['#submit'][] = 'group_alert_banner_restore_publish_page_redirect';
+  }
+}
+
+/**
+ * Alert banner add form submit handler.
+ *
+ * Restores form redirect to original target.  This has earlier been overridden
+ * in group_relationship_entity_submit().
+ *
+ * @see AlertBannerEntityForm::save()
+ * @see group_relationship_entity_submit()
+ */
+function group_alert_banner_restore_publish_page_redirect($form, FormStateInterface $form_state) {
+
+  if ($form_state->getValue('status-change') == TRUE) {
+    $banner = $form_state->getFormObject()->getEntity();
+    $group  = \Drupal::service('group.group_route_context')->getGroupFromRoute();
+
+    $form_state->setRedirect('entity.localgov_alert_banner.status_form', ['localgov_alert_banner' => $banner->id()], ['query' => ['destination' => "group/{$group->id()}/alert-banners"]]);
+  }
+}
