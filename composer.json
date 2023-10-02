@@ -10,6 +10,7 @@
         "drupal/core": "^9.4 || ^10.0"
     },
     "require-dev": {
+        "drupal/group": "^3.2",
         "drupal/scheduled_transitions": "^2.1"
     },
     "suggest": {
