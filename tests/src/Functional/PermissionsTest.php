@@ -26,6 +26,13 @@ class PermissionsTest extends BrowserTestBase {
   ];
 
   /**
+   * A user with the 'administer blocks' permission.
+   *
+   * @var \Drupal\user\UserInterface
+   */
+  protected $adminUser;
+
+  /**
    * {@inheritdoc}
    */
   public function setUp(): void {
@@ -71,7 +78,7 @@ class PermissionsTest extends BrowserTestBase {
     $this->adminUser = $this->drupalCreateUser(['administer blocks']);
     $this->drupalLogin($this->adminUser);
     $this->drupalPlaceBlock('localgov_alert_banner_block', []);
-    $this->drupalLogout($this->adminUser);
+    $this->drupalLogout();
   }
 
   /**
