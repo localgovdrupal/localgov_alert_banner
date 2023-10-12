@@ -12,6 +12,7 @@ class GroupAlertBannerTest extends GroupKernelTestBase {
   /**
    * Tests that Group specific banners remain limited to their groups.
    *
+   *  @requires module group
    * - Creates two groups.
    * - Creates two Alert banners.  One for each group.
    * - Loads all banners for each group.
