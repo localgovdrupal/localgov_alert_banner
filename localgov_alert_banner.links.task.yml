@@ -21,7 +21,7 @@ entity.localgov_alert_banner.delete_form:
   route_name: entity.localgov_alert_banner.delete_form
   base_route: entity.localgov_alert_banner.canonical
   title: Delete
-  weight: 10
+  weight: 20
 
 entity.localgov_alert_banner.collection:
   route_name: entity.localgov_alert_banner.collection
