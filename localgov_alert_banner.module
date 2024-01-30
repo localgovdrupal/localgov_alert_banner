@@ -47,6 +47,14 @@ function localgov_alert_banner_preprocess(&$variables) {
     if ($route_name == 'entity.localgov_alert_banner.status_form') {
       unset($variables['content']['content_moderation_control']);
     }
+
+    // Set is_front variable.
+    try {
+      $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
+    }
+    catch (Exception $e) {
+      $variables['is_front'] = FALSE;
+    }
   }
 }
 
