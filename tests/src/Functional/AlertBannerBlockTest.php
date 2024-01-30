@@ -88,6 +88,14 @@ class AlertBannerBlockTest extends BrowserTestBase {
     // Load the front page and check the banner is displayed.
     $this->drupalGet('<front>');
     $this->assertSession()->pageTextContains($alert_message);
+
+    // Check that the front page class exists.
+    $this->assertSession()->responseContains('localgov-alert-banner--homepage');
+
+    // Check front pages class not visible on second page.
+    $this->drupalGet('/admin');
+    $this->assertSession()->responseContains('localgov-alert-banner');
+    $this->assertSession()->responseNotContains('localgov-alert-banner--homepage');
   }
 
   /**
