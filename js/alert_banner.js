@@ -10,7 +10,6 @@
   'use strict';
 
   function setAlertBannerHideCookie(cookie_tokens, token) {
-    console.log('test');
     cookie_tokens.push(token);
     var new_cookie = cookie_tokens.join('+')
     cookies.set('hide-alert-banner-token', new_cookie, { path: '/', expires: 30, SameSite: 'Lax' });
