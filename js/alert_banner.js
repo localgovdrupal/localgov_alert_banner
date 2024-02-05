@@ -21,7 +21,6 @@
     var cookie_tokens = typeof cookie !== 'undefined' ? cookie.split('+') : [];
 
     $('.js-localgov-alert-banner').each(function() {
-      $(this).removeClass('hidden');
       var token = $(this).data('dismiss-alert-token');
       if ($.inArray(token, cookie_tokens) > -1) {
         $(this).hide();

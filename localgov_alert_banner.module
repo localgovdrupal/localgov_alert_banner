@@ -34,9 +34,6 @@ function localgov_alert_banner_preprocess(&$variables) {
     // Get token.
     $token = $variables['elements']['#localgov_alert_banner']->getToken();
 
-    // Add a hidden class.
-    $variables['attributes']['class'][] = 'hidden';
-
     // Token as attribute.
     $variables['attributes']['data-dismiss-alert-token'] = $token;
 
