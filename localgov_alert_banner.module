@@ -5,6 +5,7 @@
  * Contains localgov_alert_banner.module.
  */
 
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Routing\RouteMatchInterface;
 
@@ -34,8 +35,13 @@ function localgov_alert_banner_preprocess(&$variables) {
     // Get token.
     $token = $variables['elements']['#localgov_alert_banner']->getToken();
 
-    // Add a hidden class.
-    $variables['attributes']['class'][] = 'hidden';
+    // Early return if message has been read.
+    $cookie_tokens = \Drupal::request()->cookies->get('hide-alert-banner-token');
+    $cookie_tokens =  $cookie_tokens ? explode("+", $cookie_tokens) : [];
+    if ($cookie_tokens && in_array($token, $cookie_tokens)) {
+      $variables['alert_hidden'] = TRUE;
+      return;
+    }
 
     // Token as attribute.
     $variables['attributes']['data-dismiss-alert-token'] = $token;
