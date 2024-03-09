@@ -219,6 +219,13 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
   /**
    * {@inheritdoc}
    */
+  public function getCacheMaxAge() {
+    return 0;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
   public function getCacheContexts() {
     $contexts = [];
     foreach ($this->currentAlertBanners as $alert_banner) {

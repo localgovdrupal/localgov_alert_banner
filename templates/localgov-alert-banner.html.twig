@@ -19,48 +19,50 @@
  */
 #}
 
-{{ attach_library('localgov_alert_banner/alert_banner') }}
+{% if not alert_hidden %}
+  {{ attach_library('localgov_alert_banner/alert_banner') }}
 
-{% set has_link = content.link|render is not empty %}
-{% set type_of_alert =  type_of_alert|split('--')[1]|clean_class %}
-{% set classes = [
-    'js-localgov-alert-banner',
-    'localgov-alert-banner',
-    type_of_alert ? 'localgov-alert-banner--' ~ type_of_alert,
-    is_front ? 'localgov-alert-banner--homepage',
-    has_link ? 'localgov-alert-banner--has-link' : 'localgov-alert-banner--no-link'
-  ]
-%}
+  {% set has_link = content.link|render is not empty %}
+  {% set type_of_alert =  type_of_alert|split('--')[1]|clean_class %}
+  {% set classes = [
+      'js-localgov-alert-banner',
+      'localgov-alert-banner',
+      type_of_alert ? 'localgov-alert-banner--' ~ type_of_alert,
+      is_front ? 'localgov-alert-banner--homepage',
+      has_link ? 'localgov-alert-banner--has-link' : 'localgov-alert-banner--no-link'
+    ]
+  %}
 
-<article {{ attributes.addClass(classes) }}>
-  {# Begin Wrapper #}
-  <div class="localgov-alert-banner__wrapper">
-    {# Begin Inner #}
-    <div class="localgov-alert-banner__inner">
-      {# Begin Content #}
-      <div class="localgov-alert-banner__content">
-        {% if display_title %}
-          <h2 class="localgov-alert-banner__title">
-            {{ content.title }}
-          </h2>
-        {% endif %}
+  <article {{ attributes.addClass(classes) }}>
+    {# Begin Wrapper #}
+    <div class="localgov-alert-banner__wrapper">
+      {# Begin Inner #}
+      <div class="localgov-alert-banner__inner">
+        {# Begin Content #}
+        <div class="localgov-alert-banner__content">
+          {% if display_title %}
+            <h2 class="localgov-alert-banner__title">
+              {{ content.title }}
+            </h2>
+          {% endif %}
 
-        <div class="localgov-alert-banner__body">
-          {{ content|without('title', 'link') }}
-        </div>
-
-        {% if has_link %}
-          <div class="localgov-alert-banner__content-link">{{ content.link }}</div>
-        {% endif %}
-      </div> {# End Content #}
-
-      {% if not remove_hide_link %}
-        <div class="localgov-alert-banner__actions">
-          <div class="localgov-alert-banner__dismiss">
-            <button class="localgov-alert-banner__close js-localgov-alert-banner__close" aria-label="{{ 'Hide alert'|t ~ ': ' ~ content.title|render|striptags|trim }}">{{ 'Hide'|t }}</button>
+          <div class="localgov-alert-banner__body">
+            {{ content|without('title', 'link') }}
           </div>
-        </div>
-      {% endif %}
-    </div> {# End Inner #}
-  </div> {# End Wrapper #}
-</article>
+
+          {% if has_link %}
+            <div class="localgov-alert-banner__content-link">{{ content.link }}</div>
+          {% endif %}
+        </div> {# End Content #}
+
+        {% if not remove_hide_link %}
+          <div class="localgov-alert-banner__actions">
+            <div class="localgov-alert-banner__dismiss">
+              <button class="localgov-alert-banner__close js-localgov-alert-banner__close" aria-label="{{ 'Hide alert'|t ~ ': ' ~ content.title|render|striptags|trim }}">{{ 'Hide'|t }}</button>
+            </div>
+          </div>
+        {% endif %}
+      </div> {# End Inner #}
+    </div> {# End Wrapper #}
+  </article>
+{% endif %}
