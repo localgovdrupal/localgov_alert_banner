@@ -35,7 +35,7 @@ class SchedulingInstallTest extends KernelTestBase {
    * {@inheritdoc}
    */
   public function setUp(): void {
-    parent::setup();
+    parent::setUp();
 
     $this->installEntitySchema('workflow');
     $this->installEntitySchema('user');
