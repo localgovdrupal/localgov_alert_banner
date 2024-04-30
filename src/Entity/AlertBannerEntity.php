@@ -250,14 +250,19 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
    *   True if the alert banner is visible, otherwise FALSE.
    */
   public function isVisible() {
+    $entity = $this;
+    $langcode = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    if ($langcode != 'en' && $this->hasTranslation($langcode)) {
+      $entity = $this->getTranslation($langcode);
+    }
 
     // Check if the field is present and has a value.
-    if (!$this->hasField('visibility') || $this->get('visibility')->isEmpty()) {
+    if (!$entity->hasField('visibility') || $entity->get('visibility')->isEmpty()) {
       return TRUE;
     }
 
     // Visibility condition config.
-    $conditions_config = $this->get('visibility')->getValue()[0]['conditions'];
+    $conditions_config = $entity->get('visibility')->getValue()[0]['conditions'];
 
     // Construct visibility conditions.
     $conditions = [];
