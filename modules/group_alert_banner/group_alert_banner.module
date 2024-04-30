@@ -112,10 +112,13 @@ function group_alert_banner_query_entity_query_alter(AlterableInterface $query) 
   // The 'gcfd' table alias is set in
   // Drupal\group\QueryAccess\EntityQueryAlter::doAlter() for the
   // group_relationship_field_data table.
-  $query->where(
-    "(gcfd.entity_id IS NOT NULL AND gcfd.gid = :gid) OR gcfd.entity_id IS NULL",
-    [':gid' => $gid]
-  );
+  $table_aliases = $query->getTables();
+  if (array_key_exists('gcfd', $table_aliases)) {
+    $query->where(
+      '(gcfd.entity_id IS NOT NULL AND gcfd.gid = :gid) OR gcfd.entity_id IS NULL',
+      [':gid' => $gid]
+    );
+  }
 }
 
 /**
