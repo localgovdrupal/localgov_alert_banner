@@ -39,12 +39,12 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
   /**
    * Current alert banners.
    *
-   * This is null until ::getCurrentAlertBanners() is called. That populates
+   * This is NULL until ::getCurrentAlertBanners() is called. That populates
    * this property and re-uses the result on subsequent calls.
    *
    * @var ?\Drupal\localgov_alert_banner\Entity\AlertBannerEntity[]
    */
-  protected $currentAlertBanners = null;
+  protected $currentAlertBanners = NULL;
 
   /**
    * Constructs a new AlertBannerBlock.
