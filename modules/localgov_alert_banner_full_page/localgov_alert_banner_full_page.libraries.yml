@@ -12,4 +12,4 @@ full_page_alert_banner:
   dependencies:
     - core/drupalSettings
     - localgov_alert_banner/alert_banner
-    - core/js-cookie
+    - js_cookie/js-cookie
