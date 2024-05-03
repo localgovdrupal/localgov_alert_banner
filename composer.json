@@ -7,7 +7,8 @@
     "license": "GPL-2.0-or-later",
     "require": {
         "drupal/condition_field": "^2.0",
-        "drupal/core": "^9.4 || ^10.0"
+        "drupal/core": "^9.4 || ^10.0",
+        "drupal/js_cookie": "^1.0"
     },
     "require-dev": {
         "drupal/group": "^3.2",
