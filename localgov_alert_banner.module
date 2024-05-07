@@ -98,7 +98,7 @@ function localgov_alert_banner_theme_suggestions_localgov_alert_banner(array $va
 function localgov_alert_banner_modules_installed($modules, $is_syncing) {
 
   // Configure scheduled transitions if it's being installed.
-  if (in_array('scheduled_transitions', $modules)) {
+  if (in_array('scheduled_transitions', $modules, TRUE)) {
     localgov_alert_banner_configure_scheduled_transitions();
   }
 }
