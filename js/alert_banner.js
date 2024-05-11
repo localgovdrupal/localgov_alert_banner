@@ -19,29 +19,29 @@
     attach: function () {
       var hidden_tokens = localStorage.getItem('hide-alert-banner-token');
       var hidden_tokens_array = hidden_tokens !== null ? hidden_tokens.split('+') : [];
-  
+
       const banners = document.querySelectorAll('.js-localgov-alert-banner');
-      for (const banner of banners) {
+      banners.forEach(banner => {
         banner.classList.remove('hidden');
         var token = banner.getAttribute('data-dismiss-alert-token');
-  
+
         if (hidden_tokens_array.indexOf(token) > -1) {
           banner.style.display = 'none';
         }
-      }
-  
+      });
+
       const buttons = document.querySelectorAll('.js-localgov-alert-banner__close');
-      for (const button of buttons) {
+      buttons.forEach(button => {
         button.addEventListener('click', (e) => {
           e.preventDefault();
-  
+
           var banner = button.closest('.js-localgov-alert-banner');
           banner.setAttribute('aria-hidden', 'true');
           banner.style.display = 'none';
-  
+
           setAlertBannerToHide(hidden_tokens_array, banner.getAttribute('data-dismiss-alert-token'));
         });
-      }
+      });
     }
   };
 

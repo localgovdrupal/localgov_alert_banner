@@ -43,9 +43,13 @@ class AlertBannerHideTest extends WebDriverTestBase {
     // Load the front page.
     $this->drupalGet('<front>');
 
+    // Get session.
+    $session = $this->getSession();
+
     // Find and click hide link.
-    $page = $this->getSession()->getPage();
-    $button = $page->findButton('Hide');
+    $page = $session->getPage();
+    $this->assertSession()->waitForElementVisible('css', '.js-localgov-alert-banner__close');
+    $button = $page->find('css', '[data-dismiss-alert-token="' . $alert->getToken() . '"] button');
     $this->assertNotEmpty($button);
     $button->click();
 
@@ -85,7 +89,7 @@ class AlertBannerHideTest extends WebDriverTestBase {
     $this->assertSession()->pageTextContains($alert_message_2);
 
     // Click the first alert hide button.
-    $page = $this->getSession()->getPage();
+    $page = $session->getPage();
     $button_1 = $page->find('css', '[data-dismiss-alert-token="' . $alert->getToken() . '"] button');
     $button_1->click();
 
@@ -98,7 +102,7 @@ class AlertBannerHideTest extends WebDriverTestBase {
     $this->assertSession()->pageTextContains($alert_message_2);
 
     // Click the second alert hide button.
-    $page = $this->getSession()->getPage();
+    $page = $session->getPage();
     $button_2 = $page->find('css', '[data-dismiss-alert-token="' . $alert_2->getToken() . '"] button');
     $button_2->click();
 
