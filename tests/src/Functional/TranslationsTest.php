@@ -2,12 +2,11 @@
 
 namespace Drupal\Tests\localgov_alert_banner\Functional;
 
-use Drupal\block\Entity\Block;
-use Drupal\node\NodeInterface;
-use Drupal\language\Entity\ConfigurableLanguage;
-use Drupal\Tests\node\Traits\NodeCreationTrait;
 use Drupal\field\Entity\FieldConfig;
+use Drupal\language\Entity\ConfigurableLanguage;
+use Drupal\node\NodeInterface;
 use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\node\Traits\NodeCreationTrait;
 
 /**
  * Functional tests for LocalGovDrupal Alert banner block.
@@ -37,13 +36,6 @@ class TranslationsTest extends BrowserTestBase {
   ];
 
   /**
-   * A user with the 'administer blocks' permission.
-   *
-   * @var \Drupal\user\UserInterface
-   */
-  protected $adminUser;
-
-  /**
    * {@inheritdoc}
    */
   protected function setUp(): void {
@@ -51,18 +43,16 @@ class TranslationsTest extends BrowserTestBase {
 
     $this->drupalPlaceBlock('localgov_alert_banner_block');
     ConfigurableLanguage::createFromLangcode('zz')->save();
-    \Drupal::service('content_translation.manager')->setEnabled('localgov_alert_banner', 'localgov_alert_banner', TRUE);
+    $this->container->get('content_translation.manager')->setEnabled('localgov_alert_banner', 'localgov_alert_banner', TRUE);
     FieldConfig::loadByName('localgov_alert_banner', 'localgov_alert_banner', 'short_description')->setTranslatable(TRUE)->save();
   }
 
   /**
    * Test that valid translation is brought back based on current language.
-   *
-   * @return void
    */
   public function testAlertBannerTranslation(): void {
 
-    $default_langcode = \Drupal::service('language.default')->get()->getId();
+    $default_langcode = $this->container->get('language.default')->get()->getId();
 
     // Create alert banner.
     $alert_title = 'home page alert title - ' . $this->randomMachineName(8);
@@ -82,11 +72,11 @@ class TranslationsTest extends BrowserTestBase {
     $translated_alert_title = 'translated home page alert title - ' . $this->randomMachineName(8);
     $translated_alert_body = 'translated home page alert body - ' . $this->randomMachineName(32);
     $alert->addTranslation('zz', [
-        'title' => $translated_alert_title,
-        'short_description' => $translated_alert_body,
-        'type_of_alert' => 'minor',
-        'moderation_state' => 'published',
-      ])->save();
+      'title' => $translated_alert_title,
+      'short_description' => $translated_alert_body,
+      'type_of_alert' => 'minor',
+      'moderation_state' => 'published',
+    ])->save();
 
     // Test on home page.
     $this->drupalGet('<front>');
@@ -105,7 +95,7 @@ class TranslationsTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains($translated_alert_body);
 
     // Create node.
-    $this->drupalCreateContentType(array('type' => 'page'));
+    $this->drupalCreateContentType(['type' => 'page']);
     $page = $this->createNode([
       'type' => 'page',
       'title' => $this->randomMachineName(8),
@@ -114,7 +104,7 @@ class TranslationsTest extends BrowserTestBase {
     ]);
 
     // Add node translation.
-    $translated_page = $page->addTranslation('zz', [
+    $page->addTranslation('zz', [
       'title' => $this->randomMachineName(8),
       'status' => NodeInterface::PUBLISHED,
     ]);
@@ -145,11 +135,11 @@ class TranslationsTest extends BrowserTestBase {
     $translated_alert_title_node = 'translated node 1 alert title - ' . $this->randomMachineName(8);
     $translated_alert_body_node = 'translated node 1 alert body - ' . $this->randomMachineName(32);
     $node_alert->addTranslation('zz', [
-        'title' => $translated_alert_title_node,
-        'short_description' => $translated_alert_body_node,
-        'type_of_alert' => 'minor',
-        'moderation_state' => 'published',
-      ])->save();
+      'title' => $translated_alert_title_node,
+      'short_description' => $translated_alert_body_node,
+      'type_of_alert' => 'minor',
+      'moderation_state' => 'published',
+    ])->save();
 
     // Go to node in default language.
     $this->drupalGet('/node/1');
@@ -160,7 +150,7 @@ class TranslationsTest extends BrowserTestBase {
     $this->assertSession()->pageTextNotContains($translated_alert_title_node);
     $this->assertSession()->pageTextNotContains($translated_alert_body_node);
 
-    // Change language
+    // Change language.
     $this->drupalGet('/zz/node/1');
 
     // Test correct translation appears.
@@ -183,7 +173,7 @@ class TranslationsTest extends BrowserTestBase {
     ])->save();
 
     // Add node translation.
-    $translated_page = $page->addTranslation('zz', [
+    $page->addTranslation('zz', [
       'title' => $this->randomMachineName(8),
       'status' => NodeInterface::PUBLISHED,
     ]);
@@ -222,11 +212,11 @@ class TranslationsTest extends BrowserTestBase {
     $translated_alert_title_pa_node = 'translated path alias page alert title - ' . $this->randomMachineName(8);
     $translated_alert_body_pa_node = 'translated path alias page alert body - ' . $this->randomMachineName(32);
     $pa_node_alert->addTranslation('zz', [
-        'title' => $translated_alert_title_pa_node,
-        'short_description' => $translated_alert_body_pa_node,
-        'type_of_alert' => 'minor',
-        'moderation_state' => 'published',
-      ])->save();
+      'title' => $translated_alert_title_pa_node,
+      'short_description' => $translated_alert_body_pa_node,
+      'type_of_alert' => 'minor',
+      'moderation_state' => 'published',
+    ])->save();
 
     // Go to node in default language.
     $this->drupalGet('/untranslated-path');
@@ -237,7 +227,7 @@ class TranslationsTest extends BrowserTestBase {
     $this->assertSession()->pageTextNotContains($translated_alert_title_pa_node);
     $this->assertSession()->pageTextNotContains($translated_alert_body_pa_node);
 
-    // Change language
+    // Change language.
     $this->drupalGet('/zz/translated-path');
 
     // Test correct translation appears.
@@ -246,4 +236,5 @@ class TranslationsTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains($translated_alert_title_pa_node);
     $this->assertSession()->pageTextContains($translated_alert_body_pa_node);
   }
+
 }
