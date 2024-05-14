@@ -39,9 +39,12 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
   /**
    * Current alert banners.
    *
-   * @var \Drupal\localgov_alert_banner\Entity\AlertBannerEntity[]
+   * This is NULL until ::getCurrentAlertBanners() is called. That populates
+   * this property and re-uses the result on subsequent calls.
+   *
+   * @var ?\Drupal\localgov_alert_banner\Entity\AlertBannerEntity[]
    */
-  protected $currentAlertBanners = [];
+  protected $currentAlertBanners = NULL;
 
   /**
    * Constructs a new AlertBannerBlock.
@@ -61,7 +64,6 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
     $this->currentUser = $current_user;
-    $this->currentAlertBanners = $this->getCurrentAlertBanners();
   }
 
   /**
@@ -131,6 +133,7 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
    * {@inheritdoc}
    */
   public function build() {
+
     // Fetch the current published banner.
     $published_alert_banners = $this->getCurrentAlertBanners();
 
@@ -141,7 +144,7 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
 
     // Render the alert banner.
     $build = [];
-    foreach ($this->currentAlertBanners as $alert_banner) {
+    foreach ($published_alert_banners as $alert_banner) {
 
       // Only add to the build if it is visible.
       // @see #154.
@@ -163,7 +166,14 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
    *   Array of all published and visible alert banners.
    */
   protected function getCurrentAlertBanners() {
-    $alert_banners = [];
+
+    // If this property is an array, it's been populated and we can re-use the
+    // results.
+    if (is_array($this->currentAlertBanners)) {
+      return $this->currentAlertBanners;
+    }
+
+    $this->currentAlertBanners = [];
 
     // Get list of published alert banner IDs.
     $types = $this->mapTypesConfigToQuery();
@@ -196,11 +206,11 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
       $alert_banner = $this->entityTypeManager->getStorage('localgov_alert_banner')->load($alert_banner_id);
       $is_accessible = $alert_banner->access('view', $this->currentUser);
       if ($is_accessible) {
-        $alert_banners[] = $alert_banner;
+        $this->currentAlertBanners[] = $alert_banner;
       }
     }
 
-    return $alert_banners;
+    return $this->currentAlertBanners;
   }
 
   /**
@@ -221,7 +231,7 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
    */
   public function getCacheContexts() {
     $contexts = [];
-    foreach ($this->currentAlertBanners as $alert_banner) {
+    foreach ($this->getCurrentAlertBanners() as $alert_banner) {
       $contexts = Cache::mergeContexts($contexts, $alert_banner->getCacheContexts());
     }
     return Cache::mergeContexts(parent::getCacheContexts(), $contexts);
