@@ -4,6 +4,7 @@ namespace Drupal\localgov_alert_banner\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
@@ -37,11 +38,11 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
   protected $currentUser;
 
   /**
-   * Current alert banners.
+   * The entity repository services.
    *
-   * @var \Drupal\localgov_alert_banner\Entity\AlertBannerEntity[]
+   * @var \Drupal\Core\Entity\EntityRepositoryInterface
    */
-  protected $currentAlertBanners = [];
+  protected $entityRepository;
 
   /**
    * Constructs a new AlertBannerBlock.
@@ -56,12 +57,14 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
    *   The entity type manager service.
    * @param \Drupal\Core\Session\AccountProxyInterface $current_user
    *   Current user service.
+   * @param Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
+   *   The entity repository service.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AccountProxyInterface $current_user) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AccountProxyInterface $current_user, EntityRepositoryInterface $entity_repository) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
     $this->currentUser = $current_user;
-    $this->currentAlertBanners = $this->getCurrentAlertBanners();
+    $this->entityRepository = $entity_repository;
   }
 
   /**
@@ -84,7 +87,8 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
       $plugin_id,
       $plugin_definition,
       $container->get('entity_type.manager'),
-      $container->get('current_user')
+      $container->get('current_user'),
+      $container->get('entity.repository'),
     );
   }
 
@@ -131,6 +135,7 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
    * {@inheritdoc}
    */
   public function build() {
+
     // Fetch the current published banner.
     $published_alert_banners = $this->getCurrentAlertBanners();
 
@@ -141,7 +146,9 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
 
     // Render the alert banner.
     $build = [];
-    foreach ($this->currentAlertBanners as $alert_banner) {
+    $contexts = [];
+    foreach ($published_alert_banners as $alert_banner) {
+      $contexts = Cache::mergeContexts($contexts, $alert_banner->getCacheContexts());
 
       // Only add to the build if it is visible.
       // @see #154.
@@ -150,6 +157,7 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
           ->view($alert_banner);
       }
     }
+    $build['#cache']['contexts'] = $contexts;
     return $build;
   }
 
@@ -163,7 +171,8 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
    *   Array of all published and visible alert banners.
    */
   protected function getCurrentAlertBanners() {
-    $alert_banners = [];
+
+    $current_alert_banners = [];
 
     // Get list of published alert banner IDs.
     $types = $this->mapTypesConfigToQuery();
@@ -194,13 +203,15 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
     // Visibility check happens in build, so we get cache contexts on all.
     foreach ($published_alert_banners as $alert_banner_id) {
       $alert_banner = $this->entityTypeManager->getStorage('localgov_alert_banner')->load($alert_banner_id);
+      $alert_banner = $this->entityRepository->getTranslationFromContext($alert_banner);
+
       $is_accessible = $alert_banner->access('view', $this->currentUser);
       if ($is_accessible) {
-        $alert_banners[] = $alert_banner;
+        $current_alert_banners[] = $alert_banner;
       }
     }
 
-    return $alert_banners;
+    return $current_alert_banners;
   }
 
   /**
@@ -214,17 +225,6 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
     return array_filter($include_types, function ($t) {
       return (bool) $t;
     });
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getCacheContexts() {
-    $contexts = [];
-    foreach ($this->currentAlertBanners as $alert_banner) {
-      $contexts = Cache::mergeContexts($contexts, $alert_banner->getCacheContexts());
-    }
-    return Cache::mergeContexts(parent::getCacheContexts(), $contexts);
   }
 
   /**

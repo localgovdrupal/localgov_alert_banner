@@ -314,6 +314,7 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
       ->setLabel(t('Title'))
       ->setDescription(t('The title of the Alert banner.'))
       ->setRevisionable(TRUE)
+      ->setTranslatable(TRUE)
       ->setSettings([
         'max_length' => 50,
         'text_processing' => 0,
