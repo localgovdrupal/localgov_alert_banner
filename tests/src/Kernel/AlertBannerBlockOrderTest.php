@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\localgov_alert_banner\Kernel;
 
+use Drupal\Core\Block\BlockPluginInterface;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\KernelTests\KernelTestBase;
 use Drupal\localgov_alert_banner\Entity\AlertBannerEntity;
@@ -90,7 +91,7 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
     $plugin_block = $block_manager->createInstance('localgov_alert_banner_block', $config);
 
     // Render the block and get the alert banner IDs as an array.
-    $render = $plugin_block->build();
+    $render = $this->getBannersFromBlockRenderArray($plugin_block);
     $result = [];
     foreach ($render as $render_value) {
       $result[] = $render_value['#localgov_alert_banner']->id();
@@ -118,7 +119,7 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
 
     // Create and render the block and get the alert banner IDs as an array.
     $plugin_block = $block_manager->createInstance('localgov_alert_banner_block', $config);
-    $render = $plugin_block->build();
+    $render = $this->getBannersFromBlockRenderArray($plugin_block);
     $result_2 = [];
     foreach ($render as $render_value) {
       $result_2[] = $render_value['#localgov_alert_banner']->id();
@@ -144,7 +145,7 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
 
     // Create and render the block and get the alert banner IDs as an array.
     $plugin_block = $block_manager->createInstance('localgov_alert_banner_block', $config);
-    $render = $plugin_block->build();
+    $render = $this->getBannersFromBlockRenderArray($plugin_block);
     $result_3 = [];
     foreach ($render as $render_value) {
       $result_3[] = $render_value['#localgov_alert_banner']->id();
@@ -206,7 +207,7 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
     $block_manager = $this->container->get('plugin.manager.block');
     $config = [];
     $plugin_block = $block_manager->createInstance('localgov_alert_banner_block', $config);
-    $render = $plugin_block->build();
+    $render = $this->getBannersFromBlockRenderArray($plugin_block);
     $result = [];
     foreach ($render as $render_value) {
       $result[] = $render_value['#localgov_alert_banner']->id();
@@ -220,6 +221,21 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
       $alert[0],
     ];
     $this->assertEquals($expected, $result);
+  }
+
+  /**
+   * Get banners from block render array.
+   *
+   * @param \Drupal\Core\Block\BlockPluginInterface $plugin_block
+   *   Block plugin.
+   *
+   * @return array
+   *   Block render array missing keys starting with #.
+   */
+  protected function getBannersFromBlockRenderArray(BlockPluginInterface $plugin_block): array {
+    return array_filter($plugin_block->build(), function ($key) {
+      return strpos($key, '#') !== 0;
+    }, ARRAY_FILTER_USE_KEY);
   }
 
 }
