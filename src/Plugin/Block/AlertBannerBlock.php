@@ -146,9 +146,7 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
 
     // Render the alert banner.
     $build = [];
-    $contexts = [];
     foreach ($published_alert_banners as $alert_banner) {
-      $contexts = Cache::mergeContexts($contexts, $alert_banner->getCacheContexts());
 
       // Only add to the build if it is visible.
       // @see #154.
@@ -157,7 +155,6 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
           ->view($alert_banner);
       }
     }
-    $build['#cache']['contexts'] = $contexts;
     return $build;
   }
 
@@ -225,6 +222,17 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
     return array_filter($include_types, function ($t) {
       return (bool) $t;
     });
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getCacheContexts() {
+    $contexts = [];
+    foreach ($this->getCurrentAlertBanners() as $alert_banner) {
+      $contexts = Cache::mergeContexts($contexts, $alert_banner->getCacheContexts());
+    }
+    return Cache::mergeContexts(parent::getCacheContexts(), $contexts);
   }
 
   /**
