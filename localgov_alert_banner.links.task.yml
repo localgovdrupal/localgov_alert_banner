@@ -27,4 +27,4 @@ entity.localgov_alert_banner.collection:
   route_name: entity.localgov_alert_banner.collection
   base_route: system.admin_content
   title: 'Alert banners'
-  weight: 50
+  weight: 30
