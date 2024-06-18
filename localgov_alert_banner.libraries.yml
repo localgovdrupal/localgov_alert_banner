@@ -5,6 +5,3 @@ alert_banner:
       css/localgov-alert-banner.css: {}
   js:
     js/alert_banner.js: {}
-  dependencies:
-    - core/jquery
-    - core/js-cookie

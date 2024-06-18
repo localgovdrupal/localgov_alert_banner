@@ -1,6 +1,6 @@
-name: 'LocalGov Alert Banner'
+name: "LocalGov Alert Banner"
 type: module
-description: 'Provides a sitewide alert banner for urgent alerts.'
+description: "Provides a sitewide alert banner for urgent alerts."
 core_version_requirement: ^9.4 || ^10
 package: LocalGov Drupal
 dependencies:
