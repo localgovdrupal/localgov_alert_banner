@@ -26,6 +26,10 @@ class AlertBannerEntityHtmlRouteProvider extends AdminHtmlRouteProvider {
       $collection->add("entity.{$entity_type_id}.status_form", $status_form_route);
     }
 
+    if ($collection_route = $this->getCollectionRoute($entity_type)) {
+      $collection->add("entity.{$entity_type_id}.collection", $collection_route);
+    }
+
     return $collection;
   }
 
@@ -57,6 +61,31 @@ class AlertBannerEntityHtmlRouteProvider extends AdminHtmlRouteProvider {
       if ($this->getEntityTypeIdKeyType($entity_type) === 'integer') {
         $route->setRequirement($entity_type_id, '\d+');
       }
+      return $route;
+    }
+  }
+
+  /**
+   * Gets the collection route.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
+   *   The entity type.
+   *
+   * @return \Symfony\Component\Routing\Route|null
+   *   The generated route, if available.
+   */
+  protected function getCollectionRoute(EntityTypeInterface $entity_type) {
+    if ($entity_type->hasLinkTemplate('collection')) {
+      $entity_type_id = $entity_type->id();
+      $route = new Route($entity_type->getLinkTemplate('collection'));
+      $route
+        ->setDefaults([
+          '_entity_list' => $entity_type_id,
+          '_title' => "{$entity_type->getLabel()} list",
+        ])
+        ->setRequirement('_permission', 'access localgov alert banner listing page')
+        ->setOption('_admin_route', TRUE);
+
       return $route;
     }
   }
