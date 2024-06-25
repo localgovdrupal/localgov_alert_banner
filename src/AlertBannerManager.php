@@ -11,7 +11,7 @@ use Drupal\field\Entity\FieldStorageConfig;
 
 /**
  * Localgov alert banner manager service.
- * 
+ *
  * @ingroup localgov_alert_banner
  */
 class AlertBannerManager implements AlertBannerManagerInterface {
