@@ -150,3 +150,16 @@ function localgov_alert_banner_preprocess_field(&$variables) {
     }
   }
 }
+
+/**
+ * Implements hook_gin_content_form_routes().
+ */
+function localgov_alert_banner_gin_content_form_routes() {
+  return [
+    // Alert banner add form.
+    'entity.localgov_alert_banner.add_form',
+
+    // Alert banner add form edit form.
+    'entity.localgov_alert_banner.edit_form',
+  ];
+}

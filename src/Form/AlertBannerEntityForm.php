@@ -71,6 +71,9 @@ class AlertBannerEntityForm extends ContentEntityForm {
     $entity = $this->entity;
     assert($entity instanceof AlertBannerEntity);
 
+    // Flag if this is Gin admin theme.
+    $is_gin_theme = $this->themeManager->getActiveTheme()->getName() == 'gin' ? TRUE : FALSE;
+
     if (!$entity->isNew()) {
       $form['new_revision'] = [
         '#type' => 'checkbox',
@@ -83,8 +86,7 @@ class AlertBannerEntityForm extends ContentEntityForm {
     // Create the vertical tabs like on node edit forms.
     // @src https://drupal.stackexchange.com/a/276907
     // Only do this if the theme is not gin! Issue #116.
-    // @todo Opt alert banner into gin admin theming.
-    if ($this->themeManager->getActiveTheme()->getName() != 'gin') {
+    if (!$is_gin_theme) {
       $form['#theme'][] = 'node_edit_form';
       $form['#attached']['library'] = ['node/drupal.node'];
 
@@ -135,10 +137,6 @@ class AlertBannerEntityForm extends ContentEntityForm {
     // Move the authoring info into sidebar like nodes.
     $form['uid']['#group'] = 'author';
     $form['created']['#group'] = 'author';
-    $form['revision_log_message']['#group'] = 'author';
-
-    // Move new revision into author group.
-    $form['new_revision']['#group'] = 'author';
 
     // Change the Title label.
     unset($form['title']['widget'][0]['value']['#description']);
@@ -146,7 +144,7 @@ class AlertBannerEntityForm extends ContentEntityForm {
     // Change the Link text description.
     $form['link']['widget'][0]['title']['#description'] = $this->t("If you don't write anything here, we will use: More information");
 
-    $form['publishing_options'] = [
+    $form['meta'] = [
       '#type' => 'details',
       '#title' => $this->t('Publishing options'),
       '#group' => 'advanced',
@@ -158,9 +156,20 @@ class AlertBannerEntityForm extends ContentEntityForm {
       ],
     ];
 
-    // Move publishing options into sidebar like nodes.
-    $form['display_title']['#group'] = 'publishing_options';
-    $form['remove_hide_link']['#group'] = 'publishing_options';
+    // Add the extra entity-meta__header only if this is gin theme to correctly
+    // pad the sidebar.
+    if ($is_gin_theme) {
+      $form['meta']['#attributes']['class'][] = 'entity-meta__header';
+    }
+
+    // Move new revision into meta group like nodes.
+    $form['revision_log']['#group'] = 'meta';
+    $form['new_revision']['#group'] = 'meta';
+
+    // Move publishing options meta group like nodes.
+    $form['display_title']['#group'] = 'meta';
+    $form['remove_hide_link']['#group'] = 'meta';
+
     // Status.
     unset($form['status']);
     unset($form['moderation_state']);
@@ -173,12 +182,12 @@ class AlertBannerEntityForm extends ContentEntityForm {
     else {
       $status_message = $this->t('Stored %type', ['%type' => $entity->getEntityType()->getLabel()]);
     }
-    $form['publishing_options']['status-message'] = [
+    $form['meta']['status-message'] = [
       '#type' => 'markup',
       '#markup' => $status_message,
       '#weight' => -10,
     ];
-    $form['publishing_options']['status-change'] = [
+    $form['meta']['status-change'] = [
       '#type' => 'checkbox',
       '#title' => $entity->isPublished() ? $this->t('Remove') : $this->t('Set live'),
       '#description' => $this->t('On submission proceed to confirmation form to change the live status.'),
