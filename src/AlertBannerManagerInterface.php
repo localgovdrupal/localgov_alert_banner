@@ -6,7 +6,7 @@ namespace Drupal\localgov_alert_banner;
 
 /**
  * Interface for localgov alert banners manager service.
- * 
+ *
  * @ingroup localgov_alert_banner
  */
 interface AlertBannerManagerInterface {
