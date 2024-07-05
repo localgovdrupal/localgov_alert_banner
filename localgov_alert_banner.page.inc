@@ -37,6 +37,9 @@ function template_preprocess_localgov_alert_banner(array &$variables) {
   // Type of alert is an optional field and may not exist.
   if ($entity->hasField('type_of_alert')) {
     $variables['type_of_alert'] = $entity->get('type_of_alert')->value;
+    $definitions = \Drupal::service('entity_field.manager')->getFieldDefinitions('localgov_alert_banner', 'localgov_alert_banner');
+    $options = $definitions['type_of_alert']->getSetting('allowed_values');
+    $variables['type_of_alert_label'] = $options[$variables['type_of_alert']];
   }
 
 }
