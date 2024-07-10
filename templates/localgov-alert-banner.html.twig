@@ -31,8 +31,9 @@
     has_link ? 'localgov-alert-banner--has-link' : 'localgov-alert-banner--no-link'
   ]
 %}
+{% set alert_id = random() %}
 
-<section {{ attributes.addClass(classes) }} aria-label="{{ type_of_alert_label }}">
+<section {{ attributes.addClass(classes) }} aria-labelledby="{{ 'type_of_alert_' ~ alert_id }} {{ 'alert_' ~ alert_id }}">
   {# Begin Wrapper #}
   <div class="localgov-alert-banner__wrapper">
     {# Begin Inner #}
@@ -40,11 +41,12 @@
       {# Begin Content #}
       <div class="localgov-alert-banner__content">
         {% if display_title %}
-          <h2 class="localgov-alert-banner__title">
+          <h2 class="localgov-alert-banner__title" id="{{ 'alert_' ~ alert_id }}">
             {{ content.title }}
           </h2>
         {% endif %}
 
+        <p class="visually-hidden" id="{{ 'type_of_alert_' ~ alert_id }}">{{ type_of_alert_label|default('Announcement') }}</p>
         <div class="localgov-alert-banner__body">
           {{ content|without('title', 'link') }}
         </div>
