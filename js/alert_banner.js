@@ -5,19 +5,28 @@
  * This is so if the alert changes, the banner is reshown.
  */
 
-(function($, cookies) {
+(function($) {
 
   'use strict';
 
   function setAlertBannerHideCookie(cookie_tokens, token) {
     cookie_tokens.push(token);
-    var new_cookie = cookie_tokens.join('+')
-    cookies.set('hide-alert-banner-token', new_cookie, { path: '/', expires: 30, SameSite: 'Lax' });
+    var new_cookie = cookie_tokens.join('+');
+    // Set expiry 30 days.
+    var expiry = Date.now() + (30 * 24 * 60 * 60 * 1000);
+    document.cookie = 'hide-alert-banner-token=' + new_cookie + '; expires=' + Date(expiry).toString() + '; SameSite=Lax;'
   }
 
   $(document).ready(function() {
 
-    var cookie = cookies.get('hide-alert-banner-token');
+    var all_cookies = document.cookie.split(';');
+    var cookie = '';
+    for (var i = 0; i < all_cookies.length; i++) {
+      var indv_cookie = all_cookies[i].split('=');
+      if (indv_cookie[0] == 'hide-alert-banner-token') {
+        cookie = indv_cookie[1];
+      }
+    }
     var cookie_tokens = typeof cookie !== 'undefined' ? cookie.split('+') : [];
 
     $('.js-localgov-alert-banner').each(function() {
@@ -37,4 +46,4 @@
 
   });
 
-}) (jQuery, window.Cookies);
+}) (jQuery);
