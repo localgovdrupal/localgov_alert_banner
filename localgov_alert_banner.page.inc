@@ -7,6 +7,7 @@
  * Page callback for Alert banner entities.
  */
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Render\Element;
 
 /**
@@ -41,5 +42,10 @@ function template_preprocess_localgov_alert_banner(array &$variables) {
     $options = $definitions['type_of_alert']->getSetting('allowed_values');
     $variables['type_of_alert_label'] = $options[$variables['type_of_alert']];
   }
+
+  // HTML id.
+  $html_id = Html::getUniqueId('localgov-alert-banner--' . $entity->id());
+  $variables['html_id'] = $html_id;
+  $variables['attributes']['id'] = $html_id;
 
 }
