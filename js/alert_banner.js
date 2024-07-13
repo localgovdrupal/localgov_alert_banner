@@ -14,17 +14,16 @@
     var new_cookie = cookie_tokens.join('+');
     // Set expiry 30 days.
     var expiry = Date.now() + (30 * 24 * 60 * 60 * 1000);
-    document.cookie = 'hide-alert-banner-token=' + new_cookie + '; expires=' + Date(expiry).toString() + '; SameSite=Lax;'
+    document.cookie = 'hide-alert-banner-token=' + new_cookie + '; expires=' + new Date(expiry).toString() + '; SameSite=Lax;'
   }
 
   $(document).ready(function() {
 
     var all_cookies = document.cookie.split(';');
-    var cookie = '';
     for (var i = 0; i < all_cookies.length; i++) {
       var indv_cookie = all_cookies[i].split('=');
       if (indv_cookie[0] == 'hide-alert-banner-token') {
-        cookie = indv_cookie[1];
+        var cookie = indv_cookie[1];
       }
     }
     var cookie_tokens = typeof cookie !== 'undefined' ? cookie.split('+') : [];
