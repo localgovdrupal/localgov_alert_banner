@@ -44,10 +44,14 @@
             <h2 class="localgov-alert-banner__title" id="{{ html_id ~ '-label' }}">
               {{ content.title }}
             </h2>
-          {% endif %}
-          {# If a type of alert label is set add it for screen readers #}
-          {% if type_of_alert_label is not empty %}
+            {# If a type of alert label is set add it for screen readers #}
+            {% if type_of_alert_label is not empty %}
+              <p class="visually-hidden"> ({{ type_of_alert_label }})</p>
+            {% endif %}
+          {% elseif type_of_alert_label is not empty %}
             <p class="visually-hidden">{{ type_of_alert_label }}</p>
+          {% else %}
+            <p class="visually-hidden">{{ 'Announcement'|t }}</p>
           {% endif %}
         </div>
 
