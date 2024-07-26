@@ -155,6 +155,7 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
 
     $options = [
       'type' => $this->mapTypesConfigToQuery(),
+      'check_visible' => TRUE,
     ];
 
     // Fetch the current published banner.
@@ -168,13 +169,8 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
     // Render the alert banner.
     $build = [];
     foreach ($published_alert_banners as $alert_banner) {
-
-      // Only add to the build if it is visible.
-      // @see #154.
-      if ($alert_banner->isVisible()) {
-        $build[] = $this->entityTypeManager->getViewBuilder('localgov_alert_banner')
-          ->view($alert_banner);
-      }
+      $build[] = $this->entityTypeManager->getViewBuilder('localgov_alert_banner')
+        ->view($alert_banner);
     }
     return $build;
   }
@@ -199,6 +195,7 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
     $contexts = [];
     $options = [
       'type' => $this->mapTypesConfigToQuery(),
+      'check_visible' => FALSE,
     ];
     foreach ($this->alertBannerManager->getCurrentAlertBanners($options) as $alert_banner) {
       $contexts = Cache::mergeContexts($contexts, $alert_banner->getCacheContexts());
