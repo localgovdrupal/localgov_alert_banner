@@ -19,7 +19,7 @@
 
   $(document).ready(function() {
 
-    var all_cookies = document.cookie.split(';');
+    var all_cookies = document.cookie.split('; ');
     for (var i = 0; i < all_cookies.length; i++) {
       var indv_cookie = all_cookies[i].split('=');
       if (indv_cookie[0] == 'hide-alert-banner-token') {
