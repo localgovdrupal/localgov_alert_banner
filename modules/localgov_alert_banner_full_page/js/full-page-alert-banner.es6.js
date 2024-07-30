@@ -8,7 +8,7 @@
  * @see localgov-alert-banner--full.html.twig
  */
 
-(function launchModalAlertBanner(Drupal, drupalSettings, cookieMonster) {
+(function launchModalAlertBanner(Drupal, drupalSettings, cookieStore) {
   Drupal.behaviors.launchModalAlertBanner = {
     attach: function attach() {
       const alertId =
@@ -49,13 +49,15 @@
      * @see localgov_alert_banner/js/alert_banner.js
      */
     isHiddenAlert(lgAlert) {
-      const cookie = cookieMonster.get("hide-alert-banner-token");
-      const cookieTokens =
-        typeof cookie !== "undefined" ? cookie.split("+") : [];
-
       const dismissToken = lgAlert.getAttribute("data-dismiss-alert-token");
-      const isHidden = cookieTokens.includes(dismissToken);
+      const isHidden = cookieStore
+        .split(";")
+        .some(
+          (item) =>
+            item.trim().startsWith("hide-alert-banner-token=") &&
+            item.includes(dismissToken),
+        );
       return isHidden;
     },
   };
-})(Drupal, drupalSettings, window.Cookies);
+})(Drupal, drupalSettings, document.cookie);
