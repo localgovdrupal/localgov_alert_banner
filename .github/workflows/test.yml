@@ -13,7 +13,7 @@ on:
 
 jobs:
   tests:
-    uses: localgovdrupal/localgov_shared_workflows/.github/workflows/test-module.yml@1.x
+    uses: localgovdrupal/localgov_shared_workflows/.github/workflows/test-module.yml@fix/latest-release-lookup
     with:
       project: 'localgovdrupal/localgov_alert_banner'
       project_path: 'web/modules/contrib/localgov_alert_banner'
