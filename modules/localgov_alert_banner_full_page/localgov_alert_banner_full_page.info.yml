@@ -1,7 +1,7 @@
 name: 'LocalGov Full page Alert Banner'
 type: module
 description: 'Provides a full page alert banner for urgent alerts.'
-core_version_requirement: ^8.8 || ^9 || ^10
+core_version_requirement: ^10 || ^11
 package: LocalGov Drupal
 dependencies:
   - drupal:block
