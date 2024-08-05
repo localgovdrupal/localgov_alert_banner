@@ -8,13 +8,21 @@
   background-color: #00856A;
 }
 
+dialog.localgov-alert-banner {
+  margin: auto;
+}
+
+dialog.localgov-alert-banner::backdrop {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
 .localgov-alert-banner,
 .localgov-alert-banner a {
   color: #fefefe;
 }
 
 /* Reset the title colour as some themes assign a colour to h2.
-   Also reset the body text colour as Olivero assigns a colour 
+   Also reset the body text colour as Olivero assigns a colour
    to .text-content. */
 .localgov-alert-banner .localgov-alert-banner__title,
 .localgov-alert-banner .text-content {
