@@ -25,7 +25,7 @@ dialog + .backdrop {
 .localgov-alert-banner-full h1,
 .localgov-alert-banner-full p,
 .localgov-alert-banner-full a {
-	color: #FFFFFF;
+	color: inherit;
 }
 
 .localgov-alert-banner-full > .localgov-alert-banner-full--centered {
