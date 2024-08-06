@@ -43,7 +43,7 @@ class VisibilityTest extends BrowserTestBase {
         'type' => 'localgov_alert_banner',
         'title' => $title,
         'short_description' => $alert_message,
-        'type_of_alert' => 'minor',
+        'type_of_alert' => '20--minor',
         'moderation_state' => 'published',
         'visibility' => [
           'conditions' => [
