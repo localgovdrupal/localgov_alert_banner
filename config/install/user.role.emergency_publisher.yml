@@ -12,6 +12,7 @@ weight: -2
 is_admin: null
 permissions:
   - 'access administration pages'
+  - 'access content overview'
   - 'access localgov alert banner listing page'
   - 'access toolbar'
   - 'manage all localgov alert banner entities'
