@@ -11,9 +11,7 @@ label: 'Emergency publisher'
 weight: -2
 is_admin: null
 permissions:
-  - 'access content overview'
   - 'access localgov alert banner listing page'
-  - 'access toolbar'
   - 'manage all localgov alert banner entities'
   - 'use localgov_alert_banners transition publish'
   - 'use localgov_alert_banners transition unpublish'

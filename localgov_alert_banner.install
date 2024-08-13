@@ -19,14 +19,17 @@ use Symfony\Component\Yaml\Yaml;
  */
 function localgov_alert_banner_install($is_syncing) {
 
+  // Don't run this if syncing.
+  if ($is_syncing) {
+    return;
+  }
+
   // Configure scheduled transitions if enabled.
   if (\Drupal::moduleHandler()->moduleExists('scheduled_transitions')) {
     localgov_alert_banner_configure_scheduled_transitions();
   }
 
-  // Default grant permissions to view all alert banners.
-  user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, ['view all localgov alert banner entities']);
-  user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, ['view all localgov alert banner entities']);
+  localgov_alert_banner_set_default_permissions();
 }
 
 /**
