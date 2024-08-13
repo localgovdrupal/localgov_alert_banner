@@ -224,6 +224,8 @@ function localgov_alert_banner_update_9002() {
 }
 
 /**
+ * Assign additional permissions to Emergency publisher role.
+ *
  * Give emergency publisher permissions to access the alert banner manage screen
  * from the toolbar.
  */
