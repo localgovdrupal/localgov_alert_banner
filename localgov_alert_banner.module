@@ -7,6 +7,7 @@
 
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\user\RoleInterface;
 
 /**
  * Implements hook_help().
@@ -135,6 +136,29 @@ function localgov_alert_banner_configure_scheduled_transitions() {
     ]);
   }
   user_role_grant_permissions('emergency_publisher', $permissions);
+}
+
+/**
+ * Setup deafault permissions.
+ *
+ * @todo consider using hook_localgov_roles().
+ */
+function localgov_alert_banner_set_default_permissions() {
+
+  // Default grant permissions to view all alert banners.
+  user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, ['view all localgov alert banner entities']);
+  user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, ['view all localgov alert banner entities']);
+
+  // Set up emergency publisher access to toolbar if certian modules exist.
+  $perms = [];
+  $module_handler = \Drupal::service('module_handler');
+  if ($module_handler->moduleExists('node')) {
+    $perms[] = 'access content overview';
+  }
+  if ($module_handler->moduleExists('toolbar')) {
+    $perms[] = 'access toolbar';
+  }
+  user_role_grant_permissions('emergency_publisher', $perms);
 }
 
 /**
