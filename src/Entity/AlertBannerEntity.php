@@ -151,6 +151,7 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
     // Regenerate a JS token for the updated alert banner.
     if ($this->get('status')->value) {
       $prefix = 'alert-' . $this->id() . '-';
+      // @phpstan-ignore-next-line Both sha1 and uniqid are safe to use in this context.
       $hash = sha1(uniqid('', TRUE));
       $this->setToken($prefix . '-' . $hash);
     }
