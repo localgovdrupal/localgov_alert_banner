@@ -156,6 +156,7 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
     $status = (bool) $this->get('status')->value;
     if ($status) {
       $prefix = 'alert-' . $this->id() . '-';
+      // @phpstan-ignore-next-line Both sha1 and uniqid are safe to use in this context.
       $hash = sha1(uniqid('', TRUE));
       $this->setToken($prefix . '-' . $hash);
     }
