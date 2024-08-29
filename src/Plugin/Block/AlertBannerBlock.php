@@ -4,9 +4,11 @@ namespace Drupal\localgov_alert_banner\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
+use Drupal\Core\Session\AccountProxyInterface;
 use Drupal\localgov_alert_banner\AlertBannerManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -29,20 +31,6 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
   protected $entityTypeManager;
 
   /**
-   * Current user service.
-   *
-   * @var \Drupal\Core\Session\AccountProxyInterface
-   */
-  protected $currentUser;
-
-  /**
-   * The entity repository services.
-   *
-   * @var \Drupal\Core\Entity\EntityRepositoryInterface
-   */
-  protected $entityRepository;
-
-  /**
    * The Localgov alert banner manager service.
    *
    * @var \Drupal\localgov_alert_banner\AlertBannerManagerInterface
@@ -60,13 +48,28 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
    *   The plugin implementation definition.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager service.
-   * @param Drupal\localgov_alert_banner\AlertBannerManagerInterface $alert_banner_manager
+   * @param Drupal\localgov_alert_banner\AlertBannerManagerInterface|Drupal\Core\Session\AccountProxyInterfac $alert_banner_manager
    *   The localgov alert banner manager service.
+   * @param Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
+   *   The entity repository service.
+   *
+   * @see https://github.com/localgovdrupal/localgov_alert_banner/wiki/Change-to-alert-banner-block-signature
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AlertBannerManagerInterface $alert_banner_manager) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AlertBannerManagerInterface|AccountProxyInterface $alert_banner_manager, ?EntityRepositoryInterface $entity_repository = NULL) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
     $this->alertBannerManager = $alert_banner_manager;
+    if ($alert_banner_manager instanceof AccountProxyInterface) {
+      // @codingStandardsIgnoreStart
+      @trigger_error('Calling ' . __CLASS__ . '::_construct() without the $alert_banner_manager argument is deprecated in localgov_alert_banner:1.8.0 and and it will be required in localgov_alert_banner:2.0.0. See https://github.com/localgovdrupal/localgov_alert_banner/wiki/Change-to-alert-banner-block-signature/', E_USER_DEPRECATED);
+      @trigger_error('Calling ' . __CLASS__ . '::_construct() with the $current_user argument is deprecated in localgov_alert_banner:1.8.0 and is removed from localgov_alert_banner:2.0.0. See https://github.com/localgovdrupal/localgov_alert_banner/wiki/Change-to-alert-banner-block-signature', E_USER_DEPRECATED);
+      $this->alertBannerManager = \Drupal::service('localgov_alert_banner.manager');
+      // @codingStandardsIgnoreEnd
+    }
+    if ($entity_repository instanceof EntityRepositoryInterface) {
+      // @codingStandardsIgnoreLine
+      @trigger_error('Calling ' . __CLASS__ . '::_construct() with the $entity_repository argument is deprecated in localgov_alert_banner:1.8.0 and is removed from localgov_alert_banner:2.0.0. See https://github.com/localgovdrupal/localgov_alert_banner/wiki/Change-to-alert-banner-block-signature', E_USER_DEPRECATED);
+    }
   }
 
   /**
