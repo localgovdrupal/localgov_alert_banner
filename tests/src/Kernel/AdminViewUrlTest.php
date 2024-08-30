@@ -51,7 +51,7 @@ class AdminViewUrlTest extends KernelTestBase {
   }
 
   /**
-   * Test admin view output.
+   * Test admin view url.
    *
    * @throws \Exception
    */
