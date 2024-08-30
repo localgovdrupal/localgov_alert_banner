@@ -47,8 +47,6 @@ class AdminViewTest extends BrowserTestBase {
    * Test load the alert banner admin view.
    */
   public function testLoadAdminView() {
-    // Create an admin user -- @todo move to set up.
-    $adminUser = $this->createUser([], 'admintestuser', TRUE);
     $this->drupalLogin($this->adminUser);
 
     // Check can access the admin view dashboard.
@@ -56,7 +54,6 @@ class AdminViewTest extends BrowserTestBase {
     $this->assertSession()->statusCodeEquals(Response::HTTP_OK);
 
     // Check this is the view by making sure certian view only text is present.
-    // @todo Work out how to make sure this is the view path (Kernal test?).
     $this->assertSession()->responseContains('Manage Alert Banners');
 
     // Check that loading the collection URL loads the admin dashboard.
