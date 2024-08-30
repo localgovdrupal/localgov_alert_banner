@@ -35,12 +35,11 @@ class AdminViewTest extends BrowserTestBase {
    *
    * @throws \Drupal\Core\Entity\EntityStorageException
    */
-  protected function setUp(): void
-  {
+  protected function setUp(): void {
     parent::setUp();
 
     // Create an admin user.
-    $this->adminUser = $this->createUser([], 'admintestuser', true);
+    $this->adminUser = $this->createUser([], 'admintestuser', TRUE);
   }
 
   /**
