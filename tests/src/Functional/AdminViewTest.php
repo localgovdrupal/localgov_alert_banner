@@ -17,6 +17,13 @@ class AdminViewTest extends BrowserTestBase {
   protected $defaultTheme = 'claro';
 
   /**
+   * Admin user.
+   *
+   * @var \Drupal\user\Entity\User|false
+   */
+  protected $adminUser;
+
+  /**
    * {@inheritdoc}
    */
   protected static $modules = [
@@ -24,12 +31,25 @@ class AdminViewTest extends BrowserTestBase {
   ];
 
   /**
+   * Test setup.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  protected function setUp(): void
+  {
+    parent::setUp();
+
+    // Create an admin user.
+    $this->adminUser = $this->createUser([], 'admintestuser', true);
+  }
+
+  /**
    * Test load the alert banner admin view.
    */
   public function testLoadAdminView() {
     // Create an admin user -- @todo move to set up.
     $adminUser = $this->createUser([], 'admintestuser', TRUE);
-    $this->drupalLogin($adminUser);
+    $this->drupalLogin($this->adminUser);
 
     // Check can access the admin view dashboard.
     $this->drupalGet('admin/content/alert-banner');
