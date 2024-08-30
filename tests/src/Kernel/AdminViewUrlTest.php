@@ -7,7 +7,7 @@ use Drupal\KernelTests\KernelTestBase;
 use Drupal\views\Views;
 
 /**
- * Test admin view output.
+ * Test admin view url.
  *
  * @group localgov_alert_banner
  */
