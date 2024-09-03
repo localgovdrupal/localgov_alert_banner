@@ -4,6 +4,7 @@ namespace Drupal\localgov_alert_banner\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\DependencyInjection\DeprecatedServicePropertyTrait;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
@@ -22,6 +23,18 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * )
  */
 class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterface {
+
+  use DeprecatedServicePropertyTrait;
+
+  /**
+   * Defines deprecated injected properties.
+   *
+   * @var array
+   */
+  protected array $deprecatedProperties = [
+    'currentUser' => 'current_user',
+    'entityRepository' => 'entity.repository',
+  ];
 
   /**
    * The entity type manager service.
