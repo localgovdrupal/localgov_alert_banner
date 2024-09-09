@@ -33,7 +33,7 @@ content:
     type: link
     region: content
   short_description:
-    weight: 1
+    weight: 2
     label: hidden
     settings: {  }
     third_party_settings: {  }
@@ -47,8 +47,14 @@ content:
     settings:
       link_to_entity: false
     third_party_settings: {  }
+  type_of_alert:
+    type: list_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
 hidden:
   content_moderation_control: true
-  type_of_alert: true
   uid: true
   visibility: true
