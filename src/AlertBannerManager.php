@@ -40,6 +40,7 @@ class AlertBannerManager implements AlertBannerManagerInterface {
     // Set default options.
     $default_options = [
       'type' => [],
+      'check_visible' => FALSE,
     ];
     $options = array_merge($default_options, $options);
 
@@ -71,7 +72,7 @@ class AlertBannerManager implements AlertBannerManagerInterface {
       ->execute();
 
     // Load alert banners and add all.
-    // Visibility check happens in block build, so we get cache contexts on all.
+    // Visibility check happens separately, so we get cache contexts on all.
     if (!empty($published_alert_banners)) {
       foreach ($alert_banner_storage->loadMultiple($published_alert_banners) as $alert_banner) {
         $alert_banner = $this->entityRepository->getTranslationFromContext($alert_banner);
@@ -81,6 +82,15 @@ class AlertBannerManager implements AlertBannerManagerInterface {
           $current_alert_banners[] = $alert_banner;
         }
       }
+    }
+
+    // Check visibility if specified.
+    // Should only be when banners are being displayed.
+    // @see #154.
+    if ($options['check_visible']) {
+      $current_alert_banners = array_filter($current_alert_banners, function ($alert_banner) {
+        return $alert_banner->isVisible();
+      });
     }
 
     return $current_alert_banners;
