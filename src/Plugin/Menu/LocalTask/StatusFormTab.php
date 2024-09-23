@@ -18,7 +18,7 @@ class StatusFormTab extends LocalTaskDefault {
   /**
    * {@inheritdoc}
    */
-  public function getTitle(Request $request = NULL) {
+  public function getTitle(?Request $request = NULL) {
     $alert_banner = $request->attributes->get('localgov_alert_banner');
     if ($alert_banner instanceof AlertBannerEntityInterface) {
       $controller = new AlertBannerEntityController();
