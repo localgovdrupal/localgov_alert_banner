@@ -20,10 +20,11 @@
   $(document).ready(function() {
 
     const all_cookies = document.cookie.split('; ');
+    let cookie;
     for (let i = 0; i < all_cookies.length; i++) {
       const indv_cookie = all_cookies[i].split('=');
       if (indv_cookie[0] == 'hide-alert-banner-token') {
-        const cookie = indv_cookie[1];
+        cookie = indv_cookie[1];
       }
     }
     const cookie_tokens = typeof cookie !== 'undefined' ? cookie.split('+') : [];
