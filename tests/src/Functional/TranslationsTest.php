@@ -2,11 +2,11 @@
 
 namespace Drupal\Tests\localgov_alert_banner\Functional;
 
+use Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\node\Traits\NodeCreationTrait;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\language\Entity\ConfigurableLanguage;
 use Drupal\node\NodeInterface;
-use Drupal\Tests\BrowserTestBase;
-use Drupal\Tests\node\Traits\NodeCreationTrait;
 
 /**
  * Functional tests for LocalGovDrupal Alert banner block.

@@ -2,8 +2,8 @@
 
 namespace Drupal\Tests\localgov_alert_banner\Functional;
 
-use Drupal\block\Entity\Block;
 use Drupal\Tests\BrowserTestBase;
+use Drupal\block\Entity\Block;
 
 /**
  * Functional tests for LocalGovDrupal Alert banner block.
