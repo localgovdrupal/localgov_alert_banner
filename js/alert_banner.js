@@ -5,45 +5,72 @@
  * This is so if the alert changes, the banner is reshown.
  */
 
-(function($) {
+(function localgovAlertBannerScript(Drupal) {
+  Drupal.behaviors.localgovAlertBanners = {
+    attach(context) {
+      "use strict";
 
-  'use strict';
-
-  function setAlertBannerHideCookie(cookie_tokens, token) {
-    cookie_tokens.push(token);
-    const new_cookie = cookie_tokens.join('+');
-    // Set expiry 30 days.
-    const expiry = Date.now() + (30 * 24 * 60 * 60 * 1000);
-    document.cookie = 'hide-alert-banner-token=' + new_cookie + '; expires=' + new Date(expiry).toString() + '; SameSite=Lax;'
-  }
-
-  $(document).ready(function() {
-
-    const all_cookies = document.cookie.split('; ');
-    let cookie;
-    for (let i = 0; i < all_cookies.length; i++) {
-      const indv_cookie = all_cookies[i].split('=');
-      if (indv_cookie[0] == 'hide-alert-banner-token') {
-        cookie = indv_cookie[1];
+      function setAlertBannerHideCookie(cookieTokens, token) {
+        cookieTokens.push(token);
+        const newCookie = cookieTokens.join("+");
+        // Set expiry 30 days.
+        const expiry = Date.now() + 30 * 24 * 60 * 60 * 1000;
+        document.cookie = `hide-alert-banner-token=${newCookie}; expires=${new Date(
+          expiry
+        ).toUTCString()}; SameSite=Lax;`;
       }
-    }
-    const cookie_tokens = typeof cookie !== 'undefined' ? cookie.split('+') : [];
 
-    $('.js-localgov-alert-banner').each(function() {
-      $(this).removeClass('hidden');
-      const token = $(this).data('dismiss-alert-token');
-      if ($.inArray(token, cookie_tokens) > -1) {
-        $(this).hide();
-      }
-    });
+      document.addEventListener("DOMContentLoaded", function () {
+        const allCookies = document.cookie.split("; ");
+        let cookie;
 
-    $('.js-localgov-alert-banner__close').click(function(e) {
-      e.preventDefault();
-      const banner = $(this).closest('.js-localgov-alert-banner');
-      banner.attr("aria-hidden", "true").slideUp('fast');
-      setAlertBannerHideCookie(cookie_tokens, banner.data('dismiss-alert-token'));
-    });
+        for (let i = 0; i < allCookies.length; i++) {
+          const indvCookie = allCookies[i].split("=");
+          if (indvCookie[0] === "hide-alert-banner-token") {
+            cookie = indvCookie[1];
+          }
+        }
 
-  });
+        const cookieTokens =
+          typeof cookie !== "undefined" ? cookie.split("+") : [];
 
-}) (jQuery);
+        const alertBanners = once(
+          "allAlertBanners",
+          ".js-localgov-alert-banner",
+          context
+        );
+
+        if (alertBanners) {
+          alertBanners.forEach(function (banner) {
+            banner.classList.remove("hidden");
+            const token = banner.getAttribute("data-dismiss-alert-token");
+            if (cookieTokens.includes(token)) {
+              banner.style.display = "none";
+            }
+          });
+        }
+
+        const alertBannerCloseButtons = once(
+          "allAlertBannerCloseButtons",
+          ".js-localgov-alert-banner__close",
+          context
+        );
+
+        if (alertBannerCloseButtons) {
+          alertBannerCloseButtons.forEach(function (closeButton) {
+            closeButton.addEventListener("click", function (e) {
+              e.preventDefault();
+              const banner = closeButton.closest(".js-localgov-alert-banner");
+              banner.setAttribute("aria-hidden", "true");
+              banner.style.display = "none";
+              setAlertBannerHideCookie(
+                cookieTokens,
+                banner.getAttribute("data-dismiss-alert-token")
+              );
+            });
+          });
+        }
+      });
+    },
+  };
+})(Drupal);
