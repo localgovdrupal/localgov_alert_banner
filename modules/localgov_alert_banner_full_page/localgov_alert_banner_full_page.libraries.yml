@@ -9,3 +9,4 @@ full_page_alert_banner:
   dependencies:
     - core/drupalSettings
     - localgov_alert_banner/alert_banner
+    - core/once
