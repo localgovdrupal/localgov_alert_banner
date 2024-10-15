@@ -25,7 +25,7 @@ use Drupal\workflows\Entity\Workflow;
  *       "delete" = "Drupal\localgov_alert_banner\Form\AlertBannerEntityTypeDeleteForm"
  *     },
  *     "route_provider" = {
- *       "html" = "Drupal\localgov_alert_banner\AlertBannerEntityTypeHtmlRouteProvider",
+ *       "html" = "Drupal\Core\Entity\Routing\AdminHtmlRouteProvider",
  *       "permissions" = "Drupal\user\Entity\EntityPermissionsRouteProvider",
  *     },
  *   },
@@ -42,12 +42,11 @@ use Drupal\workflows\Entity\Workflow;
  *     "label"
  *   },
  *   links = {
- *     "canonical" = "/admin/structure/alert-banner-types/{localgov_alert_banner_type}",
- *     "add-form" = "/admin/structure/alert-banner-types/add",
- *     "edit-form" = "/admin/structure/alert-banner-types/{localgov_alert_banner_type}/edit",
- *     "delete-form" = "/admin/structure/alert-banner-types/{localgov_alert_banner_type}/delete",
- *     "entity-permissions-form" = "/admin/structure/alert-banner-types/{localgov_alert_banner_type}/permissions",
- *     "collection" = "/admin/structure/alert-banner-types"
+ *     "add-form" = "/admin/structure/localgov_alert_banner_types/add",
+ *     "edit-form" = "/admin/structure/localgov_alert_banner_types/manage/{localgov_alert_banner_type}",
+ *     "delete-form" = "/admin/structure/localgov_alert_banner_types/manage/{localgov_alert_banner_type}/delete",
+ *     "entity-permissions-form" = "/admin/structure/localgov_alert_banner_types/manage/{localgov_alert_banner_type}/permissions",
+ *     "collection" = "/admin/structure/localgov_alert_banner_types"
  *   }
  * )
  */

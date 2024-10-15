@@ -35,9 +35,13 @@ use Drupal\user\UserInterface;
  *       "edit" = "Drupal\localgov_alert_banner\Form\AlertBannerEntityForm",
  *       "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm",
  *       "status" = "Drupal\localgov_alert_banner\Form\AlertBannerEntityStatusForm",
+ *       "delete-multiple-confirm" = "Drupal\Core\Entity\Form\DeleteMultipleForm",
+ *       "revision-delete" = \Drupal\Core\Entity\Form\RevisionDeleteForm::class,
+ *       "revision-revert" = \Drupal\Core\Entity\Form\RevisionRevertForm::class,
  *     },
  *     "route_provider" = {
  *       "html" = "Drupal\localgov_alert_banner\AlertBannerEntityHtmlRouteProvider",
+ *       "revision" = \Drupal\Core\Entity\Routing\RevisionHtmlRouteProvider::class,
  *     },
  *     "access" = "Drupal\localgov_alert_banner\AlertBannerEntityAccessControlHandler",
  *   },
@@ -72,8 +76,8 @@ use Drupal\user\UserInterface;
  *     "status-form" = "/admin/content/alert-banner/{localgov_alert_banner}/status",
  *     "version-history" = "/admin/content/alert-banner/{localgov_alert_banner}/revisions",
  *     "revision" = "/admin/content/alert-banner/{localgov_alert_banner}/revisions/{localgov_alert_banner_revision}/view",
- *     "revision_revert" = "/admin/content/alert-banner/{localgov_alert_banner}/revisions/{localgov_alert_banner_revision}/revert",
- *     "revision_delete" = "/admin/content/alert-banner/{localgov_alert_banner}/revisions/{localgov_alert_banner_revision}/delete",
+ *     "revision-revert-form" = "/admin/content/alert-banner/{localgov_alert_banner}/revisions/{localgov_alert_banner_revision}/revert",
+ *     "revision-delete-form" = "/admin/content/alert-banner/{localgov_alert_banner}/revisions/{localgov_alert_banner_revision}/delete",
  *     "translation_revert" = "/admin/content/alert-banner/{localgov_alert_banner}/revisions/{localgov_alert_banner_revision}/revert/{langcode}",
  *     "collection" = "/admin/content/alert-banner",
  *   },
@@ -149,7 +153,8 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
     }
 
     // Regenerate a JS token for the updated alert banner.
-    if ($this->get('status')->value) {
+    $status = (bool) $this->get('status')->value;
+    if ($status) {
       $prefix = 'alert-' . $this->id() . '-';
       // @phpstan-ignore-next-line Both sha1 and uniqid are safe to use in this context.
       $hash = sha1(uniqid('', TRUE));

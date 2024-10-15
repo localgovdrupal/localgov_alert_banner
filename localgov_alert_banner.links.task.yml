@@ -28,3 +28,8 @@ entity.localgov_alert_banner.collection:
   base_route: system.admin_content
   title: 'Alert banners'
   weight: 30
+
+entity.localgov_alert_banner_type.edit_form:
+  title: Edit
+  route_name: entity.localgov_alert_banner_type.edit_form
+  base_route: entity.localgov_alert_banner_type.edit_form
