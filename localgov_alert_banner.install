@@ -231,18 +231,18 @@ function localgov_alert_banner_update_9002() {
  * from the toolbar.
  */
 function localgov_alert_banner_update_10002() {
-$module_handler = \Drupal::service('module_handler');
+  $module_handler = \Drupal::service('module_handler');
 
-$perms[] = 'view the administration theme';
-if ($module_handler->moduleExists('node')) {
-  $perms[] = 'access content overview';
-}
-if ($module_handler->moduleExists('toolbar')) {
-  $perms[] = 'access toolbar';
-}
+  $perms[] = 'view the administration theme';
+  if ($module_handler->moduleExists('node')) {
+    $perms[] = 'access content overview';
+  }
+  if ($module_handler->moduleExists('toolbar')) {
+    $perms[] = 'access toolbar';
+  }
 
-// Add and revoke permissions if emergency publisher exists.
-if (Role::load('emergency_publisher') instanceof RoleInterface) {
+  // Add and revoke permissions if emergency publisher exists.
+  if (Role::load('emergency_publisher') instanceof RoleInterface) {
     user_role_grant_permissions('emergency_publisher', $perms);
     user_role_revoke_permissions('emergency_publisher', ['access administration pages']);
   }
