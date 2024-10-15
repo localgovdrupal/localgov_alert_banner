@@ -79,7 +79,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
         'type' => 'localgov_alert_banner',
         'title' => $title,
         'short_description' => $alert_message,
-        'type_of_alert' => 'minor',
+        'type_of_alert' => '20--minor',
         // 'link' => 'https://localgovdrupal.org/'.
         'moderation_state' => 'published',
       ]);
@@ -111,7 +111,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
         'type' => 'localgov_alert_banner',
         'title' => $title,
         'short_description' => $alert_message,
-        'type_of_alert' => 'minor',
+        'type_of_alert' => '20--minor',
         // 'link' => 'https://localgovdrupal.org/'.
         'moderation_state' => 'unpublished',
       ]);
@@ -134,7 +134,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
         'type' => 'localgov_alert_banner',
         'title' => $title,
         'short_description' => $alert_message,
-        'type_of_alert' => 'minor',
+        'type_of_alert' => '20--minor',
         'display_title' => 1,
         'moderation_state' => 'published',
       ]);
@@ -163,7 +163,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
         'type' => 'localgov_alert_banner',
         'title' => $title,
         'short_description' => $alert_message,
-        'type_of_alert' => 'minor',
+        'type_of_alert' => '20--minor',
         'remove_hide_link' => 0,
         'moderation_state' => 'published',
       ]);

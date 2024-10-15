@@ -62,7 +62,7 @@ class TranslationsTest extends BrowserTestBase {
         'type' => 'localgov_alert_banner',
         'title' => $alert_title,
         'short_description' => $alert_body,
-        'type_of_alert' => 'minor',
+        'type_of_alert' => '20--minor',
         'moderation_state' => 'published',
         'langcode' => $default_langcode,
       ]);
@@ -74,7 +74,7 @@ class TranslationsTest extends BrowserTestBase {
     $alert->addTranslation('zz', [
       'title' => $translated_alert_title,
       'short_description' => $translated_alert_body,
-      'type_of_alert' => 'minor',
+      'type_of_alert' => '20--minor',
       'moderation_state' => 'published',
     ])->save();
 
@@ -117,7 +117,7 @@ class TranslationsTest extends BrowserTestBase {
         'type' => 'localgov_alert_banner',
         'title' => $alert_title_node,
         'short_description' => $alert_body_node,
-        'type_of_alert' => 'minor',
+        'type_of_alert' => '20--minor',
         'moderation_state' => 'published',
         'langcode' => $default_langcode,
         'visibility' => [
@@ -137,7 +137,7 @@ class TranslationsTest extends BrowserTestBase {
     $node_alert->addTranslation('zz', [
       'title' => $translated_alert_title_node,
       'short_description' => $translated_alert_body_node,
-      'type_of_alert' => 'minor',
+      'type_of_alert' => '20--minor',
       'moderation_state' => 'published',
     ])->save();
 
@@ -194,7 +194,7 @@ class TranslationsTest extends BrowserTestBase {
         'type' => 'localgov_alert_banner',
         'title' => $alert_title_pa_node,
         'short_description' => $alert_body_pa_node,
-        'type_of_alert' => 'minor',
+        'type_of_alert' => '20--minor',
         'moderation_state' => 'published',
         'langcode' => $default_langcode,
         'visibility' => [
@@ -214,7 +214,7 @@ class TranslationsTest extends BrowserTestBase {
     $pa_node_alert->addTranslation('zz', [
       'title' => $translated_alert_title_pa_node,
       'short_description' => $translated_alert_body_pa_node,
-      'type_of_alert' => 'minor',
+      'type_of_alert' => '20--minor',
       'moderation_state' => 'published',
     ])->save();
 

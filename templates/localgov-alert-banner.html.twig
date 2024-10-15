@@ -32,18 +32,28 @@
   ]
 %}
 
-<article {{ attributes.addClass(classes) }}>
+<section {{ attributes.addClass(classes) }} aria-labelledby="{{ html_id ~ '-label' }}">
   {# Begin Wrapper #}
   <div class="localgov-alert-banner__wrapper">
     {# Begin Inner #}
     <div class="localgov-alert-banner__inner">
       {# Begin Content #}
       <div class="localgov-alert-banner__content">
-        {% if display_title %}
-          <h2 class="localgov-alert-banner__title">
-            {{ content.title }}
-          </h2>
-        {% endif %}
+        <div id="{{ html_id ~ '-label' }}">
+          {% if display_title %}
+            <h2 class="localgov-alert-banner__title">
+              {{ content.title }}
+            </h2>
+            {# If a type of alert label is set add it for screen readers #}
+            {% if type_of_alert_label is not empty %}
+              <p class="visually-hidden"> ({{ type_of_alert_label }})</p>
+            {% endif %}
+          {% elseif type_of_alert_label is not empty %}
+            <p class="visually-hidden">{{ type_of_alert_label }}</p>
+          {% else %}
+            <p class="visually-hidden">{{ 'Announcement'|t }}</p>
+          {% endif %}
+        </div>
 
         <div class="localgov-alert-banner__body">
           {{ content|without('title', 'link') }}
@@ -63,4 +73,4 @@
       {% endif %}
     </div> {# End Inner #}
   </div> {# End Wrapper #}
-</article>
+</section>
