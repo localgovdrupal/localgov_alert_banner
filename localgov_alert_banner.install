@@ -19,14 +19,17 @@ use Symfony\Component\Yaml\Yaml;
  */
 function localgov_alert_banner_install($is_syncing) {
 
+  // Don't run this if syncing.
+  if ($is_syncing) {
+    return;
+  }
+
   // Configure scheduled transitions if enabled.
   if (\Drupal::moduleHandler()->moduleExists('scheduled_transitions')) {
     localgov_alert_banner_configure_scheduled_transitions();
   }
 
-  // Default grant permissions to view all alert banners.
-  user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, ['view all localgov alert banner entities']);
-  user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, ['view all localgov alert banner entities']);
+  localgov_alert_banner_set_default_permissions();
 }
 
 /**
@@ -218,4 +221,23 @@ function localgov_alert_banner_update_9002() {
     user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, ['view localgov alert banner ' . $bundle . ' entities']);
     user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, ['view localgov alert banner ' . $bundle . ' entities']);
   }
+}
+
+/**
+ * Assign additional permissions to Emergency publisher role.
+ *
+ * Give emergency publisher permissions to access the alert banner manage screen
+ * from the toolbar.
+ */
+function localgov_alert_banner_update_10002() {
+  $module_handler = \Drupal::service('module_handler');
+  $perms[] = 'view the administration theme';
+  if ($module_handler->moduleExists('node')) {
+    $perms[] = 'access content overview';
+  }
+  if ($module_handler->moduleExists('toolbar')) {
+    $perms[] = 'access toolbar';
+  }
+  user_role_grant_permissions('emergency_publisher', $perms);
+  user_role_revoke_permissions('emergency_publisher', ['access administration pages']);
 }

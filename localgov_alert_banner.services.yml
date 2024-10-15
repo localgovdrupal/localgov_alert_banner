@@ -8,3 +8,7 @@ services:
     arguments: ['@current_user', '@current_route_match']
     tags:
       - { name: access_check }
+
+  localgov_alert_banner.manager:
+    class: Drupal\localgov_alert_banner\AlertBannerManager
+    arguments: ['@entity_type.manager', '@current_user', '@entity.repository']
