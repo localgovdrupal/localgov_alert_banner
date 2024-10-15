@@ -39,14 +39,23 @@
     <div class="localgov-alert-banner__inner">
       {# Begin Content #}
       <div class="localgov-alert-banner__content">
-        {% if display_title %}
-          <h2 class="localgov-alert-banner__title">
-            {{ content.title }}
-          </h2>
+        {% if display_title or content.type_of_alert %}
+          <header class="localgov-alert-banner__header">
+          {% if display_title %}
+            <h2 class="localgov-alert-banner__title">
+              {{ content.title }}
+            </h2>
+          {% endif %}
+          {% if content.type_of_alert %}
+            <p class="localgov-alert-banner__type-of-alert">
+              {{ content.type_of_alert }}
+            </p>
+          {% endif %}
+          </header>
         {% endif %}
 
         <div class="localgov-alert-banner__body">
-          {{ content|without('title', 'link') }}
+          {{ content|without('title', 'link', 'type_of_alert') }}
         </div>
 
         {% if has_link %}
