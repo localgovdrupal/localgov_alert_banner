@@ -6,6 +6,7 @@ dependencies:
     - field.field.localgov_alert_banner.localgov_full_page.localgov_alert_banner_body
     - field.field.localgov_alert_banner.localgov_full_page.localgov_alert_banner_image
     - field.field.localgov_alert_banner.localgov_full_page.type_of_alert
+    - field.field.localgov_alert_banner.localgov_full_page.visibility
     - localgov_alert_banner.localgov_alert_banner_type.localgov_full_page
   module:
     - link
@@ -16,8 +17,8 @@ bundle: localgov_full_page
 mode: default
 content:
   link:
-    weight: 3
-    label: visually_hidden
+    type: link
+    label: hidden
     settings:
       trim_length: 80
       url_only: false
@@ -25,34 +26,35 @@ content:
       rel: ''
       target: ''
     third_party_settings: {  }
-    type: link
+    weight: 3
     region: content
   localgov_alert_banner_body:
-    weight: 2
-    label: visually_hidden
+    type: text_default
+    label: hidden
     settings: {  }
     third_party_settings: {  }
-    type: text_default
+    weight: 2
     region: content
   localgov_alert_banner_image:
     type: entity_reference_entity_view
-    weight: 1
-    label: visually_hidden
+    label: hidden
     settings:
       view_mode: default
       link: false
     third_party_settings: {  }
+    weight: 1
     region: content
   title:
-    label: visually_hidden
     type: string
-    weight: 0
-    region: content
+    label: hidden
     settings:
       link_to_entity: false
     third_party_settings: {  }
+    weight: 0
+    region: content
 hidden:
   content_moderation_control: true
   search_api_excerpt: true
   type_of_alert: true
   uid: true
+  visibility: true
