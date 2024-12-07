@@ -2,8 +2,8 @@
 
 namespace Drupal\Tests\localgov_alert_banner\Functional;
 
-use Drupal\localgov_alert_banner\Entity\AlertBannerEntity;
 use Drupal\Tests\BrowserTestBase;
+use Drupal\localgov_alert_banner\Entity\AlertBannerEntity;
 
 /**
  * Tests the core Drupal\views\Plugin\views\StatusPageLink handler.

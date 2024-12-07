@@ -90,7 +90,7 @@ class AlertBannerEntityRevisionRevertTranslationForm extends AlertBannerEntityRe
     $revision_translation = $revision->getTranslation($this->langcode);
 
     foreach ($latest_revision_translation->getFieldDefinitions() as $field_name => $definition) {
-      if ($definition->isTranslatable() || $revert_untranslated_fields) {
+      if ($definition->isTranslatable() || !is_null($revert_untranslated_fields)) {
         $latest_revision_translation->set($field_name, $revision_translation->get($field_name)->getValue());
       }
     }

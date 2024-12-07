@@ -17,6 +17,13 @@ class AdminViewTest extends BrowserTestBase {
   protected $defaultTheme = 'claro';
 
   /**
+   * Admin user.
+   *
+   * @var \Drupal\user\Entity\User|false
+   */
+  protected $adminUser;
+
+  /**
    * {@inheritdoc}
    */
   protected static $modules = [
@@ -24,19 +31,28 @@ class AdminViewTest extends BrowserTestBase {
   ];
 
   /**
+   * Test setup.
+   *
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   */
+  protected function setUp(): void {
+    parent::setUp();
+
+    // Create an admin user.
+    $this->adminUser = $this->createUser([], 'admintestuser', TRUE);
+  }
+
+  /**
    * Test load the alert banner admin view.
    */
   public function testLoadAdminView() {
-    // Create an admin user -- @todo move to set up.
-    $adminUser = $this->createUser([], 'admintestuser', TRUE);
-    $this->drupalLogin($adminUser);
+    $this->drupalLogin($this->adminUser);
 
     // Check can access the admin view dashboard.
     $this->drupalGet('admin/content/alert-banner');
     $this->assertSession()->statusCodeEquals(Response::HTTP_OK);
 
     // Check this is the view by making sure certian view only text is present.
-    // @todo Work out how to make sure this is the view path (Kernal test?).
     $this->assertSession()->responseContains('Manage Alert Banners');
 
     // Check that loading the collection URL loads the admin dashboard.

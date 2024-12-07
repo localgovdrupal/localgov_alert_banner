@@ -7,7 +7,7 @@
     "license": "GPL-2.0-or-later",
     "require": {
         "drupal/condition_field": "^2.0",
-        "drupal/core": "^9.4 || ^10.0"
+        "drupal/core": "^10.0 || ^11.0"
     },
     "require-dev": {
         "drupal/group": "^3.2",
@@ -15,7 +15,7 @@
     },
     "suggest": {
         "drupal/scheduled_transitions": "Gives the ability to schedule the publishing and unpublishing of alert banners",
-        "localgovdrupal/localgov_core": "^1 || ^2",
+        "localgovdrupal/localgov_core": "Required by localgov_alert_banner_full_page sub module for localgov_media.",
         "drupal/group": "For Group integration."
     }
 }

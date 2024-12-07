@@ -4,12 +4,13 @@ namespace Drupal\localgov_alert_banner\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Cache\Cache;
+use Drupal\Core\DependencyInjection\DeprecatedServicePropertyTrait;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountProxyInterface;
-use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\localgov_alert_banner\AlertBannerManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -23,6 +24,18 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterface {
 
+  use DeprecatedServicePropertyTrait;
+
+  /**
+   * Defines deprecated injected properties.
+   *
+   * @var array
+   */
+  protected array $deprecatedProperties = [
+    'currentUser' => 'current_user',
+    'entityRepository' => 'entity.repository',
+  ];
+
   /**
    * The entity type manager service.
    *
@@ -31,18 +44,11 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
   protected $entityTypeManager;
 
   /**
-   * Current user service.
+   * The Localgov alert banner manager service.
    *
-   * @var \Drupal\Core\Session\AccountProxyInterface
+   * @var \Drupal\localgov_alert_banner\AlertBannerManagerInterface
    */
-  protected $currentUser;
-
-  /**
-   * The entity repository services.
-   *
-   * @var \Drupal\Core\Entity\EntityRepositoryInterface
-   */
-  protected $entityRepository;
+  protected $alertBannerManager;
 
   /**
    * Constructs a new AlertBannerBlock.
@@ -55,16 +61,28 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
    *   The plugin implementation definition.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager service.
-   * @param \Drupal\Core\Session\AccountProxyInterface $current_user
-   *   Current user service.
+   * @param Drupal\localgov_alert_banner\AlertBannerManagerInterface|Drupal\Core\Session\AccountProxyInterfac $alert_banner_manager
+   *   The localgov alert banner manager service.
    * @param Drupal\Core\Entity\EntityRepositoryInterface $entity_repository
    *   The entity repository service.
+   *
+   * @see https://github.com/localgovdrupal/localgov_alert_banner/wiki/Change-to-alert-banner-block-signature
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AccountProxyInterface $current_user, EntityRepositoryInterface $entity_repository) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, EntityTypeManagerInterface $entity_type_manager, AlertBannerManagerInterface|AccountProxyInterface $alert_banner_manager, ?EntityRepositoryInterface $entity_repository = NULL) {
     parent::__construct($configuration, $plugin_id, $plugin_definition);
     $this->entityTypeManager = $entity_type_manager;
-    $this->currentUser = $current_user;
-    $this->entityRepository = $entity_repository;
+    $this->alertBannerManager = $alert_banner_manager;
+    if ($alert_banner_manager instanceof AccountProxyInterface) {
+      // @codingStandardsIgnoreStart
+      @trigger_error('Calling ' . __CLASS__ . '::_construct() without the $alert_banner_manager argument is deprecated in localgov_alert_banner:1.8.0 and and it will be required in localgov_alert_banner:2.0.0. See https://github.com/localgovdrupal/localgov_alert_banner/wiki/Change-to-alert-banner-block-signature/', E_USER_DEPRECATED);
+      @trigger_error('Calling ' . __CLASS__ . '::_construct() with the $current_user argument is deprecated in localgov_alert_banner:1.8.0 and is removed from localgov_alert_banner:2.0.0. See https://github.com/localgovdrupal/localgov_alert_banner/wiki/Change-to-alert-banner-block-signature', E_USER_DEPRECATED);
+      $this->alertBannerManager = \Drupal::service('localgov_alert_banner.manager');
+      // @codingStandardsIgnoreEnd
+    }
+    if ($entity_repository instanceof EntityRepositoryInterface) {
+      // @codingStandardsIgnoreLine
+      @trigger_error('Calling ' . __CLASS__ . '::_construct() with the $entity_repository argument is deprecated in localgov_alert_banner:1.8.0 and is removed from localgov_alert_banner:2.0.0. See https://github.com/localgovdrupal/localgov_alert_banner/wiki/Change-to-alert-banner-block-signature', E_USER_DEPRECATED);
+    }
   }
 
   /**
@@ -87,8 +105,7 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
       $plugin_id,
       $plugin_definition,
       $container->get('entity_type.manager'),
-      $container->get('current_user'),
-      $container->get('entity.repository'),
+      $container->get('localgov_alert_banner.manager'),
     );
   }
 
@@ -136,8 +153,13 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
    */
   public function build() {
 
+    $options = [
+      'type' => $this->mapTypesConfigToQuery(),
+      'check_visible' => TRUE,
+    ];
+
     // Fetch the current published banner.
-    $published_alert_banners = $this->getCurrentAlertBanners();
+    $published_alert_banners = $this->alertBannerManager->getCurrentAlertBanners($options);
 
     // If no banner found, return NULL so block is not rendered.
     if (empty($published_alert_banners)) {
@@ -147,68 +169,10 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
     // Render the alert banner.
     $build = [];
     foreach ($published_alert_banners as $alert_banner) {
-
-      // Only add to the build if it is visible.
-      // @see #154.
-      if ($alert_banner->isVisible()) {
-        $build[] = $this->entityTypeManager->getViewBuilder('localgov_alert_banner')
-          ->view($alert_banner);
-      }
+      $build[] = $this->entityTypeManager->getViewBuilder('localgov_alert_banner')
+        ->view($alert_banner);
     }
     return $build;
-  }
-
-  /**
-   * Get current alert banner(s).
-   *
-   * Note: Default order will be by the field type_of_alert
-   * (only on the default) and then updated date.
-   *
-   * @return \Drupal\localgov_alert_banner\Entity\AlertBannerEntity[]
-   *   Array of all published and visible alert banners.
-   */
-  protected function getCurrentAlertBanners() {
-
-    $current_alert_banners = [];
-
-    // Get list of published alert banner IDs.
-    $types = $this->mapTypesConfigToQuery();
-    $published_alert_banner_query = $this->entityTypeManager->getStorage('localgov_alert_banner')
-      ->getQuery()
-      ->condition('status', 1);
-
-    // Only order by type of alert if the field is present.
-    $alert_banner_has_type_of_alert = FieldStorageConfig::loadByName('localgov_alert_banner', 'type_of_alert');
-    if (!empty($alert_banner_has_type_of_alert)) {
-      $published_alert_banner_query->sort('type_of_alert', 'DESC');
-    }
-
-    // Continue alert banner query.
-    $published_alert_banner_query->sort('changed', 'DESC');
-
-    // If types (bunldes) are selected, add filter condition.
-    if (!empty($types)) {
-      $published_alert_banner_query->condition('type', $types, 'IN');
-    }
-
-    // Execute alert banner query.
-    $published_alert_banners = $published_alert_banner_query
-      ->accessCheck(TRUE)
-      ->execute();
-
-    // Load alert banners and add all.
-    // Visibility check happens in build, so we get cache contexts on all.
-    foreach ($published_alert_banners as $alert_banner_id) {
-      $alert_banner = $this->entityTypeManager->getStorage('localgov_alert_banner')->load($alert_banner_id);
-      $alert_banner = $this->entityRepository->getTranslationFromContext($alert_banner);
-
-      $is_accessible = $alert_banner->access('view', $this->currentUser);
-      if ($is_accessible) {
-        $current_alert_banners[] = $alert_banner;
-      }
-    }
-
-    return $current_alert_banners;
   }
 
   /**
@@ -229,7 +193,11 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
    */
   public function getCacheContexts() {
     $contexts = [];
-    foreach ($this->getCurrentAlertBanners() as $alert_banner) {
+    $options = [
+      'type' => $this->mapTypesConfigToQuery(),
+      'check_visible' => FALSE,
+    ];
+    foreach ($this->alertBannerManager->getCurrentAlertBanners($options) as $alert_banner) {
       $contexts = Cache::mergeContexts($contexts, $alert_banner->getCacheContexts());
     }
     return Cache::mergeContexts(parent::getCacheContexts(), $contexts);

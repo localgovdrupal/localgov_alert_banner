@@ -87,7 +87,7 @@ class AlertBannerEntityRevisionDeleteForm extends ConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public function buildForm(array $form, FormStateInterface $form_state, AlertBannerEntityInterface $localgov_alert_banner_revision = NULL) {
+  public function buildForm(array $form, FormStateInterface $form_state, ?AlertBannerEntityInterface $localgov_alert_banner_revision = NULL) {
     $this->revision = $localgov_alert_banner_revision;
     $form = parent::buildForm($form, $form_state);
 

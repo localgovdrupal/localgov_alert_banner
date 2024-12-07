@@ -113,7 +113,7 @@ class PermissionsTest extends BrowserTestBase {
     $this->assertSession()->statusCodeEquals(Response::HTTP_FORBIDDEN);
 
     // Check that anonymous user cannot access the alert banner types.
-    $this->drupalGet('admin/structure/alert-banner-types');
+    $this->drupalGet('admin/structure/localgov_alert_banner_types');
     $this->assertSession()->statusCodeEquals(Response::HTTP_FORBIDDEN);
 
     $normalAdminUser = $this->createUser(['access administration pages']);
@@ -146,7 +146,7 @@ class PermissionsTest extends BrowserTestBase {
     $this->assertSession()->statusCodeEquals(Response::HTTP_FORBIDDEN);
 
     // Check that authenticated user cannot access the alert banner types.
-    $this->drupalGet('admin/structure/alert-banner-types');
+    $this->drupalGet('admin/structure/localgov_alert_banner_types');
     $this->assertSession()->statusCodeEquals(Response::HTTP_FORBIDDEN);
 
     $this->drupalLogout();
@@ -183,7 +183,7 @@ class PermissionsTest extends BrowserTestBase {
     $this->assertSession()->statusCodeEquals(Response::HTTP_OK);
 
     // Check that emergency publisher user cannot access the alert banner types.
-    $this->drupalGet('admin/structure/alert-banner-types');
+    $this->drupalGet('admin/structure/localgov_alert_banner_types');
     $this->assertSession()->statusCodeEquals(Response::HTTP_FORBIDDEN);
 
     $this->drupalLogout();
@@ -236,7 +236,7 @@ class PermissionsTest extends BrowserTestBase {
     $this->drupalLogin($adminUser);
 
     // Check that the admin user can access the alert banner types.
-    $this->drupalGet('admin/structure/alert-banner-types');
+    $this->drupalGet('admin/structure/localgov_alert_banner_types');
     $this->assertSession()->statusCodeEquals(Response::HTTP_OK);
 
     // Check user access of the banner itself can be restricted.
