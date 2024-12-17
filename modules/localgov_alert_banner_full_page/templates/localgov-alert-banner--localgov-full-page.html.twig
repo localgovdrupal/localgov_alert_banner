@@ -31,22 +31,33 @@
 
 <!-- Alert Banner-->
 <dialog {{ attributes.addClass(classes) }} aria-labelledby="{{ attributes.id }}-label" aria-describedby="{{ attributes.id }}-description">
-  <div role="document" class="localgov-alert-banner-full--centered">
+  <div role="document" class="localgov-alert-banner-full__centered">
+
     {% if not remove_hide_link %}
     <button id="{{ attributes.id }}-canceloverlay" class="localgov-alert-banner__close  js-localgov-alert-banner__close" aria-label="Close">
       {{ 'Close this dialog' | t }}
     </button>
     {% endif %}
-    <article class="localgov-alert-banner-full--content">
-      <h1 id="{{ attributes.id }}-label">{% if display_title %} {{ content.title }} {% endif %}</h1>
-      <div class="localgov-alert-banner-full--image">
-        {{ content.localgov_alert_banner_image }}
-      </div>
-      <div class="localgov-alert-banner-full--text" id="{{ attributes.id }}-description">
+
+    <article class="localgov-alert-banner-full__content">
+      {% if display_title %}
+        <h1 id="{{ attributes.id }}-label">{{ content.title }}</h1>
+        {% else %}
+        <h1 id="{{ attributes.id }}-label" class="visually-hidden">{{ content.title }}</h1>
+      {% endif %}
+
+      {% if content.localgov_alert_banner_image.0 %}
+        <div class="localgov-alert-banner-full__image">
+          {{ content.localgov_alert_banner_image }}
+        </div>
+      {% endif %}
+
+      <div class="localgov-alert-banner-full__text" id="{{ attributes.id }}-description">
         {{ content|without('link', 'title', 'localgov_alert_banner_image') }}
         {% if content.link %} {{ content.link }} {% endif %}
       </div>
     </article>
+
   </div>
 </dialog>
 <!-- End Alert Banner -->

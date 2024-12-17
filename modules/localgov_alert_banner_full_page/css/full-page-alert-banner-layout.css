@@ -3,32 +3,25 @@
  */
 
 .localgov-alert-banner-full::backdrop {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .localgov-alert-banner-full.localgov-alert-banner--notable-person::backdrop {
   background: rgba(0, 0, 0, 1);
 }
 
-dialog.localgov-alert-banner-full.localgov-alert-banner--notable-person + .backdrop { /* Firefox handles backdrop differently */
-	background: rgba(0, 0, 0, 1) !important;
-}
-
-dialog + .backdrop {
-	background: rgba(0, 0, 0, 1) !important;
-}
-
 .localgov-alert-banner-full h1 {
 	color: inherit;
 }
 
-.localgov-alert-banner-full > .localgov-alert-banner-full--centered {
+.localgov-alert-banner-full > .localgov-alert-banner-full__centered {
   max-width: 62.5rem;
   margin: auto;
   overflow-x: none;
   overflow-y: auto;
+}
+
+.localgov-alert-banner-full__centered > * + *,
+.localgov-alert-banner-full__content > * + * {
+  margin-top: 1.5rem;
 }
