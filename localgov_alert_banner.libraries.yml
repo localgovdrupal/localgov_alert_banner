@@ -6,4 +6,5 @@ alert_banner:
   js:
     js/alert_banner.js: {}
   dependencies:
-    - core/jquery
+    - core/drupal
+    - core/once
