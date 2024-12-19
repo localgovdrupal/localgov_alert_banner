@@ -43,12 +43,16 @@ class AlertBannerHideTest extends WebDriverTestBase {
     // Load the front page.
     $this->drupalGet('<front>');
 
+    // Wait for the button to be visible and interactive.
+    $this->assertSession()->waitForElementVisible('css', '.js-localgov-alert-banner__close');
+    // Ensure the button is correctly identified.
+    $this->assertSession()->elementExists('css', '.js-localgov-alert-banner__close');
+
     // Find and click hide link.
     $page = $this->getSession()->getPage();
-    // Ensure the button is correctly identified.
-    $button = $this->assertSession()->elementExists('css', '.localgov-alert-banner__close');
-    // Wait for the button to be visible and interactive.
-    $this->assertSession()->waitForElementVisible('css', '.localgov-alert-banner__close');
+
+    // Find the hide button.
+    $button = $page->findButton('Hide');
     // Click the button.
     $button->click();
 
