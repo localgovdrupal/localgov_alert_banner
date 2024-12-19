@@ -45,11 +45,11 @@ class AlertBannerHideTest extends WebDriverTestBase {
 
     // Find and click hide link.
     $page = $this->getSession()->getPage();
-    // Ensure the button is correctly identified
+    // Ensure the button is correctly identified.
     $button = $this->assertSession()->elementExists('css', '.localgov-alert-banner__close');
-    // Wait for the button to be visible and interactive
+    // Wait for the button to be visible and interactive.
     $this->assertSession()->waitForElementVisible('css', '.localgov-alert-banner__close');
-    // Click the button
+    // Click the button.
     $button->click();
 
     // Check cookie set and banner not visible.
