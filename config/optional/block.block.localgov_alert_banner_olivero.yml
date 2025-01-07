@@ -1,0 +1,19 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - localgov_alert_banner
+  theme:
+    - olivero
+id: localgov_alert_banner_olivero
+theme: olivero
+region: hero
+weight: -100
+provider: null
+plugin: localgov_alert_banner_block
+settings:
+  id: localgov_alert_banner
+  label: 'Alert banner'
+  provider: localgov_alert_banner
+  label_display: '0'
+visibility: {  }
