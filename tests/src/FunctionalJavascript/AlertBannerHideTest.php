@@ -61,7 +61,7 @@ class AlertBannerHideTest extends WebDriverTestBase {
     $this->assertSession()->pageTextNotContains($alert_message);
 
     // Test on login page.
-    $this->drupalGet('/user');
+    $this->drupalGet('/user/login');
     $this->assertSession()->pageTextNotContains($alert_message);
 
     // Update alert message.
@@ -130,10 +130,10 @@ class AlertBannerHideTest extends WebDriverTestBase {
       ]);
     $alert_3->save();
 
-    // Hide the banner on the /user page.
+    // Hide the banner on the /user/login page.
     // This is to test the cookie is set for the site and not just the path.
     // @see https://github.com/localgovdrupal/localgov_alert_banner/issues/401
-    $this->drupalGet('/user');
+    $this->drupalGet('/user/login');
     $page = $this->getSession()->getPage();
     $button_3 = $page->find('css', '[data-dismiss-alert-token="' . $alert_3->getToken() . '"] button');
     $button_3->click();
