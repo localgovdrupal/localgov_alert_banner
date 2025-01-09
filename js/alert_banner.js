@@ -12,7 +12,7 @@ function setAlertBannerHideCookie(cookieTokens, token) {
   const expiry = Date.now() + 30 * 24 * 60 * 60 * 1000;
   document.cookie = `hide-alert-banner-token=${newCookie}; expires=${new Date(
     expiry
-  ).toUTCString()}; SameSite=Lax;`;
+  ).toUTCString()}; path=/; SameSite=Lax;`;
 }
 
 (function localgovAlertBannerScript(Drupal) {
