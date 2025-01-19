@@ -11,14 +11,14 @@
 }
 
 .localgov-alert-banner-full h1 {
-	color: inherit;
+  color: inherit;
 }
 
 .localgov-alert-banner-full > .localgov-alert-banner-full__centered {
-  max-width: 62.5rem;
-  margin: auto;
   overflow-x: none;
   overflow-y: auto;
+  max-width: 62.5rem;
+  margin: auto;
 }
 
 .localgov-alert-banner-full__centered > * + *,

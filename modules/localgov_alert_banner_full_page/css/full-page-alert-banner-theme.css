@@ -3,33 +3,33 @@
  */
 
 .localgov-alert-banner > .modal-dialog-centered .close {
-  font-size: 1.1875rem;
   text-decoration: underline;
-  text-shadow: none;
-  font-weight: 700 !important;
   border: 0;
+  text-shadow: none;
+  font-size: 1.1875rem;
+  font-weight: 700 !important;
 }
 
 .localgov-alert-banner > .modal-dialog-centered .close:hover,
 .localgov-alert-banner > .modal-dialog-centered .close:focus,
 .localgov-alert-banner > .modal-dialog-centered .close:hover span,
 .localgov-alert-banner > .modal-dialog-centered .close:focus span {
-  color: #FFBB00 !important;
-  opacity: 1 !important;
   cursor: pointer;
-  box-shadow: none;
+  opacity: 1 !important;
+  color: #fb0 !important;
   background: transparent;
+  box-shadow: none;
 }
 
 .localgov-alert-banner > .modal-dialog-centered .close span {
-  font-size: 1.1875rem;
   text-decoration: none;
   text-shadow: none;
+  font-size: 1.1875rem;
   font-weight: 700 !important;
 }
 
 .localgov-alert-banner > .modal-dialog-centered .link-text {
-  color: #FFBB00;
+  color: #fb0;
 }
 
 .localgov-alert-banner > .modal-dialog-centered .link-text:hover,
@@ -38,20 +38,21 @@
 }
 
 .localgov-alert-banner > .modal-dialog-centered a.btn {
-  text-decoration: none;
   text-align: left;
+  text-decoration: none;
 }
 
 .localgov-alert-banner.localgov-alert-banner--notable-person {
   background-color: #121212;
 }
 .localgov-alert-banner.localgov-alert-banner--notable-person a {
-  color: #FFFFFF;
+  color: #fff;
 }
 .localgov-alert-banner .modal-content .localgov-alert-banner--notable-person {
   background-color: #121212;
 }
 
-.localgov-alert-banner-full[style] { /* firefox fix for incorrect vertical centering */
+.localgov-alert-banner-full[style] {
+  /* firefox fix for incorrect vertical centering */
   top: 1rem;
 }
