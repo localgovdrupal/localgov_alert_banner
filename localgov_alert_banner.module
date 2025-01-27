@@ -8,6 +8,7 @@
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\user\RoleInterface;
+use Drupal\localgov_alert_banner\NavigationContentLinks;
 
 /**
  * Implements hook_help().
@@ -186,4 +187,24 @@ function localgov_alert_banner_gin_content_form_routes() {
     // Alert banner add form edit form.
     'entity.localgov_alert_banner.edit_form',
   ];
+}
+
+/**
+ * Implements hook_module_implements_alter() for hook_tokens.
+ */
+function localgov_alert_banner_module_implements_alter(&$implementations, $hook) {
+  if ($hook == 'menu_links_discovered_alter') {
+    $group = $implementations['localgov_alert_banner'];
+    unset($implementations['localgov_alert_banner']);
+    $implementations['localgov_alert_banner'] = $group;
+  }
+}
+
+/**
+ * Implements hook_menu_links_discovered_alter().
+ */
+function localgov_alert_banner_menu_links_discovered_alter(&$links) {
+  $navigation_links = \Drupal::classResolver(NavigationContentLinks::class);
+  assert($navigation_links instanceof NavigationContentLinks);
+  $navigation_links->addMenuLinks($links);
 }
