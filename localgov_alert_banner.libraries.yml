@@ -1,5 +1,4 @@
 alert_banner:
-  version: VERSION
   css:
     component:
       css/localgov-alert-banner.css: {}
