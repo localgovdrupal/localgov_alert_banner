@@ -5,7 +5,7 @@
 
 /* Default */
 .localgov-alert-banner {
-  background-color: #00856A;
+  background-color: #00856a;
 }
 
 .localgov-alert-banner,
@@ -22,14 +22,14 @@
 }
 
 .localgov-alert-banner__close {
-  padding: .5rem .9375rem;
-  line-height: 1.5;
-  border: 1px solid #fff;
-  font-weight: 700;
+  padding: 0.5rem 0.9375rem;
   text-align: center;
-  border-radius: 0;
   color: #fff;
+  border: 1px solid #fff;
+  border-radius: 0;
   background-color: transparent;
+  font-weight: 700;
+  line-height: 1.5;
 }
 
 .localgov-alert-banner--minor .localgov-alert-banner__close {
@@ -39,29 +39,29 @@
 
 .localgov-alert-banner__close:focus,
 .localgov-alert-banner__close:hover {
-  text-decoration: underline;
-  background-color: #fff;
-  border-color: #fff;
-  color: #0b0c0c;
   cursor: pointer;
+  text-decoration: underline;
+  color: #0b0c0c;
+  border-color: #fff;
+  background-color: #fff;
 }
 
 .localgov-alert-banner--minor .localgov-alert-banner__close:focus,
 .localgov-alert-banner--minor .localgov-alert-banner__close:hover {
-  background-color: #0b0c0c;
-  border-color: #0b0c0c;
   color: #fff;
+  border-color: #0b0c0c;
+  background-color: #0b0c0c;
 }
 
 /* Announcement */
 .localgov-alert-banner--announcement {
-  background-color: #00856A;
+  background-color: #00856a;
 }
 
 /* Minor */
 .localgov-alert-banner--minor {
-  background-color: #fc3;
   color: #121212;
+  background-color: #fc3;
 }
 .localgov-alert-banner--minor a {
   color: #121212;
@@ -69,7 +69,7 @@
 
 /* Major */
 .localgov-alert-banner--major {
-  background-color: #C00010;
+  background-color: #c00010;
 }
 
 /* Death of a notable person */
@@ -91,6 +91,6 @@
 
 .localgov-alert-banner__actions {
   display: flex;
-  justify-content: space-between;
   align-items: flex-end;
+  justify-content: space-between;
 }
