@@ -121,7 +121,7 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
   /**
    * {@inheritdoc}
    */
-  public function blockForm($form, FormStateInterface $form_state) : array {
+  public function blockForm($form, FormStateInterface $form_state): array {
     $form = parent::blockForm($form, $form_state);
     $type_storage = $this->entityTypeManager->getStorage('localgov_alert_banner_type');
     $config = $this->getConfiguration();
@@ -181,7 +181,7 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
    * @return array
    *   An array of alter banner type IDs as keys and values.
    */
-  protected function mapTypesConfigToQuery() : array {
+  protected function mapTypesConfigToQuery(): array {
     $include_types = $this->configuration['include_types'];
     return array_filter($include_types, function ($t) {
       return (bool) $t;

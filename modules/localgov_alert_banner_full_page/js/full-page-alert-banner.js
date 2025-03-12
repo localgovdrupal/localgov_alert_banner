@@ -30,7 +30,7 @@
 
       const cancelButton = document.getElementById(`${alertId}-canceloverlay`);
 
-      cancelButton.addEventListener("click", function closeAlert() {
+      cancelButton.addEventListener('click', function closeAlert() {
         lgAlert.close();
       });
 
@@ -49,12 +49,12 @@
      * @see localgov_alert_banner/js/alert_banner.js
      */
     isHiddenAlert(lgAlert) {
-      const dismissToken = lgAlert.getAttribute("data-dismiss-alert-token");
+      const dismissToken = lgAlert.getAttribute('data-dismiss-alert-token');
       const isHidden = cookieStore
-        .split(";")
+        .split(';')
         .some(
           (item) =>
-            item.trim().startsWith("hide-alert-banner-token=") &&
+            item.trim().startsWith('hide-alert-banner-token=') &&
             item.includes(dismissToken),
         );
       return isHidden;

@@ -55,7 +55,7 @@ class AdminViewUrlTest extends KernelTestBase {
    *
    * @throws \Exception
    */
-  public function testAdminViewUrl() :void {
+  public function testAdminViewUrl(): void {
 
     $view = Views::getView('localgov_admin_manage_alert_banners');
     $view->setDisplay('localgov_alert_banner_admin_list');
