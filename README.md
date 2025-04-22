@@ -1,6 +1,6 @@
-# LocalGovDrupal Alert banner
+# LocalGov Drupal Alert banner
 
-LocalGovDrupal Alert banner module, adds a global alert banner block and entity.
+LocalGov Drupal Alert banner module, adds a global alert banner block and entity.
 
 ## Order of alerts
 
