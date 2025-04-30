@@ -76,6 +76,7 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
       // @codingStandardsIgnoreStart
       @trigger_error('Calling ' . __CLASS__ . '::_construct() without the $alert_banner_manager argument is deprecated in localgov_alert_banner:1.8.0 and and it will be required in localgov_alert_banner:2.0.0. See https://github.com/localgovdrupal/localgov_alert_banner/wiki/Change-to-alert-banner-block-signature/', E_USER_DEPRECATED);
       @trigger_error('Calling ' . __CLASS__ . '::_construct() with the $current_user argument is deprecated in localgov_alert_banner:1.8.0 and is removed from localgov_alert_banner:2.0.0. See https://github.com/localgovdrupal/localgov_alert_banner/wiki/Change-to-alert-banner-block-signature', E_USER_DEPRECATED);
+      // @phpstan-ignore-next-line
       $this->alertBannerManager = \Drupal::service('localgov_alert_banner.manager');
       // @codingStandardsIgnoreEnd
     }

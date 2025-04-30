@@ -2,6 +2,7 @@
 
 namespace Drupal\Tests\localgov_alert_banner\Functional;
 
+use Drupal\Core\Url;
 use Drupal\Tests\BrowserTestBase;
 use Drupal\localgov_alert_banner\Entity\AlertBannerEntity;
 
@@ -56,7 +57,7 @@ class AlertConfirmationTest extends BrowserTestBase {
     $this->assertSession()->pageTextContains($alert_message);
 
     $this->clickLink('Put banner live');
-    $this->assertSession()->addressEquals($alert->toUrl('status-form')->toString());
+    $this->assertSession()->addressEquals($alert->toUrl('status-form')->setAbsolute()->toString());
     $this->assertSession()->pageTextContains('Set the following alert banner live');
     $this->assertSession()->pageTextContains($alert_message);
 
@@ -65,7 +66,7 @@ class AlertConfirmationTest extends BrowserTestBase {
 
     $this->drupalGet($alert->toUrl('canonical')->toString());
     $this->clickLink('Remove banner');
-    $this->assertSession()->addressEquals($alert->toUrl('status-form')->toString());
+    $this->assertSession()->addressEquals($alert->toUrl('status-form')->setAbsolute()->toString());
     $this->assertSession()->pageTextContains('Remove current alert banner ' . $title);
     $this->getSession()->getPage()->pressButton('Confirm');
     $this->assertSession()->pageTextContains('The alert banner ' . $title . ' has been removed.');
@@ -125,7 +126,7 @@ class AlertConfirmationTest extends BrowserTestBase {
     ];
     $this->drupalGet($edit_url);
     $this->submitForm($form_vars, 'Save');
-    $this->assertSession()->addressEquals($alert->toUrl('status-form')->toString());
+    $this->assertSession()->addressEquals($alert->toUrl('status-form')->setAbsolute()->toString());
     $this->getSession()->getPage()->pressButton('Confirm');
 
     // Remove the banner live and verify redirect to confirm page.
@@ -136,7 +137,7 @@ class AlertConfirmationTest extends BrowserTestBase {
     ];
     $this->drupalGet($edit_url);
     $this->submitForm($form_vars, 'Save');
-    $this->assertSession()->addressEquals($alert->toUrl('status-form')->toString());
+    $this->assertSession()->addressEquals($alert->toUrl('status-form')->setAbsolute()->toString());
     $this->getSession()->getPage()->pressButton('Confirm');
 
     // Do not change the banner state and verify that user is not redirected to
@@ -147,14 +148,14 @@ class AlertConfirmationTest extends BrowserTestBase {
     ];
     $this->drupalGet($edit_url);
     $this->submitForm($form_vars, 'Save');
-    $this->assertSession()->addressNotEquals($alert->toUrl('status-form')->toString());
+    $this->assertSession()->addressNotEquals($alert->toUrl('status-form')->setAbsolute()->toString());
 
     // Change the status of the banner with a destination paremeter and verify
     // that it still goes to the confirm form and then to the destination.
     $edit_url = $alert->toUrl('edit-form')->toString();
     $options = [
       'query' => [
-        'destination' => '/admin',
+        'destination' => 'admin',
       ],
     ];
     $form_vars = [
@@ -162,9 +163,9 @@ class AlertConfirmationTest extends BrowserTestBase {
     ];
     $this->drupalGet($edit_url, $options);
     $this->submitForm($form_vars, 'Save');
-    $this->assertSession()->addressEquals($alert->toUrl('status-form')->toString());
+    $this->assertSession()->addressEquals($alert->toUrl('status-form')->setAbsolute()->toString());
     $this->getSession()->getPage()->pressButton('Confirm');
-    $this->assertSession()->addressEquals('/admin');
+    $this->assertSession()->addressEquals(Url::fromUri('internal:/admin')->setAbsolute()->toString());
   }
 
 }
