@@ -17,7 +17,7 @@ settings:
       label: Announcement
     -
       value: 20--minor
-      label: 'Minor alert'
+      label: 'Notification'
     -
       value: 50--major
       label: Emergency

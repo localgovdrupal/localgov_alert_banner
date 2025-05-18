@@ -247,3 +247,28 @@ function localgov_alert_banner_update_10002() {
     user_role_revoke_permissions('emergency_publisher', ['access administration pages']);
   }
 }
+
+/**
+ * Update the type of alert label for 'Minor alert' to Notification if present.
+ */
+function localgov_alert_banner_update_10003() {
+
+  // Get the type of alert field storage configuration.
+  $type_of_alert_storage_config = FieldStorageConfig::loadByName('localgov_alert_banner', 'type_of_alert');
+  $settings = $type_of_alert_storage_config->get('settings');
+  
+  // Check if `allowed_values` 20--minor label is still 'Minor alert`
+  foreach($settings['allowed_values'] as $key => &$value) {
+    if ($key !== '20--minor') {
+      continue;
+    }
+    if ($value === 'Minor alert') {
+      // If so, update it's label to Notification.
+      $value = 'Notification';
+    }
+  }
+
+  // Save storage value.
+  $type_of_alert_storage_config->set('settings', $settings);
+  $type_of_alert_storage_config->save();
+}
