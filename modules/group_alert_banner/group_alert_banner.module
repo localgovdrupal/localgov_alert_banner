@@ -34,6 +34,7 @@ function group_alert_banner_localgov_microsites_roles_default() {
   $alert_banner_related_role_permissions = [
     // phpcs:disable Drupal.Classes.FullyQualifiedNamespace
     'global' => [
+      // @phpstan-ignore-next-line
       Drupal\localgov_microsites_group\RolesHelper::MICROSITES_CONTROLLER_ROLE => [
         'access localgov alert banner listing page',
         'use localgov_alert_banners transition create_new_draft',
@@ -42,6 +43,7 @@ function group_alert_banner_localgov_microsites_roles_default() {
         'view all localgov alert banner entities',
         'view all localgov alert banner entity pages',
       ],
+      // @phpstan-ignore-next-line
       Drupal\localgov_microsites_group\RolesHelper::MICROSITES_EDITOR_ROLE => [
         'access localgov alert banner listing page',
         'use localgov_alert_banners transition create_new_draft',
@@ -52,6 +54,7 @@ function group_alert_banner_localgov_microsites_roles_default() {
       ],
     ],
     'group' => [
+      // @phpstan-ignore-next-line
       Drupal\localgov_microsites_group\RolesHelper::GROUP_ADMIN_ROLE => [
         'access localgov_alert_banner overview',
         'create group_localgov_alert_banner:localgov_alert_banner entity',
@@ -68,13 +71,16 @@ function group_alert_banner_localgov_microsites_roles_default() {
         'view group_localgov_alert_banner:localgov_alert_banner relationship',
         'view any unpublished group_localgov_alert_banner:localgov_alert_banner entity',
       ],
+      // @phpstan-ignore-next-line
       Drupal\localgov_microsites_group\RolesHelper::GROUP_MEMBER_ROLE => [
         'access localgov_alert_banner overview',
         'view group_localgov_alert_banner:localgov_alert_banner entity',
       ],
+      // @phpstan-ignore-next-line
       Drupal\localgov_microsites_group\RolesHelper::GROUP_OUTSIDER_ROLE => [
         'view group_localgov_alert_banner:localgov_alert_banner entity',
       ],
+      // @phpstan-ignore-next-line
       Drupal\localgov_microsites_group\RolesHelper::GROUP_ANONYMOUS_ROLE => [
         'view group_localgov_alert_banner:localgov_alert_banner entity',
       ],
