@@ -123,7 +123,7 @@ class SchedulingTest extends KernelTestBase {
     ]);
     $scheduled_transition->save();
     $runner->runTransition($scheduled_transition);
-    
+
     // It shouldn't be necessary to reset the cache after running a transition.
     $alert_banner_storage->resetCache([$alert_banner_id]);
     $alert_banner = $alert_banner_storage->load($alert_banner_id);
