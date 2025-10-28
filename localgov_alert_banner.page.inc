@@ -7,6 +7,7 @@
  * Page callback for Alert banner entities.
  */
 
+use Drupal\Component\Utility\Html;
 use Drupal\Core\Render\Element;
 
 /**
@@ -35,8 +36,16 @@ function template_preprocess_localgov_alert_banner(array &$variables) {
   $variables['display_title'] = $entity->get('display_title')->value;
   $variables['remove_hide_link'] = $entity->get('remove_hide_link')->value;
   // Type of alert is an optional field and may not exist.
-  if ($entity->hasField('type_of_alert')) {
+  if ($entity->hasField('type_of_alert') && !$entity->get('type_of_alert')->isEmpty()) {
     $variables['type_of_alert'] = $entity->get('type_of_alert')->value;
+    $definitions = \Drupal::service('entity_field.manager')->getFieldDefinitions('localgov_alert_banner', $entity->bundle());
+    $options = $definitions['type_of_alert']->getSetting('allowed_values');
+    $variables['type_of_alert_label'] = $options[$variables['type_of_alert']];
   }
+
+  // HTML id.
+  $html_id = Html::getUniqueId('localgov-alert-banner--' . $entity->id());
+  $variables['html_id'] = $html_id;
+  $variables['attributes']['id'] = $html_id;
 
 }
