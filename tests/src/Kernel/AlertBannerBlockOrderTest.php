@@ -236,7 +236,7 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
    */
   protected function getBannersFromBlockRenderArray(BlockPluginInterface $plugin_block): array {
     return array_filter($plugin_block->build(), function ($key) {
-      return strpos($key, '#') !== 0;
+      return !(is_string($key) && str_starts_with($key, '#'));
     }, ARRAY_FILTER_USE_KEY);
   }
 

@@ -209,7 +209,7 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
   /**
    * {@inheritdoc}
    */
-  public function getToken(): string {
+  public function getToken(): string|null {
     return $this->get('token')->value;
   }
 
