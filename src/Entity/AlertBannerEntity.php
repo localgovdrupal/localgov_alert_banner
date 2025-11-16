@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_alert_banner\Entity;
 
 use Drupal\Core\Cache\Cache;
@@ -100,7 +102,7 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
   /**
    * {@inheritdoc}
    */
-  public static function preCreate(EntityStorageInterface $storage_controller, array &$values) {
+  public static function preCreate(EntityStorageInterface $storage_controller, array &$values): void {
     parent::preCreate($storage_controller, $values);
     $values += [
       'uid' => \Drupal::currentUser()->id(),
@@ -134,7 +136,7 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
   /**
    * {@inheritdoc}
    */
-  public function preSave(EntityStorageInterface $storage) {
+  public function preSave(EntityStorageInterface $storage): void {
     parent::preSave($storage);
 
     foreach (array_keys($this->getTranslationLanguages()) as $langcode) {
@@ -165,7 +167,7 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
   /**
    * {@inheritdoc}
    */
-  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
+  public function postSave(EntityStorageInterface $storage, $update = TRUE): void {
     parent::postSave($storage, $update);
 
     // Needed by the entity.localgov_alert_banner.status_form route to function
@@ -207,14 +209,14 @@ class AlertBannerEntity extends EditorialContentEntityBase implements AlertBanne
   /**
    * {@inheritdoc}
    */
-  public function getToken() {
+  public function getToken(): string {
     return $this->get('token')->value;
   }
 
   /**
    * {@inheritdoc}
    */
-  public function setToken($token) {
+  public function setToken($token): static {
     $this->set('token', $token);
     return $this;
   }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_alert_banner\Form;
 
 use Drupal\Core\Form\FormStateInterface;
@@ -37,7 +39,7 @@ class AlertBannerEntityRevisionRevertTranslationForm extends AlertBannerEntityRe
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container) {
+  public static function create(ContainerInterface $container): static {
     $instance = parent::create($container);
     $instance->languageManager = $container->get('language_manager');
     $instance->dateTime = $container->get('datetime.time');

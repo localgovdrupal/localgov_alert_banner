@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\localgov_alert_banner\Functional;
 
 use Drupal\Tests\BrowserTestBase;
@@ -60,7 +62,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
    * @param array $newSettings
    *   The new settings to merge with the existing settings.
    */
-  protected function updateBlockSettings(Block $block, array $newSettings) {
+  protected function updateBlockSettings(Block $block, array $newSettings): void {
     $settings = $block->get('settings');
     $block->set('settings', $newSettings + $settings);
     $block->save();
@@ -69,7 +71,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
   /**
    * Test alert banner block displays.
    */
-  public function testAlertBannerDisplays() {
+  public function testAlertBannerDisplays(): void {
     $this->placeAlterBlock();
     // Set up an alert banner.
     $title = $this->randomMachineName(8);
@@ -101,7 +103,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
   /**
    * Test non live alert banner does not display.
    */
-  public function testNonLiveAlertBannerDoesNotDisplay() {
+  public function testNonLiveAlertBannerDoesNotDisplay(): void {
     $this->placeAlterBlock();
     // Set up an alert banner.
     $title = $this->randomMachineName(8);
@@ -125,7 +127,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
   /**
    * Test display title option.
    */
-  public function testAlertDisplayTitle() {
+  public function testAlertDisplayTitle(): void {
     $this->placeAlterBlock();
     $title = $this->randomMachineName(8);
     $alert_message = 'Alert message: ' . $this->randomMachineName(16);
@@ -154,7 +156,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
   /**
    * Test remove hide link option.
    */
-  public function testAlertRemoveHideLink() {
+  public function testAlertRemoveHideLink(): void {
     $this->placeAlterBlock();
     $title = $this->randomMachineName(8);
     $alert_message = 'Alert message: ' . $this->randomMachineName(16);
@@ -184,7 +186,7 @@ class AlertBannerBlockTest extends BrowserTestBase {
   /**
    * Test types display option.
    */
-  public function testAlertBannerTypeDisplay() {
+  public function testAlertBannerTypeDisplay(): void {
     $alterType = $this->container->get('entity_type.manager')
       ->getStorage('localgov_alert_banner_type')
       ->create(['id' => 'extra_type', 'label' => 'Extra type']);

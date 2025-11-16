@@ -5,6 +5,8 @@
  * Contains localgov_alert_banner.module.
  */
 
+declare(strict_types=1);
+
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\user\RoleInterface;
@@ -12,7 +14,7 @@ use Drupal\user\RoleInterface;
 /**
  * Implements hook_help().
  */
-function localgov_alert_banner_help($route_name, RouteMatchInterface $route_match) {
+function localgov_alert_banner_help($route_name, RouteMatchInterface $route_match): string|\Stringable|array|null {
   switch ($route_name) {
     // Main module help for the localgov_alert_banner module.
     case 'help.page.localgov_alert_banner':
@@ -22,13 +24,14 @@ function localgov_alert_banner_help($route_name, RouteMatchInterface $route_matc
       return $output;
 
     default:
+      return NULL;
   }
 }
 
 /**
  * Implements hook_preprocess_localgov_alert_banner().
  */
-function localgov_alert_banner_preprocess(&$variables) {
+function localgov_alert_banner_preprocess(&$variables): void {
 
   if (isset($variables['elements']['#localgov_alert_banner'])) {
 
@@ -62,7 +65,7 @@ function localgov_alert_banner_preprocess(&$variables) {
 /**
  * Implements hook_theme().
  */
-function localgov_alert_banner_theme() {
+function localgov_alert_banner_theme(): array {
   $theme = [];
   $theme['localgov_alert_banner'] = [
     'render element' => 'elements',
@@ -80,7 +83,7 @@ function localgov_alert_banner_theme() {
 /**
  * Implements hook_theme_suggestions_HOOK().
  */
-function localgov_alert_banner_theme_suggestions_localgov_alert_banner(array $variables) {
+function localgov_alert_banner_theme_suggestions_localgov_alert_banner(array $variables): array {
   $suggestions = [];
   $entity = $variables['elements']['#localgov_alert_banner'];
   $sanitized_view_mode = strtr($variables['elements']['#view_mode'], '.', '_');
@@ -96,7 +99,7 @@ function localgov_alert_banner_theme_suggestions_localgov_alert_banner(array $va
 /**
  * Implements hook_modules_installed().
  */
-function localgov_alert_banner_modules_installed($modules, $is_syncing) {
+function localgov_alert_banner_modules_installed($modules, $is_syncing): void {
 
   // Configure scheduled transitions if it's being installed.
   if (in_array('scheduled_transitions', $modules, TRUE)) {
@@ -107,7 +110,7 @@ function localgov_alert_banner_modules_installed($modules, $is_syncing) {
 /**
  * Configure scheduled transitions.
  */
-function localgov_alert_banner_configure_scheduled_transitions() {
+function localgov_alert_banner_configure_scheduled_transitions(): void {
 
   // Configure scheduled transitions for alert banners.
   $scheduled_transitions_config = \Drupal::service('config.factory')->getEditable('scheduled_transitions.settings');
@@ -143,7 +146,7 @@ function localgov_alert_banner_configure_scheduled_transitions() {
  *
  * @todo consider using hook_localgov_roles().
  */
-function localgov_alert_banner_set_default_permissions() {
+function localgov_alert_banner_set_default_permissions(): void {
 
   // Default grant permissions to view all alert banners.
   user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, ['view all localgov alert banner entities']);
@@ -164,7 +167,7 @@ function localgov_alert_banner_set_default_permissions() {
 /**
  * Implements hook_preprocess_field().
  */
-function localgov_alert_banner_preprocess_field(&$variables) {
+function localgov_alert_banner_preprocess_field(&$variables): void {
   if ($variables['element']['#field_name'] == 'link' && $variables['element']['#bundle'] == 'localgov_alert_banner') {
     foreach ($variables['element']['#items'] as $item) {
       if (empty($item->getValue()['title'])) {
@@ -178,7 +181,7 @@ function localgov_alert_banner_preprocess_field(&$variables) {
 /**
  * Implements hook_gin_content_form_routes().
  */
-function localgov_alert_banner_gin_content_form_routes() {
+function localgov_alert_banner_gin_content_form_routes(): array {
   return [
     // Alert banner add form.
     'entity.localgov_alert_banner.add_form',

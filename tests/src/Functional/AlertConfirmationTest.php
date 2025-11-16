@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\localgov_alert_banner\Functional;
 
 use Drupal\Core\Url;
@@ -40,7 +42,7 @@ class AlertConfirmationTest extends BrowserTestBase {
   /**
    * Test alert banner publish un/publish confirmation.
    */
-  public function testAlertConfirmation() {
+  public function testAlertConfirmation(): void {
     // Set up an alert banner.
     $title = $this->randomMachineName(8);
     $alert_message = 'Alert message: ' . $this->randomMachineName(16);
@@ -105,7 +107,7 @@ class AlertConfirmationTest extends BrowserTestBase {
   /**
    * Test save alert with a state change redirects to the confimation page.
    */
-  public function testSaveAlertRedirect() {
+  public function testSaveAlertRedirect(): void {
 
     // Set up an alert banner.
     $title = $this->randomMachineName(8);

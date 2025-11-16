@@ -5,6 +5,8 @@
  * LocalGov Alert Banner install file.
  */
 
+declare(strict_types=1);
+
 use Drupal\Core\Cache\Cache;
 use Drupal\Core\Config\Config;
 use Drupal\Core\Config\FileStorage;
@@ -18,7 +20,7 @@ use Symfony\Component\Yaml\Yaml;
 /**
  * Implements hook_install().
  */
-function localgov_alert_banner_install($is_syncing) {
+function localgov_alert_banner_install($is_syncing): void {
 
   // Don't run this if syncing.
   if ($is_syncing) {
@@ -36,7 +38,7 @@ function localgov_alert_banner_install($is_syncing) {
 /**
  * Update alert banner entity definition to include the token on the entity.
  */
-function localgov_alert_banner_update_8801() {
+function localgov_alert_banner_update_8801(): void {
   $field_storage_definition = BaseFieldDefinition::create('string')
     ->setSetting('max_length', 64)
     ->setDisplayConfigurable('form', FALSE)
@@ -49,7 +51,7 @@ function localgov_alert_banner_update_8801() {
 /**
  * Add visibility field to existing alert banners.
  */
-function localgov_alert_banner_update_8901() {
+function localgov_alert_banner_update_8901(): void {
 
   // Enable dependent condition_field module.
   \Drupal::service('module_installer')->install(['condition_field']);
@@ -93,7 +95,7 @@ function localgov_alert_banner_update_8901() {
 /**
  * Add workflow and configure scheduled transitions if enabled.
  */
-function localgov_alert_banner_update_9001() {
+function localgov_alert_banner_update_9001(): void {
 
   // Add localgov_alert_banner workflow config.
   $workflows_workflow_localgov_alert_banner = <<<EOY
@@ -212,7 +214,7 @@ EOY;
 /**
  * Add view alert banner permission to anonymous and authenticated users.
  */
-function localgov_alert_banner_update_9002() {
+function localgov_alert_banner_update_9002(): void {
   user_role_grant_permissions(RoleInterface::ANONYMOUS_ID, ['view all localgov alert banner entities']);
   user_role_grant_permissions(RoleInterface::AUTHENTICATED_ID, ['view all localgov alert banner entities']);
 
@@ -230,7 +232,7 @@ function localgov_alert_banner_update_9002() {
  * Give emergency publisher permissions to access the alert banner manage screen
  * from the toolbar.
  */
-function localgov_alert_banner_update_10002() {
+function localgov_alert_banner_update_10002(): void {
   $module_handler = \Drupal::service('module_handler');
 
   $perms[] = 'view the administration theme';

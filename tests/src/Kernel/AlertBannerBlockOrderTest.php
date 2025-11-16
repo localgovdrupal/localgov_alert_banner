@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\localgov_alert_banner\Kernel;
 
 use Drupal\Core\Block\BlockPluginInterface;
@@ -59,7 +61,7 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
   /**
    * Test alert banner block order.
    */
-  public function testAlertBannerBlockOrder() {
+  public function testAlertBannerBlockOrder(): void {
 
     // Alert details to set.
     $alert_details = [
@@ -169,7 +171,7 @@ class AlertBannerBlockOrderTest extends KernelTestBase {
   /**
    * Test alert banner block order without type of alert.
    */
-  public function testAlertBannerBlockOrderWithoutTypeOfAlert() {
+  public function testAlertBannerBlockOrderWithoutTypeOfAlert(): void {
 
     // Delete type of alert field.
     // This is so we are testing the case where :-

@@ -7,12 +7,14 @@
 
 declare(strict_types=1);
 
+use Drupal\Core\StringTranslation\TranslatableMarkup;
+
 /**
  * Implements hook_update_N().
  *
  * Hides the "Remove hide link" checkbox from Full page alert edit pages.
  */
-function localgov_alert_banner_full_page_update_9001() {
+function localgov_alert_banner_full_page_update_9001(): TranslatableMarkup|null {
 
   $form_display = Drupal::service('entity_type.manager')
     ->getStorage('entity_form_display')
@@ -28,4 +30,6 @@ function localgov_alert_banner_full_page_update_9001() {
   else {
     return t('Cannot find settings for the "Remove hide link" checkbox.');
   }
+
+  return NULL;
 }

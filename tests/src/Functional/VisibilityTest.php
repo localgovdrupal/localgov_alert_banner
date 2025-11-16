@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\localgov_alert_banner\Functional;
 
 use Drupal\Tests\BrowserTestBase;
@@ -38,7 +40,7 @@ class VisibilityTest extends BrowserTestBase {
   /**
    * Test the visibility conditions for alert banners.
    */
-  public function testAlertBannerVisibility() {
+  public function testAlertBannerVisibility(): void {
 
     // Create a page for the alert banner.
     $this->createContentType(['type' => 'page']);

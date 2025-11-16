@@ -7,6 +7,8 @@
  * Page callback for Alert banner entities.
  */
 
+declare(strict_types=1);
+
 use Drupal\Core\Render\Element;
 
 /**
@@ -21,7 +23,7 @@ use Drupal\Core\Render\Element;
  *   eg. To fetch the alert banner element,
  *   use variables['elements']['#localgov_alert_banner'].
  */
-function template_preprocess_localgov_alert_banner(array &$variables) {
+function template_preprocess_localgov_alert_banner(array &$variables): void {
 
   // Helpful $content variable for templates.
   foreach (Element::children($variables['elements']) as $key) {
