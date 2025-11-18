@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\localgov_alert_banner\Kernel;
 
 use Drupal\Core\Extension\MissingDependencyException;
@@ -49,7 +51,7 @@ class SchedulingInstallTest extends KernelTestBase {
   /**
    * Check alert banners are configured when enabling scheduled transitions.
    */
-  public function testEnableScheduledTransitions() {
+  public function testEnableScheduledTransitions(): void {
     \Drupal::service('module_installer')->install(['localgov_alert_banner']);
 
     // Add extra alert banner type.
@@ -97,7 +99,7 @@ class SchedulingInstallTest extends KernelTestBase {
   /**
    * Check scheduled transitions are configured when enabling alert banners.
    */
-  public function testEnableLocalGovAlertBanner() {
+  public function testEnableLocalGovAlertBanner(): void {
     try {
       \Drupal::service('module_installer')->install(['scheduled_transitions']);
     }

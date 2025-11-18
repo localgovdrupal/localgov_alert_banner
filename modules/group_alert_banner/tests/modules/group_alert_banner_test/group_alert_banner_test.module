@@ -4,3 +4,5 @@
  * @file
  * Various hook implementations.
  */
+
+declare(strict_types=1);

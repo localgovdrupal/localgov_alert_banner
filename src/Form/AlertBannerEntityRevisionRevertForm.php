@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_alert_banner\Form;
 
 use Drupal\Core\Form\ConfirmFormBase;
@@ -46,7 +48,7 @@ class AlertBannerEntityRevisionRevertForm extends ConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container) {
+  public static function create(ContainerInterface $container): static {
     $instance = parent::create($container);
     $instance->alertBannerEntityStorage = $container->get('entity_type.manager')->getStorage('localgov_alert_banner');
     $instance->dateFormatter = $container->get('date.formatter');
@@ -104,7 +106,7 @@ class AlertBannerEntityRevisionRevertForm extends ConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state): void {
     // The revision timestamp will be updated when the revision is saved. Keep
     // the original one for the confirmation message.
     $original_revision_timestamp = $this->revision->getRevisionCreationTime();

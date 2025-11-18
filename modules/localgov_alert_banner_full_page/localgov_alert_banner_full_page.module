@@ -5,12 +5,14 @@
  * Hook implementations.
  */
 
+declare(strict_types=1);
+
 use Drupal\Component\Utility\Html;
 
 /**
  * Implements hook_theme().
  */
-function localgov_alert_banner_full_page_theme() {
+function localgov_alert_banner_full_page_theme(): array {
   $theme = [];
 
   $theme['localgov_alert_banner__localgov_full_page'] = [
@@ -26,7 +28,7 @@ function localgov_alert_banner_full_page_theme() {
  * - Adds a unique id for the top level wrapper div of the alert banner.
  * - Adds relevant Javascript settings and library.
  */
-function localgov_alert_banner_full_page_preprocess_localgov_alert_banner__localgov_full_page(&$variables) {
+function localgov_alert_banner_full_page_preprocess_localgov_alert_banner__localgov_full_page(&$variables): void {
   $alert_banner_id = $variables['attributes']['id'] ?? Html::getUniqueId('localgov-full-page-alert-banner');
   $variables['attributes']['id'] = $alert_banner_id;
 

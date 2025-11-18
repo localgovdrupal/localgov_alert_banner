@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\localgov_alert_banner\Functional;
 
 use Drupal\Tests\BrowserTestBase;
@@ -84,7 +86,7 @@ class PermissionsTest extends BrowserTestBase {
   /**
    * Test the alert banner user access permissions.
    */
-  public function testAlertBannerUserAccess() {
+  public function testAlertBannerUserAccess(): void {
 
     // Check that anonymous user cannot access to the overview page.
     $this->drupalGet('admin/content/alert-banner');

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\localgov_alert_banner\Functional;
 
 use Drupal\Tests\BrowserTestBase;

@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_alert_banner\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -41,7 +44,7 @@ class AlertBannerEntityController extends ControllerBase implements ContainerInj
   /**
    * Publish or Unpublish title for alert banner status change form.
    */
-  public function getStatusFormTitle(AlertBannerEntityInterface $localgov_alert_banner) {
+  public function getStatusFormTitle(AlertBannerEntityInterface $localgov_alert_banner): TranslatableMarkup {
     return $localgov_alert_banner->isPublished() ? $this->t('Remove banner') : $this->t('Put banner live');
   }
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_alert_banner\Plugin\views\field;
 
 use Drupal\Core\Form\FormStateInterface;
@@ -30,7 +32,7 @@ class StatusPageLink extends LinkBase {
   /**
    * {@inheritdoc}
    */
-  public function buildOptionsForm(&$form, FormStateInterface $form_state) {
+  public function buildOptionsForm(&$form, FormStateInterface $form_state): void {
     $form['publish_text'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Publish text to display'),

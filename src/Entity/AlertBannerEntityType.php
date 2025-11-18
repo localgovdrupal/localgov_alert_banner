@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_alert_banner\Entity;
 
 use Drupal\Core\Config\Entity\ConfigEntityBundleBase;
@@ -69,7 +71,7 @@ class AlertBannerEntityType extends ConfigEntityBundleBase implements AlertBanne
   /**
    * {@inheritdoc}
    */
-  public function postSave(EntityStorageInterface $storage, $update = TRUE) {
+  public function postSave(EntityStorageInterface $storage, $update = TRUE): void {
 
     // Add fields and workflow when creating a new alert banner type.
     if (!$update && !$this->isSyncing) {

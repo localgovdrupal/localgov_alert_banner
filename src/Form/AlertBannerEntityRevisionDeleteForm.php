@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_alert_banner\Form;
 
 use Drupal\Core\Form\ConfirmFormBase;
@@ -46,7 +48,7 @@ class AlertBannerEntityRevisionDeleteForm extends ConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container) {
+  public static function create(ContainerInterface $container): static {
     $instance = parent::create($container);
     $instance->alertBannerEntityStorage = $container->get('entity_type.manager')->getStorage('localgov_alert_banner');
     $instance->connection = $container->get('database');
@@ -97,7 +99,7 @@ class AlertBannerEntityRevisionDeleteForm extends ConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state): void {
     // @phpstan-ignore-next-line.
     $this->alertBannerEntityStorage->deleteRevision($this->revision->getRevisionId());
 

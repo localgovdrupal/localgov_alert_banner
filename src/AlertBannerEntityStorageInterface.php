@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_alert_banner;
 
 use Drupal\Core\Entity\ContentEntityStorageInterface;
@@ -56,6 +58,6 @@ interface AlertBannerEntityStorageInterface extends ContentEntityStorageInterfac
    * @param \Drupal\Core\Language\LanguageInterface $language
    *   The language object.
    */
-  public function clearRevisionsLanguage(LanguageInterface $language);
+  public function clearRevisionsLanguage(LanguageInterface $language): int|null;
 
 }

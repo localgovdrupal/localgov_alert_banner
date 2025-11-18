@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\localgov_alert_banner\Kernel;
 
 use Drupal\Core\Extension\MissingDependencyException;
@@ -62,7 +64,7 @@ class SchedulingTest extends KernelTestBase {
   /**
    * Test scheduling alert banners.
    */
-  public function testAlertBannerScheduling() {
+  public function testAlertBannerScheduling(): void {
     // It should be possible to enable scheduled_transitions by listing it in
     // the class $modules array and then add a '@requires module
     // scheduled_transitions' annotation to skip the test if scheduled

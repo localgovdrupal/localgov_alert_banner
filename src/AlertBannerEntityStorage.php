@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_alert_banner;
 
 use Drupal\Core\Entity\Sql\SqlContentEntityStorage;
@@ -48,7 +50,7 @@ class AlertBannerEntityStorage extends SqlContentEntityStorage implements AlertB
   /**
    * {@inheritdoc}
    */
-  public function clearRevisionsLanguage(LanguageInterface $language) {
+  public function clearRevisionsLanguage(LanguageInterface $language): int|null {
     return $this->database->update('localgov_alert_banner_revision')
       ->fields(['langcode' => LanguageInterface::LANGCODE_NOT_SPECIFIED])
       ->condition('langcode', $language->getId())

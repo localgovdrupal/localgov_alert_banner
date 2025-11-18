@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\localgov_alert_banner\Functional;
 
 use Drupal\Core\Url;
@@ -45,7 +47,7 @@ class AdminViewTest extends BrowserTestBase {
   /**
    * Test load the alert banner admin view.
    */
-  public function testLoadAdminView() {
+  public function testLoadAdminView(): void {
     $this->drupalLogin($this->adminUser);
 
     // Check can access the admin view dashboard.
