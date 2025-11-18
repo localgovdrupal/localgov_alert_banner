@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_alert_banner\Form;
 
 use Drupal\Core\Entity\ContentEntityConfirmFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\localgov_alert_banner\Entity\AlertBannerEntity;
 use Drupal\localgov_alert_banner\Entity\AlertBannerEntityInterface;
 
@@ -84,7 +87,7 @@ class AlertBannerEntityStatusForm extends ContentEntityConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  public function submitForm(array &$form, FormStateInterface $form_state) {
+  public function submitForm(array &$form, FormStateInterface $form_state): void {
     $entity = $this->getEntity();
     assert($entity instanceof AlertBannerEntityInterface);
 
@@ -137,7 +140,7 @@ class AlertBannerEntityStatusForm extends ContentEntityConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  protected function getStatusChangedMessage() {
+  protected function getStatusChangedMessage(): TranslatableMarkup {
     $entity = $this->getEntity();
     assert($entity instanceof AlertBannerEntityInterface);
 
@@ -155,7 +158,7 @@ class AlertBannerEntityStatusForm extends ContentEntityConfirmFormBase {
   /**
    * {@inheritdoc}
    */
-  protected function logStatusChanged() {
+  protected function logStatusChanged(): void {
     $entity = $this->getEntity();
     assert($entity instanceof AlertBannerEntityInterface);
 

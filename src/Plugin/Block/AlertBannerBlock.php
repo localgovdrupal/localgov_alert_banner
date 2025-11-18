@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_alert_banner\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
@@ -76,6 +78,7 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
       // @codingStandardsIgnoreStart
       @trigger_error('Calling ' . __CLASS__ . '::_construct() without the $alert_banner_manager argument is deprecated in localgov_alert_banner:1.8.0 and and it will be required in localgov_alert_banner:2.0.0. See https://github.com/localgovdrupal/localgov_alert_banner/wiki/Change-to-alert-banner-block-signature/', E_USER_DEPRECATED);
       @trigger_error('Calling ' . __CLASS__ . '::_construct() with the $current_user argument is deprecated in localgov_alert_banner:1.8.0 and is removed from localgov_alert_banner:2.0.0. See https://github.com/localgovdrupal/localgov_alert_banner/wiki/Change-to-alert-banner-block-signature', E_USER_DEPRECATED);
+      // @phpstan-ignore-next-line
       $this->alertBannerManager = \Drupal::service('localgov_alert_banner.manager');
       // @codingStandardsIgnoreEnd
     }
@@ -142,7 +145,7 @@ class AlertBannerBlock extends BlockBase implements ContainerFactoryPluginInterf
   /**
    * {@inheritdoc}
    */
-  public function blockSubmit($form, FormStateInterface $form_state) {
+  public function blockSubmit($form, FormStateInterface $form_state): void {
     parent::blockSubmit($form, $form_state);
     $values = $form_state->getValues();
     $this->configuration['include_types'] = $values['include_types'];

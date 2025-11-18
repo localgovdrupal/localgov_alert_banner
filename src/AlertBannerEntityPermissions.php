@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_alert_banner;
 
 use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
@@ -39,7 +41,7 @@ class AlertBannerEntityPermissions implements ContainerInjectionInterface {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container) {
+  public static function create(ContainerInterface $container): static {
     return new static($container->get('entity_type.manager'));
   }
 

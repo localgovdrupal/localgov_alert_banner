@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\group_alert_banner\Kernel;
 
 use Drupal\Tests\group\Kernel\GroupKernelTestBase;

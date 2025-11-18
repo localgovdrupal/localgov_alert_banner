@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\localgov_alert_banner\Kernel;
 
 use Drupal\Core\Extension\MissingDependencyException;
@@ -7,6 +9,7 @@ use Drupal\KernelTests\KernelTestBase;
 use Drupal\Tests\node\Traits\ContentTypeCreationTrait;
 use Drupal\Tests\node\Traits\NodeCreationTrait;
 use Drupal\scheduled_transitions\Entity\ScheduledTransition;
+use Drupal\user\Entity\User;
 
 /**
  * Kernel test for scheduling transitions.
@@ -61,7 +64,7 @@ class SchedulingTest extends KernelTestBase {
   /**
    * Test scheduling alert banners.
    */
-  public function testAlertBannerScheduling() {
+  public function testAlertBannerScheduling(): void {
     // It should be possible to enable scheduled_transitions by listing it in
     // the class $modules array and then add a '@requires module
     // scheduled_transitions' annotation to skip the test if scheduled
@@ -76,6 +79,13 @@ class SchedulingTest extends KernelTestBase {
 
     $alert_banner_storage = $this->container->get('entity_type.manager')->getStorage('localgov_alert_banner');
     $runner = $this->container->get('scheduled_transitions.runner');
+
+    /** @var \Drupal\user\UserInterface $author */
+    $author = User::create([
+      'uid' => 2,
+      'name' => $this->randomMachineName(),
+    ]);
+    $author->save();
 
     // Create an alert banner.
     $alert_banner = $alert_banner_storage->create([
@@ -93,7 +103,7 @@ class SchedulingTest extends KernelTestBase {
     $scheduled_transition = ScheduledTransition::create([
       'entity' => $alert_banner,
       'entity_revision_id' => 1,
-      'author' => 1,
+      'author' => $author,
       'workflow' => 'localgov_alert_banners',
       'moderation_state' => 'published',
       'transition_on' => (new \DateTime('1 Jan 2020 12am'))->getTimestamp(),
@@ -108,13 +118,14 @@ class SchedulingTest extends KernelTestBase {
     $scheduled_transition = ScheduledTransition::create([
       'entity' => $alert_banner,
       'entity_revision_id' => 2,
-      'author' => 1,
+      'author' => $author,
       'workflow' => 'localgov_alert_banners',
       'moderation_state' => 'unpublished',
       'transition_on' => (new \DateTime('1 Jan 2021 12am'))->getTimestamp(),
     ]);
     $scheduled_transition->save();
     $runner->runTransition($scheduled_transition);
+
     // It shouldn't be necessary to reset the cache after running a transition.
     $alert_banner_storage->resetCache([$alert_banner_id]);
     $alert_banner = $alert_banner_storage->load($alert_banner_id);

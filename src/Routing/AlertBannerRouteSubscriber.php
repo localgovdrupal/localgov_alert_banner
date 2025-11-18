@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_alert_banner\Routing;
 
 use Drupal\Core\Routing\RouteSubscriberBase;
@@ -13,7 +15,7 @@ class AlertBannerRouteSubscriber extends RouteSubscriberBase {
   /**
    * {@inheritdoc}
    */
-  protected function alterRoutes(RouteCollection $collection) {
+  protected function alterRoutes(RouteCollection $collection): void {
 
     if ($route = $collection->get('entity.localgov_alert_banner.canonical')) {
       // Change the access permission for the alert banner access page.

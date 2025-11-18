@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_alert_banner\Form;
 
 use Drupal\Core\Entity\ContentEntityForm;
@@ -52,7 +54,7 @@ class AlertBannerEntityForm extends ContentEntityForm {
   /**
    * {@inheritdoc}
    */
-  public static function create(ContainerInterface $container) {
+  public static function create(ContainerInterface $container): static {
     // Instantiates this form class.
     $instance = parent::create($container);
     $instance->account = $container->get('current_user');

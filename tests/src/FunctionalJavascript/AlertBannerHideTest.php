@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\localgov_alert_banner\FunctionalJavascript;
 
 use Drupal\FunctionalJavascriptTests\WebDriverTestBase;
@@ -24,7 +26,7 @@ class AlertBannerHideTest extends WebDriverTestBase {
   /**
    * Test alert banner hide link.
    */
-  public function testAlertBannerHide() {
+  public function testAlertBannerHide(): void {
     $this->drupalPlaceBlock('localgov_alert_banner_block');
 
     // Set up an alert banner.

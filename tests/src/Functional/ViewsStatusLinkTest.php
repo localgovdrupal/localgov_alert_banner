@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\Tests\localgov_alert_banner\Functional;
 
 use Drupal\Tests\BrowserTestBase;
@@ -56,7 +58,7 @@ class ViewsStatusLinkTest extends BrowserTestBase {
   /**
    * Tests entity link fields.
    */
-  public function testEntityLink() {
+  public function testEntityLink(): void {
     $this->drupalGet('/admin/content/alert-banner');
     $session = $this->assertSession();
 

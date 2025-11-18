@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_alert_banner\Plugin\Menu\LocalTask;
 
 use Drupal\Core\Menu\LocalTaskDefault;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\localgov_alert_banner\Access;
 
 use Drupal\Core\Access\AccessResult;
@@ -18,7 +20,7 @@ class AlertBannerEntityPageAccess implements AccessInterface {
   /**
    * {@inheritDoc}
    */
-  public function access(AccountInterface $account, RouteMatchInterface $route_match) {
+  public function access(AccountInterface $account, RouteMatchInterface $route_match): mixed {
 
     if ($account->hasPermission('view all localgov alert banner entity pages')) {
       return AccessResult::allowed();

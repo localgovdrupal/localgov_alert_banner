@@ -38,7 +38,7 @@ function setAlertBannerHideCookie(cookieTokens, token) {
       );
 
       if (alertBanners) {
-        alertBanners.forEach(function (banner) {
+        alertBanners.forEach((banner) => {
           banner.classList.remove('hidden');
           const token = banner.getAttribute('data-dismiss-alert-token');
           if (cookieTokens.includes(token)) {
@@ -54,8 +54,8 @@ function setAlertBannerHideCookie(cookieTokens, token) {
       );
 
       if (alertBannerCloseButtons) {
-        alertBannerCloseButtons.forEach(function (closeButton) {
-          closeButton.addEventListener('click', function (e) {
+        alertBannerCloseButtons.forEach((closeButton) => {
+          closeButton.addEventListener('click', (e) => {
             e.preventDefault();
             const banner = closeButton.closest('.js-localgov-alert-banner');
             banner.setAttribute('aria-hidden', 'true');

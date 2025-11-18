@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Drupal\group_alert_banner\Routing;
 
 use Drupal\Core\Routing\RouteSubscriberBase;
